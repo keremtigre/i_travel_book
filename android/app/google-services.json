@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "590014607433",
+    "project_id": "travelbook-472dd",
+    "storage_bucket": "travelbook-472dd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:590014607433:android:1b6770e61b50e16b1ecf98",
+        "android_client_info": {
+          "package_name": "com.keremtigre.i_travel_book"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "590014607433-7ep89kjt88jbvgntphr2fmvfptirou47.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjRd0En0VBGPnn30_UXbyHPucrKmFxGUM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "590014607433-7ep89kjt88jbvgntphr2fmvfptirou47.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "590014607433-18ti7q2s0rn49m880crjj6ggq1dfc76o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.keremtigre.iTravelBook"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
