@@ -73,90 +73,159 @@ class _AddLocationState extends State<AddLocation> {
         resizeToAvoidBottomInset: false,
         body: Form(
           key: _formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: size.height / 3.5,
-                  child: Stack(
-                    children: [
-                      GoogleMap(
-                        onLongPress: (argument) async {
-                          if (await InternetConnectionChecker().hasConnection &&
-                              await Geolocator.isLocationServiceEnabled()) {
-                            setState(() {});
-                            //eklenen markerları silmek için yaptım
-                            markers.clear();
-                            //MarkerId için addres geldi
-                            String address = await GetAddressFromLatLong(
-                                argument.latitude, argument.longitude);
-                            //Konumu Kaydet Butonu için gereken atamalar yapıldı
-                            _originLatitude = argument.latitude;
-                            _originLongitude = argument.longitude;
-                            //marker oluşturuluyor
-                            final marker = Marker(
-                                markerId: MarkerId(address),
-                                position: argument);
-                            markers[MarkerId(address)] = marker;
-                            debugPrint("lat: " +
-                                _originLatitude.toString() +
-                                " long: " +
-                                _originLongitude.toString());
-                          } else if (await InternetConnectionChecker()
-                                      .hasConnection ==
-                                  false &&
-                              await Geolocator.isLocationServiceEnabled() ==
-                                  false) {
-                            ShowDialogForAddLocationPage(context,
-                                "Internet ve Konum özelliğinizin açık olduğundan emin olun");
-                          } else if (await InternetConnectionChecker()
-                                  .hasConnection ==
-                              false) {
-                            ShowDialogForAddLocationPage(context,
-                                "Internet Bağlantınızı Kontrol Ediniz");
-                          } else if (await Geolocator
-                                  .isLocationServiceEnabled() ==
-                              false) {
-                            ShowDialogForAddLocationPage(context,
-                                "Konumunuzun açık olduğundan emin olun");
-                          }
+          child: ListView(
+            children: [
+              Container(
+                width: double.infinity,
+                height: size.height / 3.5,
+                child: Stack(
+                  children: [
+                    GoogleMap(
+                      onLongPress: (argument) async {
+                        if (await InternetConnectionChecker().hasConnection &&
+                            await Geolocator.isLocationServiceEnabled()) {
+                          setState(() {});
+                          //eklenen markerları silmek için yaptım
+                          markers.clear();
+                          //MarkerId için addres geldi
+                          String address = await GetAddressFromLatLong(
+                              argument.latitude, argument.longitude);
+                          //Konumu Kaydet Butonu için gereken atamalar yapıldı
+                          _originLatitude = argument.latitude;
+                          _originLongitude = argument.longitude;
+                          //marker oluşturuluyor
+                          final marker = Marker(
+                              markerId: MarkerId(address), position: argument);
+                          markers[MarkerId(address)] = marker;
+                          debugPrint("lat: " +
+                              _originLatitude.toString() +
+                              " long: " +
+                              _originLongitude.toString());
+                        } else if (await InternetConnectionChecker()
+                                    .hasConnection ==
+                                false &&
+                            await Geolocator.isLocationServiceEnabled() ==
+                                false) {
+                          ShowDialogForAddLocationPage(context,
+                              "Internet ve Konum özelliğinizin açık olduğundan emin olun");
+                        } else if (await InternetConnectionChecker()
+                                .hasConnection ==
+                            false) {
+                          ShowDialogForAddLocationPage(
+                              context, "Internet Bağlantınızı Kontrol Ediniz");
+                        } else if (await Geolocator
+                                .isLocationServiceEnabled() ==
+                            false) {
+                          ShowDialogForAddLocationPage(
+                              context, "Konumunuzun açık olduğundan emin olun");
+                        }
+                      },
+                      markers: markers.values.toSet(),
+                      myLocationEnabled: true,
+                      myLocationButtonEnabled: true,
+                      mapType: MapType.normal,
+                      tiltGesturesEnabled: true,
+                      compassEnabled: true,
+                      scrollGesturesEnabled: true,
+                      zoomGesturesEnabled: true,
+                      onMapCreated: (GoogleMapController controller) async {
+                        var _permision = await Geolocator.checkPermission();
+                        debugPrint("izin: " + _permision.toString());
+                        if (await Geolocator.isLocationServiceEnabled() &&
+                                _permision == LocationPermission.whileInUse ||
+                            _permision == LocationPermission.always) {
+                          var position = await Geolocator.getCurrentPosition(
+                              desiredAccuracy: LocationAccuracy.high);
+                          controller.animateCamera(
+                              CameraUpdate.newCameraPosition(CameraPosition(
+                                  target: LatLng(
+                                    position.latitude,
+                                    position.longitude,
+                                  ),
+                                  zoom: 17)));
+                          setState(() {});
+                        } else {
+                          checkLocation(context);
+                        }
+                      },
+                      initialCameraPosition: _cameraPosition,
+                    ),
+                    Positioned(
+                      child: IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
                         },
-                        markers: markers.values.toSet(),
-                        myLocationEnabled: true,
-                        myLocationButtonEnabled: true,
-                        mapType: MapType.normal,
-                        tiltGesturesEnabled: true,
-                        compassEnabled: true,
-                        scrollGesturesEnabled: true,
-                        zoomGesturesEnabled: true,
-                        onMapCreated: (GoogleMapController controller) async {
-                          var _permision = await Geolocator.checkPermission();
-                          debugPrint("izin: " + _permision.toString());
-                          if (await Geolocator.isLocationServiceEnabled() &&
-                                  _permision == LocationPermission.whileInUse ||
-                              _permision == LocationPermission.always) {
-                            var position = await Geolocator.getCurrentPosition(
-                                desiredAccuracy: LocationAccuracy.high);
-                            controller.animateCamera(
-                                CameraUpdate.newCameraPosition(CameraPosition(
-                                    target: LatLng(
-                                      position.latitude,
-                                      position.longitude,
-                                    ),
-                                    zoom: 17)));
-                            setState(() {});
-                          } else {
-                            checkLocation(context);
-                          }
-                        },
-                        initialCameraPosition: _cameraPosition,
+                        icon: Icon(
+                          Icons.arrow_back,
+                          color: AppColor().appColor,
+                          size: size.width / 10,
+                        ),
                       ),
-                      Positioned(
-                        top: 5,
-                        left: 5,
-                        child: Container(
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: size.height / 40,
+              ),
+              SizedBox(
+                width: size.width,
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Column(
+                          children: [
+                            Text(
+                              image == null
+                                  ? "Fotoğraf ekleyebilirsiniz"
+                                  : "Fotoğraf Eklendi",
+                              style: TextStyle(fontWeight: FontWeight.w600),
+                            ),
+                            SizedBox(
+                              height: size.height / 100,
+                            ),
+                            InkWell(
+                                onTap: (() {
+                                  FocusScope.of(context)
+                                      .requestFocus(FocusNode());
+                                  pickImage(size);
+                                  debugPrint(image.toString());
+                                }),
+                                child: image == null
+                                    ? Container(
+                                        width: size.width / 3,
+                                        height: size.height / 6,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: AppColor().appColor,
+                                              width: 5),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        child: AddPhotoAnimation())
+                                    : Container(
+                                        width: size.width / 3,
+                                        height: size.height / 6,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          child: Image.file(
+                                            image!,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ))),
+                          ],
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Container(
                             padding: EdgeInsets.all(3),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
@@ -164,135 +233,81 @@ class _AddLocationState extends State<AddLocation> {
                                   width: 2, color: AppColor().appColor),
                               color: Colors.white.withOpacity(0.6),
                             ),
-                            height: size.height / 13,
+                            height: size.height / 10,
                             width: size.width / 2,
                             child: Text(
                               "Seçmek istediğiniz konumun üzerine birkaç saniye basılı tutunuz",
                               style: TextStyle(color: Colors.black),
                             )),
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: size.height / 40,
-                ),
-                Container(
-                  height: size.height / 2,
-                  width: size.width,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(
-                        height: size.height * 0.02,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10, right: 10),
-                        child: TextFormField(
-                          maxLength: 30,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return "Bu alan boş bırakılamaz";
-                            } else {
-                              return null;
-                            }
-                          },
-                          textInputAction: TextInputAction.next,
-                          controller: _placeTitleTextController,
-                          decoration: InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  borderSide: BorderSide(
+                      ],
+                    ),
+                    SizedBox(
+                      height: size.height / 40,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: TextFormField(
+                        maxLength: 30,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Bu alan boş bırakılamaz";
+                          } else {
+                            return null;
+                          }
+                        },
+                        textInputAction: TextInputAction.next,
+                        controller: _placeTitleTextController,
+                        decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide(
+                                  width: 2,
+                                  color: AppColor().appColor,
+                                )),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide(
                                     width: 2,
-                                    color: AppColor().appColor,
-                                  )),
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  borderSide: BorderSide(
-                                      width: 2,
-                                      color:
-                                          Color.fromARGB(255, 190, 22, 148))),
-                              hintText:
-                                  "Konumunuza Başlık Ekleyin (Örn. *Ev,Cafe...)"),
-                        ),
+                                    color: Color.fromARGB(255, 190, 22, 148))),
+                            hintText:
+                                "Konumunuza Başlık Ekleyin (Örn. *Ev,Cafe...)"),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10, right: 10),
-                        child: TextFormField(
-                          maxLines: 2,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return "Bu alan boş bırakılamaz";
-                            } else {
-                              return null;
-                            }
-                          },
-                          maxLength: 120,
-                          textInputAction: TextInputAction.done,
-                          controller: _placeDetailTextController,
-                          decoration: InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  borderSide: BorderSide(
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: TextFormField(
+                        maxLines: 2,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Bu alan boş bırakılamaz";
+                          } else {
+                            return null;
+                          }
+                        },
+                        maxLength: 120,
+                        textInputAction: TextInputAction.done,
+                        controller: _placeDetailTextController,
+                        decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide(
+                                  width: 2,
+                                  color: AppColor().appColor,
+                                )),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide(
                                     width: 2,
-                                    color: AppColor().appColor,
-                                  )),
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  borderSide: BorderSide(
-                                      width: 2,
-                                      color:
-                                          Color.fromARGB(255, 190, 22, 148))),
-                              hintText:
-                                  "Konumunuzla ilgili ayrıntı ekleyebilirsiniz"),
-                        ),
+                                    color: Color.fromARGB(255, 190, 22, 148))),
+                            hintText:
+                                "Konumunuzla ilgili ayrıntı ekleyebilirsiniz"),
                       ),
-                      SizedBox(height: size.height / 20),
-                      Column(
-                        children: [
-                          Text(
-                            "Fotoğraf ekleyebilirsiniz",
-                            style: TextStyle(fontWeight: FontWeight.w600),
-                          ),
-                          SizedBox(
-                            height: size.height / 100,
-                          ),
-                          InkWell(
-                              onTap: (() {
-                                pickImage(size);
-                                debugPrint(image.toString());
-                              }),
-                              child: image == null
-                                  ? Container(
-                                      width: size.width / 3,
-                                      height: size.height / 6,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: AppColor().appColor,
-                                            width: 5),
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      child: AddPhotoAnimation())
-                                  : Container(
-                                      width: size.width / 3,
-                                      height: size.height / 6,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: Image.file(
-                                          image!,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ))),
-                        ],
-                      )
-                    ],
-                  ),
-                )
-              ],
-            ),
+                    ),
+                    SizedBox(height: size.height / 20),
+                  ],
+                ),
+              )
+            ],
           ),
         ),
         floatingActionButton: FloatingActionButton.extended(
@@ -368,7 +383,7 @@ class _AddLocationState extends State<AddLocation> {
         builder: (builder) {
           return Container(
               width: double.infinity,
-              height: size.height / 7,
+              height: size.height / 3.5,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -393,28 +408,37 @@ class _AddLocationState extends State<AddLocation> {
                       }
                     },
                   ),
-                  Expanded(
-                    child: ListTile(
-                      leading: Icon(Icons.collections),
-                      title: Text("Galeri"),
-                      onTap: () async {
-                        try {
-                          final image = await ImagePicker().pickImage(
-                              source: ImageSource.gallery,
-                              imageQuality: 50,
-                              maxHeight: 480,
-                              maxWidth: 640);
-                          if (image == null) return;
-                          final imageTemporary = File(image.path);
-                          setState(() {
-                            this.image = imageTemporary;
-                          });
-                          Navigator.pop(context);
-                        } on PlatformException catch (e) {
-                          print("başarısız oldu " + e.message.toString());
-                        }
-                      },
-                    ),
+                  ListTile(
+                    leading: Icon(Icons.collections),
+                    title: Text("Galeri"),
+                    onTap: () async {
+                      try {
+                        final image = await ImagePicker().pickImage(
+                            source: ImageSource.gallery,
+                            imageQuality: 50,
+                            maxHeight: 480,
+                            maxWidth: 640);
+                        if (image == null) return;
+                        final imageTemporary = File(image.path);
+                        setState(() {
+                          this.image = imageTemporary;
+                        });
+                        Navigator.pop(context);
+                      } on PlatformException catch (e) {
+                        print("başarısız oldu " + e.message.toString());
+                      }
+                    },
+                  ),
+                  ListTile(
+                    onTap: () {
+                      this.image =null;
+                      Navigator.pop(context);
+                      setState(() {
+                        
+                      });
+                    },
+                    leading: Icon(Icons.delete),
+                    title: Text("Fotoğrafı Kaldır"),
                   )
                 ],
               ));

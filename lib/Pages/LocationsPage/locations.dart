@@ -126,255 +126,306 @@ class _LocationsState extends State<Locations> {
     checkLocation();
     return SafeArea(
       child: Scaffold(
-        body: StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance
-                .collection(FirebaseAuth.instance.currentUser!.email.toString())
-                .snapshots(),
-            builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (snapshot.hasData) {
-                _pageViewTotalCount = snapshot.data!.size;
+        body: Stack(
+          children: [
+            StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection(
+                        FirebaseAuth.instance.currentUser!.email.toString())
+                    .snapshots(),
+                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.hasData) {
+                    _pageViewTotalCount = snapshot.data!.size;
 
-                //eğer ilk eleman ise onu çağırır (sadece sayfanın ilk kez Açılışında gerekiyor)
-                if (isFirstItem && snapshot.data!.size != 0) {
-                  double _lng = double.parse(snapshot.data!.docs[0].get("lng"));
-                  double _lat = double.parse(snapshot.data!.docs[0].get("lat"));
-                  getMarker(0, _lat, _lng);
-                } else if (snapshot.data!.size == 0) {
-                  markers.clear();
-                  isFirstItem = false;
+                    //eğer ilk eleman ise onu çağırır (sadece sayfanın ilk kez Açılışında gerekiyor)
+                    if (isFirstItem && snapshot.data!.size != 0) {
+                      double _lng =
+                          double.parse(snapshot.data!.docs[0].get("lng"));
+                      double _lat =
+                          double.parse(snapshot.data!.docs[0].get("lat"));
+                      getMarker(0, _lat, _lng);
+                    } else if (snapshot.data!.size == 0) {
+                      markers.clear();
+                      isFirstItem = false;
 
-                  debugPrint("value2: " + isFirstItem.toString());
-                }
-              }
-              return Container(
-                width: double.infinity,
-                height: double.infinity,
-                color: Colors.white,
-                child: Stack(
-                  clipBehavior: Clip.none,
-                  children: <Widget>[
-                    SizedBox(
-                      height: double.infinity,
-                      width: double.infinity,
-                      child: GoogleMap(
-                        padding: EdgeInsets.only(bottom: size.height / 2),
-                        markers: markers.values.toSet(),
-                        myLocationEnabled: true,
-                        zoomControlsEnabled: true,
-                        myLocationButtonEnabled: true,
-                        mapType: MapType.normal,
-                        tiltGesturesEnabled: true,
-                        compassEnabled: true,
-                        scrollGesturesEnabled: true,
-                        zoomGesturesEnabled: true,
-                        onMapCreated: (GoogleMapController controller) async {
-                          var _permision = await Geolocator.checkPermission();
-                          debugPrint("izin: " + _permision.toString());
-                          if (await Geolocator.isLocationServiceEnabled()) {
-                            setState(() {
-                              //markerın üstüne basıldığında padding işleminin yapılması için
-                            });
-                            _controller.complete(controller);
-                          } else {
-                            Geolocator.openLocationSettings();
-                          }
-                        },
-                        initialCameraPosition: _cameraPosition,
-                      ),
-                    ),
-                    Align(
-                        alignment: FractionalOffset.bottomCenter,
-                        child: SizedBox(
-                          height: size.height * .35,
+                      debugPrint("value2: " + isFirstItem.toString());
+                    }
+                  }
+                  return Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    color: Colors.white,
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      children: <Widget>[
+                        SizedBox(
+                          height: double.infinity,
                           width: double.infinity,
-                          child: snapshot.hasData
-                              ? snapshot.data!.size != 0
-                                  ? PageView.builder(
-                                      controller: _pageViewController,
-                                      itemCount: _pageViewTotalCount,
-                                      padEnds: true,
-                                      onPageChanged: (value) {
-                                        markers.clear();
-                                        final _lng = double.parse(snapshot
-                                            .data!.docs[value]
-                                            .get("lng"));
-                                        final _lat = double.parse(snapshot
-                                            .data!.docs[value]
-                                            .get("lat"));
-                                        getMarker(value, _lat, _lng);
-                                        if (value != 0) {
-                                          isFirstItem = false;
-                                        }
-                                        if (value == 0) {
-                                          isFirstItem = true;
-                                        }
-                                        _pageViewCounter = value + 1;
+                          child: GoogleMap(
+                            padding: EdgeInsets.only(bottom: size.height / 2),
+                            markers: markers.values.toSet(),
+                            myLocationEnabled: true,
+                            zoomControlsEnabled: true,
+                            myLocationButtonEnabled: true,
+                            mapType: MapType.normal,
+                            tiltGesturesEnabled: true,
+                            compassEnabled: true,
+                            scrollGesturesEnabled: true,
+                            zoomGesturesEnabled: true,
+                            onMapCreated:
+                                (GoogleMapController controller) async {
+                              var _permision =
+                                  await Geolocator.checkPermission();
+                              debugPrint("izin: " + _permision.toString());
+                              if (await Geolocator.isLocationServiceEnabled()) {
+                                setState(() {
+                                  //markerın üstüne basıldığında padding işleminin yapılması için
+                                });
+                                _controller.complete(controller);
+                              } else {
+                                Geolocator.openLocationSettings();
+                              }
+                            },
+                            initialCameraPosition: _cameraPosition,
+                          ),
+                        ),
+                        Align(
+                            alignment: FractionalOffset.bottomCenter,
+                            child: SizedBox(
+                              height: size.height * .35,
+                              width: double.infinity,
+                              child: snapshot.hasData
+                                  ? snapshot.data!.size != 0
+                                      ? PageView.builder(
+                                          controller: _pageViewController,
+                                          itemCount: _pageViewTotalCount,
+                                          padEnds: true,
+                                          onPageChanged: (value) {
+                                            markers.clear();
+                                            final _lng = double.parse(snapshot
+                                                .data!.docs[value]
+                                                .get("lng"));
+                                            final _lat = double.parse(snapshot
+                                                .data!.docs[value]
+                                                .get("lat"));
+                                            getMarker(value, _lat, _lng);
+                                            if (value != 0) {
+                                              isFirstItem = false;
+                                            }
+                                            if (value == 0) {
+                                              isFirstItem = true;
+                                            }
+                                            _pageViewCounter = value + 1;
 
-                                        setState(() {});
-                                      },
-                                      itemBuilder: (context, index) {
-                                        if (snapshot.data!.size != 0 &&
-                                            index == 0) {
-                                          isFirstItem = true;
-                                        } else if (snapshot.data!.size != 0 &&
-                                            index != 0) {
-                                          isFirstItem = false;
-                                        }
-                                        String _url = snapshot.data!.docs[index]
-                                            .get("downloadUrl");
+                                            setState(() {});
+                                          },
+                                          itemBuilder: (context, index) {
+                                            if (snapshot.data!.size != 0 &&
+                                                index == 0) {
+                                              isFirstItem = true;
+                                            } else if (snapshot.data!.size !=
+                                                    0 &&
+                                                index != 0) {
+                                              isFirstItem = false;
+                                            }
+                                            String _url = snapshot
+                                                .data!.docs[index]
+                                                .get("downloadUrl");
 
-                                        return Container(
-                                          margin: EdgeInsets.all(20),
-                                          child: Row(
-                                            children: [
-                                              Expanded(
-                                                flex: 5,
-                                                child: !_url.isEmpty
-                                                    ? ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(20),
-                                                        child: Image.network(
-                                                          _url,
-                                                          height: size.height,
-                                                          width: size.width,
-                                                          fit: BoxFit.cover,
-                                                          filterQuality:
-                                                              FilterQuality
-                                                                  .high,
-                                                        ),
-                                                      )
-                                                    : Container(
-                                                      color: darkmode==true ? AppColor().darkModeBackgroundColor :  Colors.white,
-                                                        alignment:
-                                                            Alignment.center,
-                                                        width: double.infinity,
-                                                        height: double.infinity,
-                                                        child: Image.asset(
-                                                          "assets/images/signup.png",
-                                                          fit: BoxFit.cover,
-                                                        ),
-                                                      ),
-                                              ),
-                                              Expanded(
-                                                flex: 1,
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    IconButton(
-                                                        onPressed: () {
-                                                          final String _baslik =
-                                                              snapshot.data!
-                                                                  .docs[index]
-                                                                  .get("title")
-                                                                  .toString();
-                                                          final String
-                                                              _aciklama =
-                                                              snapshot.data!
-                                                                  .docs[index]
-                                                                  .get("action")
-                                                                  .toString();
+                                            return Container(
+                                              margin: EdgeInsets.all(20),
+                                              child: Row(
+                                                children: [
+                                                  Expanded(
+                                                    flex: 5,
+                                                    child: !_url.isEmpty
+                                                        ? ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20),
+                                                            child:
+                                                                Image.network(
+                                                              _url,
+                                                              height:
+                                                                  size.height,
+                                                              width: size.width,
+                                                              fit: BoxFit.cover,
+                                                              filterQuality:
+                                                                  FilterQuality
+                                                                      .high,
+                                                            ),
+                                                          )
+                                                        : ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20),
+                                                            child: Container(
+                                                              color: darkmode ==
+                                                                      true
+                                                                  ? AppColor()
+                                                                      .darkModeBackgroundColor
+                                                                  : Colors
+                                                                      .white,
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              width: double
+                                                                  .infinity,
+                                                              height: double
+                                                                  .infinity,
+                                                              child:
+                                                                  Image.asset(
+                                                                "assets/images/signup.png",
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                  ),
+                                                  Expanded(
+                                                    flex: 1,
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        IconButton(
+                                                            onPressed: () {
+                                                              final String
+                                                                  _baslik =
+                                                                  snapshot
+                                                                      .data!
+                                                                      .docs[
+                                                                          index]
+                                                                      .get(
+                                                                          "title")
+                                                                      .toString();
+                                                              final String
+                                                                  _aciklama =
+                                                                  snapshot
+                                                                      .data!
+                                                                      .docs[
+                                                                          index]
+                                                                      .get(
+                                                                          "action")
+                                                                      .toString();
 
-                                                          showDialog(
-                                                              context: context,
-                                                              builder:
-                                                                  (context) =>
-                                                                      DetailPage(
-                                                                        size:
-                                                                            size,
-                                                                        image_url:
-                                                                            _url,
-                                                                        aciklama:
-                                                                            _aciklama,
-                                                                        baslik:
-                                                                            _baslik,
-                                                                      ));
-                                                        },
-                                                        icon: Icon(
-                                                          Icons.info_outline,
-                                                          color: AppColor()
-                                                              .appColor,
-                                                          size: 30,
-                                                        )),
-                                                    Text(_pageViewCounter
-                                                            .toString() +
-                                                        "/" +
-                                                        _pageViewTotalCount
-                                                            .toString()),
-                                                    IconButton(
-                                                        onPressed: () async {
-                                                          var collection =
-                                                              FirebaseFirestore
+                                                              showDialog(
+                                                                  context:
+                                                                      context,
+                                                                  builder:
+                                                                      (context) =>
+                                                                          DetailPage(
+                                                                            size:
+                                                                                size,
+                                                                            image_url:
+                                                                                _url,
+                                                                            aciklama:
+                                                                                _aciklama,
+                                                                            baslik:
+                                                                                _baslik,
+                                                                          ));
+                                                            },
+                                                            icon: Icon(
+                                                              Icons
+                                                                  .info_outline,
+                                                              color: AppColor()
+                                                                  .appColor,
+                                                              size: 30,
+                                                            )),
+                                                        Text(_pageViewCounter
+                                                                .toString() +
+                                                            "/" +
+                                                            _pageViewTotalCount
+                                                                .toString()),
+                                                        IconButton(
+                                                            onPressed:
+                                                                () async {
+                                                              var collection = FirebaseFirestore
                                                                   .instance
                                                                   .collection(FirebaseAuth
                                                                       .instance
                                                                       .currentUser!
                                                                       .email
                                                                       .toString());
-                                                          await collection
-                                                              .where('id',
-                                                                  isEqualTo: snapshot
-                                                                      .data!
-                                                                      .docs[
-                                                                          index]
-                                                                      .get(
-                                                                          "id"))
-                                                              .get()
-                                                              .then((value) {
-                                                            if (value != null) {
-                                                              value.docs.first
-                                                                  .reference
-                                                                  .delete();
-                                                              ScaffoldMessenger
-                                                                      .of(
+                                                              await collection
+                                                                  .where('id',
+                                                                      isEqualTo: snapshot
+                                                                          .data!
+                                                                          .docs[
+                                                                              index]
+                                                                          .get(
+                                                                              "id"))
+                                                                  .get()
+                                                                  .then(
+                                                                      (value) {
+                                                                if (value !=
+                                                                    null) {
+                                                                  value
+                                                                      .docs
+                                                                      .first
+                                                                      .reference
+                                                                      .delete();
+                                                                  ScaffoldMessenger.of(
                                                                           context)
-                                                                  .showSnackBar(
-                                                                      SnackBar(
+                                                                      .showSnackBar(SnackBar(
                                                                           content:
                                                                               Text("Seçilen Konum Başarıyla Silindi")));
-                                                            }
-                                                          });
-                                                          await CloudHelper()
-                                                              .deleteImage(
-                                                                  _url);
-                                                          _pageViewController
-                                                              .jumpToPage(0);
-                                                        },
-                                                        icon: Icon(
-                                                          Icons.delete,
-                                                          color: Colors.red,
-                                                          size: 30,
-                                                        )),
-                                                  ],
-                                                ),
+                                                                }
+                                                              });
+                                                              await CloudHelper()
+                                                                  .deleteImage(
+                                                                      _url);
+                                                              _pageViewController
+                                                                  .jumpToPage(
+                                                                      0);
+                                                            },
+                                                            icon: Icon(
+                                                              Icons.delete,
+                                                              color: Colors.red,
+                                                              size: 30,
+                                                            )),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                            ],
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color: darkmode == false
-                                                ? Colors.grey.shade100
-                                                : AppColor()
-                                                    .darkModeBackgroundColor,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(20)),
-                                          ),
-                                        );
-                                      })
-                                  : AlertDialog(
-                                      title: Text("Konum Ekleyin"),
-                                      content: Text(
-                                          "Eklediğiniz konumlar burada listelenecektir."),
-                                    )
-                              : Center(
-                                  child: CircularProgressIndicator(),
-                                ),
-                        )),
-                  ],
-                ),
-              );
-            }),
+                                              decoration: BoxDecoration(
+                                                color: darkmode == false
+                                                    ? Colors.grey.shade100
+                                                    : AppColor()
+                                                        .darkModeBackgroundColor,
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(20)),
+                                              ),
+                                            );
+                                          })
+                                      : AlertDialog(
+                                          title: Text("Konum Ekleyin"),
+                                          content: Text(
+                                              "Eklediğiniz konumlar burada listelenecektir."),
+                                        )
+                                  : Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                            )),
+                      ],
+                    ),
+                  );
+                }),
+            IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: AppColor().appColor,
+                  size: size.width / 10,
+                )),
+          ],
+        ),
       ),
     );
   }

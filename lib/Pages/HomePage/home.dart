@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:i_travel_book/Helper/shared_preferences.dart';
 import 'package:i_travel_book/Pages/AddLocationPage/add_location.dart';
 import 'package:i_travel_book/Pages/HomePage/Widgets/settings_drawer.dart';
 import 'package:i_travel_book/Pages/HomePage/cubit/home_cubit.dart';
@@ -26,18 +27,18 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     AddmobService.initialize();
     Geolocator.requestPermission();
+    GetDarkMode();
     super.initState();
   }
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-
-    super.dispose();
+  Future<void> GetDarkMode() async {
+    isdarkmode = await getBool("darkmode");
   }
 
+   bool isdarkmode=false;
   @override
   Widget build(BuildContext context) {
+    GetDarkMode();
     Size size = MediaQuery.of(context).size;
     return BlocConsumer<HomeCubit, HomeState>(
       listener: (context, state) {
@@ -64,6 +65,8 @@ class _HomePageState extends State<HomePage> {
                   height: size.height,
                 ),
                 appBar: AppBar(
+                  backgroundColor:
+                      isdarkmode == true ? AppColor().appColor : Colors.white,
                   centerTitle: true,
                   leading: Builder(
                     //End Drawer Widgetına context parametresini göndermek için Builder ile Sarmalandı
@@ -96,7 +99,8 @@ class _HomePageState extends State<HomePage> {
                   elevation: 0,
                   title: Text(
                     'ITravelBook',
-                    style: TextStyle(),
+                    style: TextStyle(
+                        color: isdarkmode ? Colors.white : AppColor().appColor),
                   ),
                 ),
                 body: Column(
@@ -251,7 +255,9 @@ class _HomePageState extends State<HomePage> {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    Expanded(
+                    Container(
+                      width: size.width,
+                      height: size.height / 10,
                       child:
                           AdWidget(ad: AddmobService.createBannerAdd()..load()),
                     ),

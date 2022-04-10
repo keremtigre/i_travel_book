@@ -31,7 +31,6 @@ class _EmailTextFieldState extends State<EmailTextField> {
           null;
         }
       },
-      textInputAction: TextInputAction.next,
       controller: context.watch<SignupCubit>().emailController,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
