@@ -1,10 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:i_travel_book/Helper/shared_preferences.dart';
 import 'package:i_travel_book/Pages/HomePage/Widgets/change_password.dart';
 import 'package:i_travel_book/Pages/HomePage/Widgets/edit_profile.dart';
+import 'package:i_travel_book/Pages/HomePage/cubit/home_cubit.dart';
+import 'package:i_travel_book/Pages/HomePage/home.dart';
 import 'package:i_travel_book/Pages/LogInPage/login.dart';
 import 'package:i_travel_book/core/color/appcolor..dart';
+import 'package:i_travel_book/main.dart';
 import 'package:i_travel_book/services/authentication.dart';
 
 class SettingsDrawer extends StatefulWidget {
@@ -22,12 +26,9 @@ class SettingsDrawer extends StatefulWidget {
 }
 
 class _SettingsDrawerState extends State<SettingsDrawer> {
-  bool _isDarkMode = true;
-
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Colors.white,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -184,6 +185,35 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
               style: TextStyle(color: AppColor().appColor, fontSize: 16),
             ),
           ),
+          FutureBuilder<bool>(
+              future: getBool("darkmode"),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(Icons.light_mode),
+                      Switch(
+                          value: snapshot.data!,
+                          onChanged: (value) {
+                            if (value == true) {
+                              context
+                                  .read<HomeCubit>()
+                                  .isDarkModeSelected(false);
+                            } else {
+                              context
+                                  .read<HomeCubit>()
+                                  .isDarkModeSelected(true);
+                            }
+                            debugPrint("gell:" + snapshot.data.toString());
+                          }),
+                      Icon(Icons.dark_mode),
+                    ],
+                  );
+                } else {
+                  return CircularProgressIndicator();
+                }
+              })
         ],
       ),
     );

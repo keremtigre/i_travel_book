@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:i_travel_book/Helper/shared_preferences.dart';
 import 'package:i_travel_book/Pages/HomePage/home.dart';
 import 'package:i_travel_book/Pages/LocationsPage/Widgets/detailPage.dart';
 import 'package:i_travel_book/core/color/appcolor..dart';
@@ -105,11 +106,17 @@ class _LocationsState extends State<Locations> {
     }
   }
 
+  late bool darkmode;
   @override
   void initState() {
     // TODO: implement initState
     checkLocation();
+    GetDarkMode();
     super.initState();
+  }
+
+  Future<void> GetDarkMode() async {
+    darkmode = await getBool("darkmode");
   }
 
   @override
@@ -238,7 +245,7 @@ class _LocationsState extends State<Locations> {
                                                         ),
                                                       )
                                                     : Container(
-                                                        color: Colors.white,
+                                                      color: darkmode==true ? AppColor().darkModeBackgroundColor :  Colors.white,
                                                         alignment:
                                                             Alignment.center,
                                                         width: double.infinity,
@@ -346,7 +353,10 @@ class _LocationsState extends State<Locations> {
                                             ],
                                           ),
                                           decoration: BoxDecoration(
-                                            color: Colors.grey.shade100,
+                                            color: darkmode == false
+                                                ? Colors.grey.shade100
+                                                : AppColor()
+                                                    .darkModeBackgroundColor,
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(20)),
                                           ),

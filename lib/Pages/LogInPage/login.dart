@@ -18,11 +18,9 @@ class LogIn extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: AppColor().appColor,
           title: Text("ITravelBook"),
         ),
         body: Container(
-          color: Colors.white,
           child: Center(
               child: SingleChildScrollView(
             child: Column(

@@ -167,7 +167,9 @@ class _AddLocationState extends State<AddLocation> {
                             height: size.height / 13,
                             width: size.width / 2,
                             child: Text(
-                                "Seçmek istediğiniz konumun üzerine birkaç saniye basılı tutunuz")),
+                              "Seçmek istediğiniz konumun üzerine birkaç saniye basılı tutunuz",
+                              style: TextStyle(color: Colors.black),
+                            )),
                       )
                     ],
                   ),
@@ -268,20 +270,17 @@ class _AddLocationState extends State<AddLocation> {
                                         border: Border.all(
                                             color: AppColor().appColor,
                                             width: 5),
-                                        borderRadius:
-                                            BorderRadius.circular(20),
+                                        borderRadius: BorderRadius.circular(20),
                                       ),
                                       child: AddPhotoAnimation())
                                   : Container(
                                       width: size.width / 3,
                                       height: size.height / 6,
                                       decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(20),
+                                        borderRadius: BorderRadius.circular(20),
                                       ),
                                       child: ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(20),
+                                        borderRadius: BorderRadius.circular(20),
                                         child: Image.file(
                                           image!,
                                           fit: BoxFit.cover,
@@ -299,7 +298,10 @@ class _AddLocationState extends State<AddLocation> {
         floatingActionButton: FloatingActionButton.extended(
           elevation: 10,
           backgroundColor: AppColor().appColor,
-          label: Text("Kaydet"),
+          label: Text(
+            "Kaydet",
+            style: TextStyle(color: Colors.white),
+          ),
           onPressed: () async {
             if (_formKey.currentState!.validate() &&
                 await InternetConnectionChecker().hasConnection == false) {

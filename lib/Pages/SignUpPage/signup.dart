@@ -23,7 +23,6 @@ class SignUp extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-        backgroundColor: Colors.white,
         appBar: AppBar(
           elevation: 0,
           title: Text("ITravelBook"),

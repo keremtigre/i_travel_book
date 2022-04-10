@@ -36,7 +36,7 @@ class _DetailPageState extends State<DetailPage> {
                   padding: const EdgeInsets.all(8.0),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
-                    child: Image.network(
+                    child:widget.image_url.isEmpty ? Image.asset("assets/images/signup.png") : Image.network(
                       widget.image_url,
                       filterQuality: FilterQuality.high,
                       width: widget.size.width,
