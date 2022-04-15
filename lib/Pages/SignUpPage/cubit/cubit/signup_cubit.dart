@@ -60,7 +60,7 @@ class SignupCubit extends Cubit<SignupState> {
         builder: (builder) {
           return Container(
               width: double.infinity,
-              height: MediaQuery.of(context).size.height / 7,
+              height: MediaQuery.of(context).size.height / 4,
               child: Column(
                 children: [
                   ListTile(
@@ -79,29 +79,39 @@ class SignupCubit extends Cubit<SignupState> {
                       }
                     },
                   ),
-                  Expanded(
-                    child: ListTile(
-                      leading: Icon(Icons.collections),
-                      title: Text("Galeri"),
-                      onTap: () async {
-                        try {
-                          final image = await ImagePicker().pickImage(
-                              source: ImageSource.gallery,
-                              imageQuality: 50,
-                              maxHeight: 480,
-                              maxWidth: 640);
-                          if (image == null) return;
-                          final imageTemporary = File(image.path);
-                          updateImageFile(imageTemporary);
-                          Navigator.pop(context);
-                        } on PlatformException catch (e) {
-                          print("başarısız oldu " + e.message.toString());
-                        }
-                      },
-                    ),
+                  ListTile(
+                    leading: Icon(Icons.collections),
+                    title: Text("Galeri"),
+                    onTap: () async {
+                      try {
+                        final image = await ImagePicker().pickImage(
+                            source: ImageSource.gallery,
+                            imageQuality: 50,
+                            maxHeight: 480,
+                            maxWidth: 640);
+                        if (image == null) return;
+                        final imageTemporary = File(image.path);
+                        updateImageFile(imageTemporary);
+                        Navigator.pop(context);
+                      } on PlatformException catch (e) {
+                        print("başarısız oldu " + e.message.toString());
+                      }
+                    },
+                  ),
+                  ListTile(
+                    onTap: () {
+                      updateImageFile(File(''));
+                      Navigator.pop(context);
+                    },
+                    leading: Icon(Icons.delete),
+                    title: Text("Fotoğrafı Kaldır"),
                   )
                 ],
               ));
         });
   }
+
+ 
+
+
 }

@@ -59,8 +59,6 @@ class _AddLocationState extends State<AddLocation> {
 
   @override
   void initState() {
-    _loadInterstitialAd();
-    checkLocation(context);
     super.initState();
   }
 
@@ -123,6 +121,7 @@ class _AddLocationState extends State<AddLocation> {
                       markers: markers.values.toSet(),
                       myLocationEnabled: true,
                       myLocationButtonEnabled: true,
+                      zoomControlsEnabled: true,
                       mapType: MapType.normal,
                       tiltGesturesEnabled: true,
                       compassEnabled: true,
@@ -143,7 +142,6 @@ class _AddLocationState extends State<AddLocation> {
                                     position.longitude,
                                   ),
                                   zoom: 17)));
-                          setState(() {});
                         } else {
                           checkLocation(context);
                         }
