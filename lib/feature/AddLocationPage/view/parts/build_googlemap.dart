@@ -82,6 +82,7 @@ class _BuildGoogleMap extends StatelessWidget {
           Positioned(
             child: IconButton(
               onPressed: () {
+                context.read<AddlocationCubit>().addLocationDispose(context);
                 Navigator.pop(context);
               },
               icon: Icon(

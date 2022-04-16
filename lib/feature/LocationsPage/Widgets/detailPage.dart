@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:i_travel_book/core/color/appcolor..dart';
+import 'package:kartal/kartal.dart';
 
 class DetailPage extends StatefulWidget {
   DetailPage(
       {Key? key,
       required this.aciklama,
       required this.baslik,
-      required this.image_url,
-      required this.size})
+      required this.image_url})
       : super(key: key);
   String aciklama;
   String baslik;
   String image_url;
-  Size size;
   @override
   _DetailPageState createState() => _DetailPageState();
 }
@@ -36,19 +35,21 @@ class _DetailPageState extends State<DetailPage> {
                   padding: const EdgeInsets.all(8.0),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
-                    child:widget.image_url.isEmpty ? Image.asset("assets/images/signup.png") : Image.network(
-                      widget.image_url,
-                      filterQuality: FilterQuality.high,
-                      width: widget.size.width,
-                      height: widget.size.height / 4,
-                      fit: BoxFit.cover,
-                    ),
+                    child: widget.image_url.isEmpty
+                        ? Image.asset("assets/images/signup.png")
+                        : Image.network(
+                            widget.image_url,
+                            filterQuality: FilterQuality.high,
+                            width: context.width,
+                            height: context.height / 4,
+                            fit: BoxFit.cover,
+                          ),
                   ),
                 ),
                 Container(
                   margin: EdgeInsets.all(8),
                   padding: EdgeInsets.all(8),
-                  width: widget.size.width,
+                  width: context.width,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(color: AppColor().appColor, width: 2)),
@@ -72,7 +73,7 @@ class _DetailPageState extends State<DetailPage> {
                 Container(
                   margin: EdgeInsets.all(8),
                   padding: EdgeInsets.all(8),
-                  width: widget.size.width,
+                  width: context.width,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(color: AppColor().appColor, width: 2)),

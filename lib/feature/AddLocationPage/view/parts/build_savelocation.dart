@@ -15,29 +15,17 @@ class SaveLocationButton extends StatelessWidget {
         style: TextStyle(color: Colors.white),
       ),
       onPressed: () async {
-        /* if (context
-                .read<AddlocationCubit>()
-                .formKey
-                .currentState!
-                .validate() &&
+        if (context.read<AddlocationCubit>().formKey.currentState!.validate() &&
             await InternetConnectionChecker().hasConnection == false) {
           ShowDialogForAddLocationPage(
               context, "Internet Bağlantınızı Kontrol Edin");
         }
-        if (context
-                .read<AddlocationCubit>()
-                .formKey
-                .currentState!
-                .validate() &&
+        if (context.read<AddlocationCubit>().formKey.currentState!.validate() &&
             context.read<AddlocationCubit>().markers.isEmpty) {
           ShowDialogForAddLocationPage(
               context, "lütfen Haritadan Konum Seçiniz");
         }
-        if (context
-                .read<AddlocationCubit>()
-                .formKey
-                .currentState!
-                .validate() &&
+        if (context.read<AddlocationCubit>().formKey.currentState!.validate() &&
             !context.read<AddlocationCubit>().markers.isEmpty &&
             await InternetConnectionChecker().hasConnection) {
           ShowLoaderDialog(context, "Konum kaydediliyor...");
@@ -56,6 +44,7 @@ class SaveLocationButton extends StatelessWidget {
               if (context.read<AddlocationCubit>().isInterstitialAdReady) {
                 context.read<AddlocationCubit>().interstitialAd?.show();
               }
+              context.read<AddlocationCubit>().AddLocationInit(context);
               Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (builder) => HomePage()),
@@ -74,7 +63,7 @@ class SaveLocationButton extends StatelessWidget {
                   (route) => false);
             }
           });
-        } */
+        }
       },
     );
   }

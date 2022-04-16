@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:i_travel_book/feature/AddLocationPage/helper/helper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kartal/kartal.dart';
-import 'package:meta/meta.dart';
 
 part 'addlocation_state.dart';
 
@@ -27,31 +27,41 @@ class AddlocationCubit extends Cubit<AddlocationState> {
   bool isInterstitialAdReady = false;
 
   //sayfa açıldığında yapılacaklar
-  AddLocationInit() async {
+  AddLocationInit(BuildContext context) async {
+    loadInterstitialAd();
+    checkLocation(context);
     markers.clear();
     placeDetailTextController.clear();
     placeTitleTextController.clear();
     image = null;
+    print("add init çalıştı");
+    await Future.delayed(Duration(milliseconds: 1000));
     emit(AddLocationLoaded());
+  }
+  addLocationDispose(BuildContext context) async {
+    markers.clear();
+    placeDetailTextController.clear();
+    placeTitleTextController.clear();
+    image = null;
+    print("add init çalıştı");
+    await Future.delayed(Duration(milliseconds: 1000));
+    emit(AddlocationInitial());
   }
 
 //markerr güncelle
   updateMarker(String address, Marker marker) {
     markers[MarkerId(address)] = marker;
-    emit(AddlocationInitial());
     emit(AddLocationLoaded());
   }
 
   clearMarker() {
     markers.clear();
-    emit(AddlocationInitial());
     emit(AddLocationLoaded());
   }
 
   updateLocation(LatLng argument) {
     originLatitude = argument.latitude;
     originLongitude = argument.longitude;
-    emit(AddlocationInitial());
     emit(AddLocationLoaded());
   }
 
@@ -76,6 +86,7 @@ class AddlocationCubit extends Cubit<AddlocationState> {
         },
       ),
     );
+    emit(AddLocationLoaded());
   }
 
 //pick image

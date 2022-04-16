@@ -1,11 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:i_travel_book/feature/AddLocationPage/add_location.dart';
 import 'package:i_travel_book/feature/AddLocationPage/viewmodel/cubit/addlocation_cubit.dart';
 import 'package:i_travel_book/feature/HomePage/view/home_view.dart';
 import 'package:i_travel_book/feature/HomePage/viewmodel/cubit/home_cubit.dart';
+import 'package:i_travel_book/feature/LocationsPage/view/locations_view.dart';
+import 'package:i_travel_book/feature/LocationsPage/viewmodel/cubit/locations_cubit.dart';
 import 'package:i_travel_book/feature/LogInPage/view/login_view.dart';
 import 'package:i_travel_book/feature/LogInPage/viewmodel/cubit/cubit/login_cubit.dart';
 import 'package:i_travel_book/feature/SignUpPage/viewmodel/cubit/cubit/signup_cubit.dart';
@@ -20,6 +20,9 @@ Future main() async {
       providers: [
         BlocProvider(
           create: (context) => HomeCubit(),
+        ),
+        BlocProvider(
+          create: (context) => LocationsCubit(),
         ),
         BlocProvider(
           create: (context) => SignupCubit(),

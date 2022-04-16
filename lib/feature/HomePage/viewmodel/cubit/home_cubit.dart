@@ -15,10 +15,10 @@ class HomeCubit extends Cubit<HomeState> {
   String FirebaseimageUrl = "";
 
   bool isdarkmode = false;
-  
+
   homeInitState() async {
-    AddmobService.initialize();
-    Geolocator.requestPermission();
+    await AddmobService.initialize();
+    await Geolocator.requestPermission();
     isdarkmode = await getDarkmode();
     emit(HomeLoaded());
   }

@@ -48,14 +48,14 @@ class _BuildListView extends StatelessWidget {
           context,
           MaterialPageRoute(
               builder: (builder) =>
-                  !isLocatinPage ? AddLocationPage() : Locations()));
+                  !isLocatinPage ? AddLocationPage() : LocationsPage()));
     } else if (_permission == LocationPermission.always ||
         _permission == LocationPermission.whileInUse) {
       Navigator.push(
           context,
           MaterialPageRoute(
               builder: (builder) =>
-                  !isLocatinPage ? AddLocationPage() : Locations()));
+                  !isLocatinPage ? AddLocationPage() : LocationsPage()));
     }
   }
 }
