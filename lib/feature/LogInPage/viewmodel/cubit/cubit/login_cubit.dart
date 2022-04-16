@@ -1,12 +1,11 @@
 import 'dart:io';
-
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:i_travel_book/feature/HomePage/home.dart';
 import 'package:i_travel_book/core/Helper/shared_preferences.dart';
 import 'package:i_travel_book/core/Helper/showcircularprogress.dart';
+import 'package:i_travel_book/feature/HomePage/view/home_view.dart';
 import 'package:i_travel_book/services/authentication.dart';
 import 'package:i_travel_book/services/cloud_firestore.dart';
 part 'login_state.dart';

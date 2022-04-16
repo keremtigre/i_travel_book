@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:i_travel_book/feature/HomePage/home.dart';
+import 'package:i_travel_book/feature/HomePage/view/home_view.dart';
 
 void ShowDialogForAddLocationPage(BuildContext context, String message) {
   showDialog(

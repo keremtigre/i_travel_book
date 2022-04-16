@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:i_travel_book/feature/HomePage/view/home_view.dart';
 import 'package:i_travel_book/feature/LogInPage/view/login_view.dart';
 import 'package:i_travel_book/core/Helper/shared_preferences.dart';
 import 'package:lottie/lottie.dart';
-import 'package:i_travel_book/feature/HomePage/home.dart';
 import 'package:i_travel_book/services/authentication.dart';
 import 'package:provider/provider.dart';
 
