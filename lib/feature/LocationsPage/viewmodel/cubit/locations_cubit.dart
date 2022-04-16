@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:i_travel_book/feature/LogInPage/viewmodel/cubit/cubit/login_cubit.dart';
 part 'locations_state.dart';
 
 class LocationsCubit extends Cubit<LocationsState> {

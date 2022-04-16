@@ -2,35 +2,6 @@ part of addlocation_view.dart;
 
 class AddLocationPageBody extends StatelessWidget {
   const AddLocationPageBody({Key? key}) : super(key: key);
-  Future<bool> _onWillPopScope(BuildContext context) async {
-    return (await showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text('Emin misiniz ?'),
-            content: const Text(
-                'Tüm değişiklikler kaybolacak emin misiniz ?'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(false),
-                child: Text(
-                  'Hayır',
-                  style: TextStyle(color: AppColor().appColor),
-                ),
-              ),
-              TextButton(
-                  onPressed: () {
-                    context.read<AddlocationCubit>().addLocationDispose(context);
-                    Navigator.of(context).pop(true);
-                  },
-                  child: Text(
-                    'Evet',
-                    style: TextStyle(color: AppColor().appColor),
-                  )),
-            ],
-          ),
-        )) ??
-        false;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,5 +52,36 @@ class AddLocationPageBody extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Future<bool> _onWillPopScope(BuildContext context) async {
+    return (await showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Emin misiniz ?'),
+            content: const Text('Tüm değişiklikler kaybolacak emin misiniz ?'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: Text(
+                  'Hayır',
+                  style: TextStyle(color: AppColor().appColor),
+                ),
+              ),
+              TextButton(
+                  onPressed: () {
+                    context
+                        .read<AddlocationCubit>()
+                        .addLocationDispose(context);
+                    Navigator.of(context).pop(true);
+                  },
+                  child: Text(
+                    'Evet',
+                    style: TextStyle(color: AppColor().appColor),
+                  )),
+            ],
+          ),
+        )) ??
+        false;
   }
 }

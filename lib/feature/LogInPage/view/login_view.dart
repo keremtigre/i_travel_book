@@ -3,7 +3,7 @@ library login_view.dart;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:i_travel_book/feature/HomePage/view/home_view.dart';
-import 'package:i_travel_book/feature/LogInPage/viewmodel/cubit/cubit/login_cubit.dart';
+import 'package:i_travel_book/feature/LogInPage/viewmodel/cubit/login_cubit.dart';
 import 'package:i_travel_book/feature/SignUpPage/view/signup_view.dart';
 import 'package:i_travel_book/core/Helper/shared_preferences.dart';
 import 'package:i_travel_book/core/Helper/showcircularprogress.dart';

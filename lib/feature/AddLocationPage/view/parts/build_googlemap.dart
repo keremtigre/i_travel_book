@@ -78,6 +78,11 @@ class _BuildGoogleMap extends StatelessWidget {
             },
             initialCameraPosition:
                 context.read<AddlocationCubit>().cameraPosition,
+            gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
+              new Factory<OneSequenceGestureRecognizer>(
+                () => new EagerGestureRecognizer(),
+              ),
+            ].toSet(),
           ),
           Positioned(
             child: IconButton(
