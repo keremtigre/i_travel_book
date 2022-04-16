@@ -10,6 +10,7 @@ import 'package:i_travel_book/admob/admob_helper.dart';
 import 'package:i_travel_book/core/Widgets/homepage_container.dart';
 import 'package:i_travel_book/core/color/appcolor..dart';
 import 'package:i_travel_book/feature/AddLocationPage/add_location.dart';
+import 'package:i_travel_book/feature/AddLocationPage/view/addlocation_view.dart';
 import 'package:i_travel_book/feature/HomePage/Widgets/settings_drawer.dart';
 import 'package:i_travel_book/feature/HomePage/viewmodel/cubit/home_cubit.dart';
 import 'package:i_travel_book/feature/LocationsPage/locations.dart';

@@ -19,7 +19,7 @@ class _BuildListView extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           children: [
             InkWell(
-              onTap: () => ShowPermission(context),
+              onTap: () => ShowPermission(context, false),
               child: HomePageContainer(
                   assetname: "assets/images/addlocation.png",
                   height: context.height / 3.5,
@@ -27,6 +27,7 @@ class _BuildListView extends StatelessWidget {
                   containerTitle: "Konum Ekle"),
             ),
             InkWell(
+              onTap: () => ShowPermission(context, true),
               child: HomePageContainer(
                   assetname: "assets/images/locations.png",
                   height: context.height / 3.5,
@@ -38,17 +39,23 @@ class _BuildListView extends StatelessWidget {
     );
   }
 
-  ShowPermission(BuildContext context) async {
+  ShowPermission(BuildContext context, bool isLocatinPage) async {
     var _permission = await Geolocator.checkPermission();
     if (_permission == LocationPermission.denied ||
         _permission == LocationPermission.deniedForever) {
       await Geolocator.requestPermission();
       Navigator.push(
-          context, MaterialPageRoute(builder: (builder) => AddLocation()));
+          context,
+          MaterialPageRoute(
+              builder: (builder) =>
+                  !isLocatinPage ? AddLocationPage() : Locations()));
     } else if (_permission == LocationPermission.always ||
         _permission == LocationPermission.whileInUse) {
       Navigator.push(
-          context, MaterialPageRoute(builder: (builder) => AddLocation()));
+          context,
+          MaterialPageRoute(
+              builder: (builder) =>
+                  !isLocatinPage ? AddLocationPage() : Locations()));
     }
   }
 }
