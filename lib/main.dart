@@ -2,11 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:i_travel_book/Helper/shared_preferences.dart';
-import 'package:i_travel_book/Pages/HomePage/cubit/home_cubit.dart';
-import 'package:i_travel_book/Pages/LogInPage/cubit/cubit/login_cubit.dart';
-import 'package:i_travel_book/Pages/SignUpPage/cubit/cubit/signup_cubit.dart';
-import 'package:i_travel_book/Pages/StartingPage/startingpage.dart';
+import 'package:i_travel_book/feature/HomePage/cubit/home_cubit.dart';
+import 'package:i_travel_book/feature/LogInPage/viewmodel/cubit/cubit/login_cubit.dart';
+import 'package:i_travel_book/feature/SignUpPage/viewmodel/cubit/cubit/signup_cubit.dart';
+import 'package:i_travel_book/feature/StartingPage/startingpage.dart';
 import 'package:i_travel_book/core/color/appcolor..dart';
 
 Future main() async {
