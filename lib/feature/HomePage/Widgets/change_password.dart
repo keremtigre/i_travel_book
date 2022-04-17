@@ -10,7 +10,8 @@ class ChangePasswordDiaolog extends StatefulWidget {
 }
 
 class _ChangePasswordDiaologState extends State<ChangePasswordDiaolog> {
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey =
+      new GlobalKey<FormState>(debugLabel: 'changepasskey');
   bool _passwordVisibility = true;
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _passwordController2 = TextEditingController();

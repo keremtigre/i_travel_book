@@ -16,7 +16,8 @@ class LoginCubit extends Cubit<LoginState> {
   bool passwordVisibility = true;
   bool beniHatirla = false;
   TextEditingController emailController = TextEditingController();
-  var formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKey =
+      new GlobalKey<FormState>(debugLabel: 'loginkey');
   TextEditingController passwordController = TextEditingController();
   void changeBeniHatirla(bool? value) {
     beniHatirla = value!;

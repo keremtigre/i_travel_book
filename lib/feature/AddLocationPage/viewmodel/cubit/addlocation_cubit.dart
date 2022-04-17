@@ -20,7 +20,8 @@ class AddlocationCubit extends Cubit<AddlocationState> {
   Map<MarkerId, Marker> markers = {};
   late CameraPosition cameraPosition =
       CameraPosition(target: LatLng(originLatitude, originLongitude));
-  final formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKey =
+      new GlobalKey<FormState>(debugLabel: 'addlocationkey');
   final placeTitleTextController = TextEditingController();
   final placeDetailTextController = TextEditingController();
   bool photoIsSelected = false;
@@ -30,22 +31,18 @@ class AddlocationCubit extends Cubit<AddlocationState> {
   AddLocationInit(BuildContext context) async {
     loadInterstitialAd();
     checkLocation(context);
-    markers.clear();
-    placeDetailTextController.clear();
-    placeTitleTextController.clear();
-    image = null;
     print("add init çalıştı");
     await Future.delayed(Duration(milliseconds: 1000));
     emit(AddLocationLoaded());
   }
+
   addLocationDispose(BuildContext context) async {
     markers.clear();
     placeDetailTextController.clear();
     placeTitleTextController.clear();
     image = null;
-    print("add init çalıştı");
-    await Future.delayed(Duration(milliseconds: 1000));
-    emit(AddlocationInitial());
+    print("add dispose çalıştı");
+    emit(AddLocationLoaded());
   }
 
 //markerr güncelle

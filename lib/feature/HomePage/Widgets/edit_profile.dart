@@ -9,7 +9,8 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  final _formKey = GlobalKey<FormState>();
+ final GlobalKey<FormState> _formKey =
+      new GlobalKey<FormState>(debugLabel: 'editProfile');
   TextEditingController _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {

@@ -1,3 +1,4 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:i_travel_book/feature/HomePage/view/home_view.dart';
 import 'package:i_travel_book/feature/LogInPage/view/login_view.dart';
@@ -36,22 +37,24 @@ class _StartingPageState extends State<StartingPage> {
   @override
   void initState() {
     _isLogged();
+    // TODO: implement initState
     super.initState();
-    Future.delayed(
-      Duration(milliseconds: 3000),
-      () => Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (builder) => LoginPage()),
-          (route) => false),
-    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(
-        child: Lottie.asset("assets/json/loading_an2.json", fit: BoxFit.cover),
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        child: AnimatedSplashScreen(
+          splashIconSize: 400,
+            nextScreen: LoginPage(),
+            splash: Expanded(
+                child: Image.asset(
+              "assets/images/logo.png",
+            ))),
       ),
     );
   }

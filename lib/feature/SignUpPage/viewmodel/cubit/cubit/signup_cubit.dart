@@ -17,7 +17,8 @@ class SignupCubit extends Cubit<SignupState> {
   SignupCubit() : super(SignupInitial());
 
   TextEditingController emailController = TextEditingController();
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+final GlobalKey<FormState> formKey =
+      new GlobalKey<FormState>(debugLabel: 'signupKey');
   TextEditingController passwordController = TextEditingController();
   TextEditingController passwordController2 = TextEditingController();
   TextEditingController userNameController = TextEditingController();

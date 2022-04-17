@@ -6,7 +6,11 @@ class AddLocationPageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () => _onWillPopScope(context),
+      onWillPop: () => _onWillPopScope(
+        context,
+        "Emin Misin ?",
+        "Bütün değişiklikler kayboalcak emin misin ?",
+      ),
       child: BlocConsumer<AddlocationCubit, AddlocationState>(
         listener: (context, state) {
           // TODO: implement listener
@@ -54,12 +58,13 @@ class AddLocationPageBody extends StatelessWidget {
     );
   }
 
-  Future<bool> _onWillPopScope(BuildContext context) async {
+  Future<bool> _onWillPopScope(
+      BuildContext context, String title, String detail) async {
     return (await showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: const Text('Emin misiniz ?'),
-            content: const Text('Tüm değişiklikler kaybolacak emin misiniz ?'),
+            title: Text(title),
+            content: Text(detail),
             actions: <Widget>[
               TextButton(
                 onPressed: () => Navigator.of(context).pop(false),
@@ -73,7 +78,9 @@ class AddLocationPageBody extends StatelessWidget {
                     context
                         .read<AddlocationCubit>()
                         .addLocationDispose(context);
-                    Navigator.of(context).pop(true);
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (builder) => HomePage()),
+                        (route) => false);
                   },
                   child: Text(
                     'Evet',
