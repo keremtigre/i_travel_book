@@ -13,6 +13,7 @@ import 'package:i_travel_book/feature/LocationsPage/viewmodel/cubit/locations_cu
 import 'package:kartal/kartal.dart';
 part 'locations_body.dart';
 part 'parts/build_googlemap.dart';
+part 'parts/build_detailpage.dart';
 
 class LocationsPage extends StatelessWidget {
   const LocationsPage({Key? key}) : super(key: key);
@@ -20,6 +21,10 @@ class LocationsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Konumlarım"),
+        centerTitle: true,
+      ),
       body: WillPopScope(
           onWillPop: () async {
             await Navigator.pushAndRemoveUntil(

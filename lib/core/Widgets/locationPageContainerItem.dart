@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:i_travel_book/core/color/appcolor..dart';
-import 'package:i_travel_book/feature/LocationsPage/Widgets/detailPage.dart';
+import 'package:i_travel_book/feature/LocationsPage/view/locations_view.dart';
 import 'package:i_travel_book/feature/LocationsPage/viewmodel/cubit/locations_cubit.dart';
 import 'package:i_travel_book/services/cloud_firestore.dart';
 import 'package:kartal/kartal.dart';
