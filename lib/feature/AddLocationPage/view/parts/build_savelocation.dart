@@ -51,7 +51,7 @@ class SaveLocationButton extends StatelessWidget {
                   (route) => false);
 
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  duration: Duration(milliseconds: 100),
+                  duration: Duration(milliseconds: 25),
                   backgroundColor: AppColor().appColor,
                   content: Text("Konum Eklendi")));
             } else if (value != null) {

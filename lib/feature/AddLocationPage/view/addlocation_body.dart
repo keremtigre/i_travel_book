@@ -56,7 +56,9 @@ class AddLocationPageBody extends StatelessWidget {
         },
       ),
     );
+    
   }
+
 
   Future<bool> _onWillPopScope(
       BuildContext context, String title, String detail) async {

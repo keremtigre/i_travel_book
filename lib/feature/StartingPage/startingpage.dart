@@ -1,4 +1,5 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:i_travel_book/feature/HomePage/view/home_view.dart';
 import 'package:i_travel_book/feature/LogInPage/view/login_view.dart';
@@ -17,16 +18,25 @@ class StartingPage extends StatefulWidget {
 class _StartingPageState extends State<StartingPage> {
   Future _isLogged() async {
     bool _kontrol = await getBool("hatirla");
-    print("shared email : " + await getString("email"));
+    /* print("shared email : " + await getString("email"));
     print("shared password : " + await getString("password"));
-    print("shared hatirla : " + _kontrol.toString());
+    print("shared hatirla : " + _kontrol.toString());*/
     if (_kontrol == true) {
-      String _emailLogged = await getString("email");
+      /*   String _emailLogged = await getString("email");
       String _passwordLogged = await getString("password");
       AuthenticationHelper()
           .signIn(email: _emailLogged, password: _passwordLogged)
           .then((value) {
         if (value == null) {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (builder) => HomePage()));
+        }
+      });
+    } */
+      FirebaseAuth.instance.authStateChanges().listen((User? user) {
+        if (user == null) {
+          print('User is currently signed out!');
+        } else {
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (builder) => HomePage()));
         }
@@ -49,7 +59,7 @@ class _StartingPageState extends State<StartingPage> {
         width: double.infinity,
         height: double.infinity,
         child: AnimatedSplashScreen(
-          splashIconSize: 400,
+            splashIconSize: 400,
             nextScreen: LoginPage(),
             splash: Expanded(
                 child: Image.asset(

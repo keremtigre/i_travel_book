@@ -50,7 +50,11 @@ class LoginCubit extends Cubit<LoginState> {
         accessToken: googleSignInAuthentication.accessToken,
         idToken: googleSignInAuthentication.idToken,
       );
-      await _auth.signInWithCredential(credential);
+      await _auth.signInWithCredential(credential).then((value) {
+        if (value == null) {
+          putBool("hatirla", beniHatirla);
+        }
+      });
       await CloudHelper()
           .addUserNamePhoto(File(''), _auth.currentUser!.displayName!);
     } on FirebaseAuthException catch (e) {
@@ -74,11 +78,13 @@ class LoginCubit extends Cubit<LoginState> {
     )
         .then((value) {
       if (value == null) {
-        putBool("hatirla", beniHatirla);
+        putBool("hatirla",
+            beniHatirla); /* 
         if (beniHatirla == true) {
+          putString("loginoption", "withemail");
           putString("email", emailController.text);
           putString("password", passwordController.text);
-        }
+        } */
         clearFiled(context);
         Navigator.pushAndRemoveUntil(
           context,

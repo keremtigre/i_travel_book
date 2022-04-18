@@ -23,9 +23,9 @@ class _BuildGoogleMap extends StatelessWidget {
             zoomGesturesEnabled: true,
             initialCameraPosition:
                 context.read<LocationsCubit>().cameraPosition,
-            onMapCreated: (GoogleMapController googleMapController) async {
-              await Future.delayed(Duration(milliseconds: 100));
-              context.read<LocationsCubit>().googleMapController = googleMapController;
+            onMapCreated: (GoogleMapController googleMapController)  {
+              context.read<LocationsCubit>().googleMapController =
+                  googleMapController;
             }));
   }
 }

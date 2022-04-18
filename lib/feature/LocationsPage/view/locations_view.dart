@@ -1,7 +1,6 @@
 library locations_view.dart;
 
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -21,8 +20,15 @@ class LocationsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: LocationsPageBody(),
-      );
-    
+      body: WillPopScope(
+          onWillPop: () async {
+            await Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (builder) => HomePage()),
+                (route) => false);
+            return true;
+          },
+          child: LocationsPageBody()),
+    );
   }
 }

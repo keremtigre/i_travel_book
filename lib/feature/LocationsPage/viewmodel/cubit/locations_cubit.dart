@@ -13,7 +13,7 @@ class LocationsCubit extends Cubit<LocationsState> {
   double originLongitude = 0;
   int pageViewCounter = 1;
   int pageViewTotalCount = 0;
-   GoogleMapController? googleMapController;
+  GoogleMapController? googleMapController;
   late CameraPosition cameraPosition =
       CameraPosition(target: LatLng(originLatitude, originLongitude));
   //initial error hatası için
@@ -23,9 +23,6 @@ class LocationsCubit extends Cubit<LocationsState> {
     emit(LocationsLoaded());
   }
 
-  LocationPageDispose() async {
-    emit(LocationsInitial());
-  }
 
   //seçilen karttaki konumu getirir ve yakınlaştırır.
   getMarker(int value, double lat, double lng, String nereden) async {
@@ -36,12 +33,14 @@ class LocationsCubit extends Cubit<LocationsState> {
           value.toString(),
         ));
     markers[MarkerId(value.toString())] = marker;
-    googleMapController?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        target: LatLng(
-          lat,
-          lng,
-        ),
-        zoom: 17)));
+    await Future.delayed(Duration(milliseconds: 100));
+    await googleMapController
+        ?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+            target: LatLng(
+              lat,
+              lng,
+            ),
+            zoom: 17)));
 
     emit(LocationsLoaded());
   }
