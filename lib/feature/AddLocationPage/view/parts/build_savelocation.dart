@@ -28,7 +28,7 @@ class SaveLocationButton extends StatelessWidget {
         if (context.read<AddlocationCubit>().formKey.currentState!.validate() &&
             !context.read<AddlocationCubit>().markers.isEmpty &&
             await InternetConnectionChecker().hasConnection) {
-          ShowLoaderDialog(context, "Konum kaydediliyor...");
+          ShowLoaderDialog(context, "Konum kaydediliyor...",true);
           CloudHelper()
               .addLocation(
             context.read<AddlocationCubit>().placeTitleTextController.text,

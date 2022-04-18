@@ -12,7 +12,8 @@ part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(LoginInitial());
-
+  bool isLodingGoogle = false;
+  bool isLodingEmail = false;
   bool passwordVisibility = true;
   bool beniHatirla = false;
   TextEditingController emailController = TextEditingController();
@@ -21,6 +22,16 @@ class LoginCubit extends Cubit<LoginState> {
   TextEditingController passwordController = TextEditingController();
   void changeBeniHatirla(bool? value) {
     beniHatirla = value!;
+    emit(LoginInitial());
+  }
+
+  setIsLodingGoogle() {
+    isLodingGoogle = !isLodingGoogle;
+    emit(LoginInitial());
+  }
+
+  setIsLodingEmail() {
+    isLodingEmail = !isLodingEmail;
     emit(LoginInitial());
   }
 
@@ -40,8 +51,9 @@ class LoginCubit extends Cubit<LoginState> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
-  Future<String?> signInwithGoogle() async {
+  Future<String?> signInwithGoogle(BuildContext context) async {
     try {
+      ShowLoaderDialog(context, "Giriş Yapılıyor",false);
       final GoogleSignInAccount? googleSignInAccount =
           await _googleSignIn.signIn();
       final GoogleSignInAuthentication googleSignInAuthentication =
@@ -51,9 +63,7 @@ class LoginCubit extends Cubit<LoginState> {
         idToken: googleSignInAuthentication.idToken,
       );
       await _auth.signInWithCredential(credential).then((value) {
-        if (value == null) {
-          putBool("hatirla", beniHatirla);
-        }
+        putBool("hatirla", true);
       });
       await CloudHelper()
           .addUserNamePhoto(File(''), _auth.currentUser!.displayName!);
@@ -70,7 +80,8 @@ class LoginCubit extends Cubit<LoginState> {
   // sign in with email - password
 
   LoginWithEmailMethod(BuildContext context) async {
-    ShowLoaderDialog(context, "Giriş Yapılıyor");
+    setIsLodingEmail();
+    ShowLoaderDialog(context, "Giriş Yapılıyor",false);
     AuthenticationHelper()
         .signIn(
       email: emailController.text,
@@ -78,6 +89,7 @@ class LoginCubit extends Cubit<LoginState> {
     )
         .then((value) {
       if (value == null) {
+        setIsLodingEmail();
         putBool("hatirla",
             beniHatirla); /* 
         if (beniHatirla == true) {
@@ -92,6 +104,7 @@ class LoginCubit extends Cubit<LoginState> {
           (route) => false,
         );
       } else {
+        setIsLodingEmail();
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(

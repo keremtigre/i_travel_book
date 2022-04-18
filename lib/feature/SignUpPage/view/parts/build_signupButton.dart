@@ -12,11 +12,12 @@ class _BuildSignupButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: size.width / 4,
+      height: size.height/15,
       decoration: BoxDecoration(
         color: AppColor().appColor,
         borderRadius: BorderRadius.circular(10),
       ),
-      child: TextButton(
+      child:!context.read<SignupCubit>().isLoading ? TextButton(
         onPressed: () async {
           if (context.read<SignupCubit>().formKey.currentState!.validate()) {
             await context.read<SignupCubit>().SignupWithEmail(context);
@@ -26,7 +27,7 @@ class _BuildSignupButton extends StatelessWidget {
           "Kayıt Ol",
           style: TextStyle(color: Colors.white),
         ),
-      ),
+      ): Center(child: CircularProgressIndicator(backgroundColor: Colors.white),),
     );
   }
 }

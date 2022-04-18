@@ -6,11 +6,13 @@ class _BuildInfoText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isdarkmode = context.read<HomeCubit>().isdarkmode2;
+    Color settingDrawerColor = !isdarkmode ? AppColor().appColor : Colors.white;
     return Container(
         padding: EdgeInsets.all(3),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
-          border: Border.all(width: 2, color: AppColor().appColor),
+          border: Border.all(width: 2, color: !isdarkmode ? AppColor().appColor :Colors.white),
           color: Colors.white.withOpacity(0.6),
         ),
         height: context.height / 10,

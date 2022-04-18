@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:i_travel_book/core/color/appcolor..dart';
+import 'package:i_travel_book/feature/HomePage/viewmodel/cubit/home_cubit.dart';
 import 'package:i_travel_book/feature/LocationsPage/view/locations_view.dart';
 import 'package:i_travel_book/feature/LocationsPage/viewmodel/cubit/locations_cubit.dart';
 import 'package:i_travel_book/services/cloud_firestore.dart';
@@ -28,6 +29,8 @@ class LocationsContainer extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final isdarkmode = context.read<HomeCubit>().isdarkmode2;
+    Color settingDrawerColor = !isdarkmode ? AppColor().appColor : Colors.white;
     return Container(
       margin: EdgeInsets.all(20),
       child: Row(
@@ -46,7 +49,11 @@ class LocationsContainer extends StatelessWidget {
                     ),
                   )
                 : Container(
-                    color: Colors.white,
+                    decoration: BoxDecoration(
+                        color: isdarkmode
+                            ? AppColor().darkModeBackgroundColor
+                            : Colors.white,
+                        borderRadius: BorderRadius.circular(25)),
                     alignment: Alignment.center,
                     width: double.infinity,
                     height: double.infinity,
@@ -115,7 +122,9 @@ class LocationsContainer extends StatelessWidget {
         ],
       ),
       decoration: BoxDecoration(
-        color: Colors.grey.shade100,
+        color: isdarkmode
+            ? AppColor().darkModeBackgroundColor
+            : Colors.grey.shade100,
         borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
     );

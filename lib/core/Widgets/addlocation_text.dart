@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:i_travel_book/feature/HomePage/viewmodel/cubit/home_cubit.dart';
 import 'package:i_travel_book/feature/SignUpPage/viewmodel/cubit/cubit/signup_cubit.dart';
 import 'package:i_travel_book/core/color/appcolor..dart';
 import 'package:kartal/kartal.dart';
@@ -21,20 +22,22 @@ class AddLocationText extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final isdarkmode = context.read<HomeCubit>().isdarkmode2;
+    Color settingDrawerColor = !isdarkmode ? AppColor().appColor : Colors.white;
     return TextFormField(
         maxLength: maxLength,
         maxLines: maxLines,
         controller: controller,
         validator: validator,
-        decoration: DefaultDecoration());
+        decoration: DefaultDecoration(isdarkmode));
   }
 
-  InputDecoration DefaultDecoration() => InputDecoration(
+  InputDecoration DefaultDecoration(bool isdarkmode) => InputDecoration(
         enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
             borderSide: BorderSide(
               width: 2,
-              color: AppColor().appColor,
+              color: !isdarkmode ? AppColor().appColor : Colors.white,
             )),
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),

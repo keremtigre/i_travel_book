@@ -1,13 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:i_travel_book/feature/HomePage/Widgets/change_password.dart';
 import 'package:i_travel_book/feature/HomePage/Widgets/edit_profile.dart';
+import 'package:i_travel_book/feature/HomePage/view/home_view.dart';
 import 'package:i_travel_book/feature/HomePage/viewmodel/cubit/home_cubit.dart';
 import 'package:i_travel_book/feature/LogInPage/view/login_view.dart';
 import 'package:i_travel_book/core/Helper/shared_preferences.dart';
 import 'package:i_travel_book/core/color/appcolor..dart';
-import 'package:i_travel_book/main.dart';
 import 'package:i_travel_book/services/authentication.dart';
 
 class SettingsDrawer extends StatefulWidget {
@@ -27,13 +26,15 @@ class SettingsDrawer extends StatefulWidget {
 class _SettingsDrawerState extends State<SettingsDrawer> {
   @override
   Widget build(BuildContext context) {
+    final isdarkmode = context.read<HomeCubit>().isdarkmode2;
+    Color settingDrawerColor = !isdarkmode ? AppColor().appColor : Colors.white;
     return Drawer(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           widget.imageUrl.isEmpty
               ? CircleAvatar(
-                  backgroundColor: AppColor().appColor,
+                  backgroundColor: settingDrawerColor,
                   minRadius: 40,
                   maxRadius: 40,
                   child: Image.asset("assets/images/profile.png"))
@@ -47,7 +48,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
           Text(
             FirebaseAuth.instance.currentUser!.email.toString(),
             style: TextStyle(
-                color: AppColor().appColor,
+                color: settingDrawerColor,
                 fontSize: 16,
                 fontWeight: FontWeight.bold),
           ),
@@ -62,11 +63,11 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
             leading: Icon(
               Icons.manage_accounts_outlined,
               size: 35,
-              color: AppColor().appColor,
+              color: settingDrawerColor,
             ),
             title: Text(
               "Profilimi Düzenle",
-              style: TextStyle(color: AppColor().appColor, fontSize: 16),
+              style: TextStyle(fontSize: 16,color: settingDrawerColor),
             ),
           ),
           ListTile(
@@ -74,17 +75,17 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
               showDialog(
                   context: context,
                   builder: (builder) {
-                    return const ChangePasswordDiaolog();
+                    return ChangePasswordDialog();
                   });
             },
             leading: Icon(
               Icons.password_outlined,
               size: 35,
-              color: AppColor().appColor,
+              color: settingDrawerColor,
             ),
             title: Text(
               "Şifremi Değiştir",
-              style: TextStyle(color: AppColor().appColor, fontSize: 16),
+              style: TextStyle(color: settingDrawerColor, fontSize: 16),
             ),
           ),
           ListTile(
@@ -103,7 +104,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                             child: Text(
                               "Hayır",
                               style: TextStyle(
-                                color: AppColor().appColor,
+                                color: settingDrawerColor,
                               ),
                             )),
                         TextButton(
@@ -117,7 +118,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                                   (Route<dynamic> route) => false);
                             },
                             child: Text("Evet",
-                                style: TextStyle(color: AppColor().appColor))),
+                                style: TextStyle(color: settingDrawerColor))),
                       ],
                     );
                   });
@@ -125,11 +126,11 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
             leading: Icon(
               Icons.logout,
               size: 35,
-              color: AppColor().appColor,
+              color: settingDrawerColor,
             ),
             title: Text(
               "Oturumu Kapat",
-              style: TextStyle(color: AppColor().appColor, fontSize: 16),
+              style: TextStyle(color: settingDrawerColor, fontSize: 16),
             ),
           ),
           ListTile(
@@ -149,7 +150,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                             child: Text(
                               "Hayır",
                               style: TextStyle(
-                                color: AppColor().appColor,
+                                color: settingDrawerColor,
                               ),
                             )),
                         TextButton(
@@ -168,7 +169,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                             },
                             child: Text("Evet",
                                 style: TextStyle(
-                                  color: AppColor().appColor,
+                                  color: settingDrawerColor,
                                 ))),
                       ],
                     );
@@ -177,42 +178,13 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
             leading: Icon(
               Icons.delete_sweep,
               size: 35,
-              color: AppColor().appColor,
+              color: settingDrawerColor,
             ),
             title: Text(
               "Hesabımı Sil",
-              style: TextStyle(color: AppColor().appColor, fontSize: 16),
+              style: TextStyle(color: settingDrawerColor, fontSize: 16),
             ),
           ),
-          FutureBuilder<bool>(
-              future: getBool("darkmode"),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(Icons.light_mode),
-                      Switch(
-                          value: snapshot.data!,
-                          onChanged: (value) {
-                            if (value == true) {
-                              context
-                                  .read<HomeCubit>()
-                                  .isDarkModeSelected(false);
-                            } else {
-                              context
-                                  .read<HomeCubit>()
-                                  .isDarkModeSelected(true);
-                            }
-                            debugPrint("gell:" + snapshot.data.toString());
-                          }),
-                      Icon(Icons.dark_mode),
-                    ],
-                  );
-                } else {
-                  return CircularProgressIndicator();
-                }
-              })
         ],
       ),
     );

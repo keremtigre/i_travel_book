@@ -19,6 +19,7 @@ import 'package:i_travel_book/feature/AddLocationPage/helper/helper.dart';
 import 'package:i_travel_book/feature/AddLocationPage/helper/showerDialog.dart';
 import 'package:i_travel_book/feature/AddLocationPage/viewmodel/cubit/addlocation_cubit.dart';
 import 'package:i_travel_book/feature/HomePage/view/home_view.dart';
+import 'package:i_travel_book/feature/HomePage/viewmodel/cubit/home_cubit.dart';
 import 'package:i_travel_book/feature/LogInPage/viewmodel/cubit/login_cubit.dart';
 import 'package:i_travel_book/services/cloud_firestore.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';

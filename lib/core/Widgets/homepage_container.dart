@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:i_travel_book/core/color/appcolor..dart';
+import 'package:i_travel_book/feature/HomePage/viewmodel/cubit/home_cubit.dart';
 import 'package:kartal/kartal.dart';
 
 class HomePageContainer extends StatelessWidget {
@@ -13,12 +15,13 @@ class HomePageContainer extends StatelessWidget {
     required this.assetname,
     required this.height,
     required this.width,
-    this.margin=EdgeInsets.zero,
+    this.margin = EdgeInsets.zero,
     required this.containerTitle,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final bool isdarkmode = context.read<HomeCubit>().isdarkmode2;
     return Column(
       children: [
         Container(
@@ -27,7 +30,9 @@ class HomePageContainer extends StatelessWidget {
           margin: margin,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(width: 2, color: AppColor().appColor),
+            border: Border.all(
+                width: 2,
+                color: isdarkmode == false ? Colors.black : Colors.white),
             image: DecorationImage(
                 image: AssetImage(assetname), fit: BoxFit.cover),
           ),

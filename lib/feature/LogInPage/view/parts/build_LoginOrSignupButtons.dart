@@ -20,21 +20,19 @@ class _BuildLoginOrSignUp extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           ),
           child: TextButton(
-            onPressed: () async{
-              if (context
-                  .read<LoginCubit>()
-                  .formKey
-                  .currentState!
-                  .validate()) {
-               await context
-                    .read<LoginCubit>()
-                    .LoginWithEmailMethod(context);
+            onPressed: () async {
+              if (context.read<LoginCubit>().formKey.currentState!.validate()) {
+                await context.read<LoginCubit>().LoginWithEmailMethod(context);
               }
             },
-            child: Text(
-              "Giriş Yap",
-              style: TextStyle(color: Colors.white),
-            ),
+            child: !context.read<LoginCubit>().isLodingEmail
+                ? Text(
+                    "Giriş Yap",
+                    style: TextStyle(color: Colors.white),
+                  )
+                : Center(
+                    child: CircularProgressIndicator(),
+                  ),
           ),
         ),
         Text("ya da"),
@@ -46,10 +44,8 @@ class _BuildLoginOrSignUp extends StatelessWidget {
           ),
           child: TextButton(
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => SignUpPage()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SignUpPage()));
             },
             child: Text(
               "Üye Ol",

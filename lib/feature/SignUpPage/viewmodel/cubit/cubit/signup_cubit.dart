@@ -17,18 +17,23 @@ class SignupCubit extends Cubit<SignupState> {
   SignupCubit() : super(SignupInitial());
 
   TextEditingController emailController = TextEditingController();
-final GlobalKey<FormState> formKey =
+  final GlobalKey<FormState> formKey =
       new GlobalKey<FormState>(debugLabel: 'signupKey');
   TextEditingController passwordController = TextEditingController();
   TextEditingController passwordController2 = TextEditingController();
   TextEditingController userNameController = TextEditingController();
   bool passwordVisibility = true;
   bool passwordVisibility2 = true;
-
+  bool isLoading = false;
   void changePasswordVisibilty() {
     passwordVisibility == true
         ? passwordVisibility = false
         : passwordVisibility = true;
+    emit(SignupInitial());
+  }
+
+  setIsloading() {
+    isLoading = !isLoading;
     emit(SignupInitial());
   }
 
@@ -119,11 +124,13 @@ final GlobalKey<FormState> formKey =
   }
 
   SignupWithEmail(BuildContext context) async {
-    ShowLoaderDialog(context, "Lütfen Bekleyin...");
+    setIsloading();
+    ShowLoaderDialog(context, "Lütfen Bekleyin...",false);
     AuthenticationHelper()
         .signUp(email: emailController.text, password: passwordController.text)
         .then((value) {
       if (value == null) {
+        setIsloading();
         Navigator.pop(context);
         putBool("hatirla", true);
         putString("email", emailController.text);
@@ -134,6 +141,7 @@ final GlobalKey<FormState> formKey =
             .addUserNamePhoto(_Firebaseimage, userNameController.text)
             .then((value) {
           if (value != null) {
+            setIsloading();
             debugPrint(_Firebaseimage.path);
             Navigator.pushAndRemoveUntil(
               context,

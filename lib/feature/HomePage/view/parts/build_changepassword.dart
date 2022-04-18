@@ -1,18 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:i_travel_book/core/Helper/shared_preferences.dart';
-import 'package:i_travel_book/services/authentication.dart';
+part of home_view.dart;
 
-class ChangePasswordDiaolog extends StatefulWidget {
-  const ChangePasswordDiaolog({Key? key}) : super(key: key);
-  @override
-  _ChangePasswordDiaologState createState() => _ChangePasswordDiaologState();
-}
-
-class _ChangePasswordDiaologState extends State<ChangePasswordDiaolog> {
+class ChangePasswordDialog extends StatelessWidget {
+  ChangePasswordDialog({Key? key}) : super(key: key);
   final GlobalKey<FormState> _formKey =
       new GlobalKey<FormState>(debugLabel: 'changepasskey');
-  bool _passwordVisibility = true;
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _passwordController2 = TextEditingController();
   @override
@@ -33,21 +24,17 @@ class _ChangePasswordDiaologState extends State<ChangePasswordDiaolog> {
                 return null;
               }
             },
-            obscureText: _passwordVisibility,
+            obscureText: context.read<HomeCubit>().changePasswordVisibility,
             controller: _passwordController,
             decoration: InputDecoration(
               suffixIcon: InkWell(
                 onTap: () {
-                  setState(() {});
-                  if (_passwordVisibility == true) {
-                    _passwordVisibility = false;
-                  } else {
-                    _passwordVisibility = true;
-                  }
+                  context.read<HomeCubit>().changePasswordVisibilty();
                 },
-                child: _passwordVisibility == true
-                    ? Icon(Icons.visibility, color: Colors.blue)
-                    : Icon(Icons.visibility_off, color: Colors.blue),
+                child:
+                    context.read<HomeCubit>().changePasswordVisibility == true
+                        ? Icon(Icons.visibility, )
+                        : Icon(Icons.visibility_off, ),
               ),
               prefixIcon: Icon(
                 Icons.vpn_key,
@@ -70,21 +57,17 @@ class _ChangePasswordDiaologState extends State<ChangePasswordDiaolog> {
                 return null;
               }
             },
-            obscureText: _passwordVisibility,
+            obscureText: context.read<HomeCubit>().changePasswordVisibility2,
             controller: _passwordController2,
             decoration: InputDecoration(
               suffixIcon: InkWell(
                 onTap: () {
-                  setState(() {});
-                  if (_passwordVisibility == true) {
-                    _passwordVisibility = false;
-                  } else {
-                    _passwordVisibility = true;
-                  }
+                  context.read<HomeCubit>().changePasswordVisibilty2();
                 },
-                child: _passwordVisibility == true
-                    ? Icon(Icons.visibility, color: Colors.blue)
-                    : Icon(Icons.visibility_off, color: Colors.blue),
+                child:
+                    context.read<HomeCubit>().changePasswordVisibility2 == true
+                        ? Icon(Icons.visibility, )
+                        : Icon(Icons.visibility_off, ),
               ),
               prefixIcon: Icon(
                 Icons.vpn_key,

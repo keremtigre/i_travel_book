@@ -9,6 +9,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:i_travel_book/core/Widgets/locationPageContainerItem.dart';
 import 'package:i_travel_book/core/color/appcolor..dart';
 import 'package:i_travel_book/feature/HomePage/view/home_view.dart';
+import 'package:i_travel_book/feature/HomePage/viewmodel/cubit/home_cubit.dart';
 import 'package:i_travel_book/feature/LocationsPage/viewmodel/cubit/locations_cubit.dart';
 import 'package:kartal/kartal.dart';
 part 'locations_body.dart';
@@ -20,8 +21,12 @@ class LocationsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isdarkmode = context.read<HomeCubit>().isdarkmode2;
+    Color settingDrawerColor = !isdarkmode ? AppColor().appColor : Colors.white;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: !isdarkmode ? AppColor().appColor : AppColor().darkModeBackgroundColor,
+        elevation: 0,
         title: Text("Konumlarım"),
         centerTitle: true,
       ),

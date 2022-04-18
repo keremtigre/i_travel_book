@@ -12,6 +12,7 @@ import 'package:i_travel_book/core/Strings/signupPage_strings.dart';
 import 'package:i_travel_book/core/Widgets/authtextfield.dart';
 import 'package:i_travel_book/core/color/appcolor..dart';
 import 'package:i_travel_book/services/authentication.dart';
+import 'package:kartal/kartal.dart';
 part 'login_body.dart';
 part 'parts/build_form.dart';
 part 'parts/build_LoginOrSignupButtons.dart';

@@ -15,6 +15,31 @@ class HomeCubit extends Cubit<HomeState> {
   String FirebaseimageUrl = "";
 
   bool isdarkmode = false;
+  bool isdarkmode2 = false;
+  bool changePasswordVisibility = true;
+  bool changePasswordVisibility2 = true;
+  changeDarkMode() {
+    isdarkmode2 = !isdarkmode2;
+    emit(HomeLoaded());
+  }
+
+  changePasswordVisibilty() {
+    if (changePasswordVisibility) {
+      changePasswordVisibility = false;
+    } else {
+      changePasswordVisibility = true;
+    }
+    emit(HomeLoaded());
+  }
+
+  changePasswordVisibilty2() {
+    if (changePasswordVisibility) {
+      changePasswordVisibility = false;
+    } else {
+      changePasswordVisibility = true;
+    }
+    emit(HomeLoaded());
+  }
 
   homeInitState() async {
     await AddmobService.initialize();
@@ -42,16 +67,19 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   ThemeData lightTheme = ThemeData(
-      scaffoldBackgroundColor: Colors.white,
-      colorScheme: ColorScheme.light(),
-      appBarTheme: AppBarTheme(
+    appBarTheme: AppBarTheme(
         backgroundColor: AppColor().appColor,
-      ));
+      ),
+    scaffoldBackgroundColor: Colors.white,
+    iconTheme: IconThemeData(color: AppColor().appColor),
+    colorScheme: ColorScheme.light(),
+  );
 
   ThemeData darkTheme = ThemeData(
       scaffoldBackgroundColor: AppColor().darkModeBackgroundColor,
       colorScheme: ColorScheme.dark(),
+      iconTheme: IconThemeData(color: Colors.white),
       appBarTheme: AppBarTheme(
-        backgroundColor: AppColor().appColor,
+        backgroundColor: AppColor().darkModeBackgroundColor,
       ));
 }

@@ -7,6 +7,8 @@ class _BuildAddPhotoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isdarkmode = context.read<HomeCubit>().isdarkmode2;
+    Color settingDrawerColor = !isdarkmode ? AppColor().appColor : Colors.white;
     return Column(
       children: [
         Text(
@@ -20,23 +22,16 @@ class _BuildAddPhotoWidget extends StatelessWidget {
         ),
         InkWell(
             onTap: (() {
-              
-              FocusScope.of(context)
-                  .requestFocus(FocusNode());
-              context
-                  .read<AddlocationCubit>()
-                  .pickImage(context);
-              debugPrint(context
-                  .read<AddlocationCubit>()
-                  .image
-                  .toString()); 
+              FocusScope.of(context).requestFocus(FocusNode());
+              context.read<AddlocationCubit>().pickImage(context);
+              debugPrint(context.read<AddlocationCubit>().image.toString());
             }),
             child: context.read<AddlocationCubit>().image == null
                 ? Container(
                     width: context.width / 3,
                     height: context.height / 6,
                     decoration: BoxDecoration(
-                      border: Border.all(color: AppColor().appColor, width: 5),
+                      border: Border.all( color: !isdarkmode ? AppColor().appColor:Colors.white, width: 5),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: AddPhotoAnimation())

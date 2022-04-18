@@ -7,6 +7,8 @@ class _BuildGoogleMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isdarkmode = context.read<HomeCubit>().isdarkmode2;
+    Color settingDrawerColor = !isdarkmode ? AppColor().appColor : Colors.white;
     return Container(
       width: double.infinity,
       height: context.height / 3.5,
@@ -92,7 +94,7 @@ class _BuildGoogleMap extends StatelessWidget {
               },
               icon: Icon(
                 Icons.arrow_back,
-                color: AppColor().appColor,
+                color: !isdarkmode ? AppColor().appColor : AppColor().darkModeBackgroundColor,
                 size: context.width / 10,
               ),
             ),
