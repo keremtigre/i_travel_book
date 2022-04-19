@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:i_travel_book/core/color/appcolor..dart';
 import 'package:i_travel_book/feature/HomePage/view/home_view.dart';
-import 'package:i_travel_book/services/authentication.dart';
+import 'package:i_travel_book/core/services/authentication.dart';
 
 class VerifyPage extends StatefulWidget {
   const VerifyPage({Key? key}) : super(key: key);

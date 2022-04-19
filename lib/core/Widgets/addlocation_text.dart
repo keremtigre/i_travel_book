@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:i_travel_book/core/Helper/shared_preferences.dart';
 import 'package:i_travel_book/feature/HomePage/viewmodel/cubit/home_cubit.dart';
 import 'package:i_travel_book/feature/SignUpPage/viewmodel/cubit/cubit/signup_cubit.dart';
 import 'package:i_travel_book/core/color/appcolor..dart';
 import 'package:kartal/kartal.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddLocationText extends StatelessWidget {
   String? Function(String?)? validator;
@@ -20,16 +22,28 @@ class AddLocationText extends StatelessWidget {
     required this.maxLength,
     this.maxLines = 1,
   }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    final isdarkmode = context.read<HomeCubit>().isdarkmode2;
-    Color settingDrawerColor = !isdarkmode ? AppColor().appColor : Colors.white;
-    return TextFormField(
-        maxLength: maxLength,
-        maxLines: maxLines,
-        controller: controller,
-        validator: validator,
-        decoration: DefaultDecoration(isdarkmode));
+    return FutureBuilder<bool>(
+        future: getBool("darkmode"),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final isdarkmode = snapshot.data;
+            Color settingDrawerColor =
+                isdarkmode! ? AppColor().appColor : Colors.white;
+            return TextFormField(
+                maxLength: maxLength,
+                maxLines: maxLines,
+                controller: controller,
+                validator: validator,
+                decoration: DefaultDecoration(isdarkmode));
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        });
   }
 
   InputDecoration DefaultDecoration(bool isdarkmode) => InputDecoration(

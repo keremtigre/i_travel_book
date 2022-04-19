@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:i_travel_book/core/Helper/shared_preferences.dart';
 import 'package:i_travel_book/core/Helper/showcircularprogress.dart';
+import 'package:i_travel_book/core/services/authentication.dart';
+import 'package:i_travel_book/core/services/cloud_firestore.dart';
 import 'package:i_travel_book/feature/HomePage/view/home_view.dart';
-import 'package:i_travel_book/services/authentication.dart';
-import 'package:i_travel_book/services/cloud_firestore.dart';
 part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {

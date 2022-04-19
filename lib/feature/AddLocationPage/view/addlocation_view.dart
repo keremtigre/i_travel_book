@@ -14,6 +14,7 @@ import 'package:i_travel_book/core/Helper/showcircularprogress.dart';
 import 'package:i_travel_book/core/Strings/addlocation_strings.dart';
 import 'package:i_travel_book/core/Widgets/addlocation_text.dart';
 import 'package:i_travel_book/core/color/appcolor..dart';
+import 'package:i_travel_book/core/services/cloud_firestore.dart';
 import 'package:i_travel_book/feature/AddLocationPage/helper/addphotoanimation.dart';
 import 'package:i_travel_book/feature/AddLocationPage/helper/helper.dart';
 import 'package:i_travel_book/feature/AddLocationPage/helper/showerDialog.dart';
@@ -21,9 +22,9 @@ import 'package:i_travel_book/feature/AddLocationPage/viewmodel/cubit/addlocatio
 import 'package:i_travel_book/feature/HomePage/view/home_view.dart';
 import 'package:i_travel_book/feature/HomePage/viewmodel/cubit/home_cubit.dart';
 import 'package:i_travel_book/feature/LogInPage/viewmodel/cubit/login_cubit.dart';
-import 'package:i_travel_book/services/cloud_firestore.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:kartal/kartal.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 part 'parts/build_googlemap.dart';
 part 'addlocation_body.dart';
 part 'parts/build_addphoto.dart';

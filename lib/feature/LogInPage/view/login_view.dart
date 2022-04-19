@@ -11,7 +11,6 @@ import 'package:i_travel_book/core/Strings/loginpage_strings.dart';
 import 'package:i_travel_book/core/Strings/signupPage_strings.dart';
 import 'package:i_travel_book/core/Widgets/authtextfield.dart';
 import 'package:i_travel_book/core/color/appcolor..dart';
-import 'package:i_travel_book/services/authentication.dart';
 import 'package:kartal/kartal.dart';
 part 'login_body.dart';
 part 'parts/build_form.dart';
@@ -25,6 +24,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text("ITravelBook"),
       ),
       body: LoginPageBody(),

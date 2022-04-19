@@ -75,7 +75,7 @@ class LocationsPageBody extends StatelessWidget {
                                     String _url = snapshot.data!.docs[index]
                                         .get("downloadUrl");
                                     return LocationsContainer(
-                                        snapshot: snapshot,
+                                        snapshot2: snapshot,
                                         index: index,
                                         detail: _aciklama,
                                         pageViewCount: context

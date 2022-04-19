@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:i_travel_book/core/Helper/shared_preferences.dart';
 import 'package:i_travel_book/core/Widgets/locationPageContainerItem.dart';
 import 'package:i_travel_book/core/color/appcolor..dart';
 import 'package:i_travel_book/feature/HomePage/view/home_view.dart';
@@ -21,24 +22,37 @@ class LocationsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isdarkmode = context.read<HomeCubit>().isdarkmode2;
-    Color settingDrawerColor = !isdarkmode ? AppColor().appColor : Colors.white;
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: !isdarkmode ? AppColor().appColor : AppColor().darkModeBackgroundColor,
-        elevation: 0,
-        title: Text("Konumlarım"),
-        centerTitle: true,
-      ),
-      body: WillPopScope(
-          onWillPop: () async {
-            await Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (builder) => HomePage()),
-                (route) => false);
-            return true;
-          },
-          child: LocationsPageBody()),
-    );
+    return FutureBuilder<bool>(
+        future: getBool("darkmode"),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final isdarkmode = snapshot.data!;
+            Color settingDrawerColor =
+                !isdarkmode ? AppColor().appColor : Colors.white;
+            return Scaffold(
+              appBar: AppBar(
+                backgroundColor: !isdarkmode
+                    ? AppColor().appColor
+                    : AppColor().darkModeBackgroundColor,
+                elevation: 0,
+                title: Text("Konumlarım"),
+                centerTitle: true,
+              ),
+              body: WillPopScope(
+                  onWillPop: () async {
+                    await Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (builder) => HomePage()),
+                        (route) => false);
+                    return true;
+                  },
+                  child: LocationsPageBody()),
+            );
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        });
   }
 }

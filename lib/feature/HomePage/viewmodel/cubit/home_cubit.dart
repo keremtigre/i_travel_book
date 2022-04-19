@@ -2,8 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:i_travel_book/admob/admob_helper.dart';
 import 'package:i_travel_book/core/Helper/shared_preferences.dart';
+import 'package:i_travel_book/core/admob/admob_helper.dart';
 import 'package:i_travel_book/core/color/appcolor..dart';
 import 'package:meta/meta.dart';
 
@@ -15,13 +15,8 @@ class HomeCubit extends Cubit<HomeState> {
   String FirebaseimageUrl = "";
 
   bool isdarkmode = false;
-  bool isdarkmode2 = false;
   bool changePasswordVisibility = true;
   bool changePasswordVisibility2 = true;
-  changeDarkMode() {
-    isdarkmode2 = !isdarkmode2;
-    emit(HomeLoaded());
-  }
 
   changePasswordVisibilty() {
     if (changePasswordVisibility) {
@@ -44,6 +39,7 @@ class HomeCubit extends Cubit<HomeState> {
   homeInitState() async {
     await AddmobService.initialize();
     await Geolocator.requestPermission();
+    await Future.delayed(Duration(milliseconds: 200));
     isdarkmode = await getDarkmode();
     emit(HomeLoaded());
   }
@@ -68,8 +64,8 @@ class HomeCubit extends Cubit<HomeState> {
 
   ThemeData lightTheme = ThemeData(
     appBarTheme: AppBarTheme(
-        backgroundColor: AppColor().appColor,
-      ),
+      backgroundColor: AppColor().appColor,
+    ),
     scaffoldBackgroundColor: Colors.white,
     iconTheme: IconThemeData(color: AppColor().appColor),
     colorScheme: ColorScheme.light(),

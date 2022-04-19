@@ -7,8 +7,8 @@ import 'package:i_travel_book/feature/LogInPage/view/login_view.dart';
 import 'package:i_travel_book/feature/VerifyPage/verify_page.dart';
 import 'package:i_travel_book/core/Helper/shared_preferences.dart';
 import 'package:i_travel_book/core/Helper/showcircularprogress.dart';
-import 'package:i_travel_book/services/authentication.dart';
-import 'package:i_travel_book/services/cloud_firestore.dart';
+import 'package:i_travel_book/core/services/authentication.dart';
+import 'package:i_travel_book/core/services/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
 
 part 'signup_state.dart';
@@ -125,7 +125,7 @@ class SignupCubit extends Cubit<SignupState> {
 
   SignupWithEmail(BuildContext context) async {
     setIsloading();
-    ShowLoaderDialog(context, "Lütfen Bekleyin...",false);
+    ShowLoaderDialog(context, "Lütfen Bekleyin...", false);
     AuthenticationHelper()
         .signUp(email: emailController.text, password: passwordController.text)
         .then((value) {

@@ -31,7 +31,6 @@ class _BuildScaffoldAppBar extends StatelessWidget implements PreferredSize {
                       Switch(
                           value: snapshot.data!,
                           onChanged: (value) {
-                            context.read<HomeCubit>().changeDarkMode();
                             if (value == true) {
                               context
                                   .read<HomeCubit>()

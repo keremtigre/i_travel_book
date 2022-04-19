@@ -13,8 +13,6 @@ import 'package:i_travel_book/core/Helper/showcircularprogress.dart';
 import 'package:i_travel_book/core/Strings/signupPage_strings.dart';
 import 'package:i_travel_book/core/Widgets/authtextfield.dart';
 import 'package:i_travel_book/core/color/appcolor..dart';
-import 'package:i_travel_book/services/authentication.dart';
-import 'package:i_travel_book/services/cloud_firestore.dart';
 
 part 'parts/build_form.dart';
 part 'signup_body.dart';
@@ -26,13 +24,24 @@ class SignUpPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        title: Text("ITravelBook"),
-        backgroundColor: AppColor().appColor,
-      ),
-      body: SignupBody(),
-    );
+    return FutureBuilder<bool>(
+        future: getBool("darkmode"),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Scaffold(
+              appBar: AppBar(
+                elevation: 0,
+                centerTitle: true,
+                title: Text("ITravelBook"),
+                backgroundColor:!snapshot.data! ? AppColor().appColor : AppColor().darkModeBackgroundColor,
+              ),
+              body: SignupBody(),
+            );
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        });
   }
 }

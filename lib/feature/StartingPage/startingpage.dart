@@ -5,7 +5,7 @@ import 'package:i_travel_book/feature/HomePage/view/home_view.dart';
 import 'package:i_travel_book/feature/LogInPage/view/login_view.dart';
 import 'package:i_travel_book/core/Helper/shared_preferences.dart';
 import 'package:lottie/lottie.dart';
-import 'package:i_travel_book/services/authentication.dart';
+import 'package:i_travel_book/core/services/authentication.dart';
 import 'package:provider/provider.dart';
 
 class StartingPage extends StatefulWidget {
@@ -61,10 +61,9 @@ class _StartingPageState extends State<StartingPage> {
         child: AnimatedSplashScreen(
             splashIconSize: 400,
             nextScreen: LoginPage(),
-            splash: Expanded(
-                child: Image.asset(
+            splash: Image.asset(
               "assets/images/logo.png",
-            ))),
+            )),
       ),
     );
   }

@@ -7,101 +7,128 @@ class _BuildGoogleMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isdarkmode = context.read<HomeCubit>().isdarkmode2;
-    Color settingDrawerColor = !isdarkmode ? AppColor().appColor : Colors.white;
-    return Container(
-      width: double.infinity,
-      height: context.height / 3.5,
-      child: Stack(
-        children: [
-          GoogleMap(
-            onLongPress: (argument) async {
-              if (await InternetConnectionChecker().hasConnection &&
-                  await Geolocator.isLocationServiceEnabled()) {
-                //eklenen markerları silmek için yaptım
-                context.read<AddlocationCubit>().clearMarker();
-                //MarkerId için addres geldi
-                String address = await GetAddressFromLatLong(
-                    argument.latitude, argument.longitude);
-                //Konumu Kaydet Butonu için gereken atamalar yapıldı
-                context.read<AddlocationCubit>().updateLocation(argument);
-                //marker oluşturuluyor
-                final marker =
-                    Marker(markerId: MarkerId(address), position: argument);
-                context.read<AddlocationCubit>().updateMarker(address, marker);
-                debugPrint("lat: " +
-                    context.read<AddlocationCubit>().originLatitude.toString() +
-                    " long: " +
-                    context
-                        .read<AddlocationCubit>()
-                        .originLongitude
-                        .toString());
-              } else if (await InternetConnectionChecker().hasConnection ==
-                      false &&
-                  await Geolocator.isLocationServiceEnabled() == false) {
-                ShowDialogForAddLocationPage(context,
-                    "Internet ve Konum özelliğinizin açık olduğundan emin olun");
-              } else if (await InternetConnectionChecker().hasConnection ==
-                  false) {
-                ShowDialogForAddLocationPage(
-                    context, "Internet Bağlantınızı Kontrol Ediniz");
-              } else if (await Geolocator.isLocationServiceEnabled() == false) {
-                ShowDialogForAddLocationPage(
-                    context, "Konumunuzun açık olduğundan emin olun");
-              }
-            },
-            markers: context.read<AddlocationCubit>().markers.values.toSet(),
-            myLocationEnabled: true,
-            myLocationButtonEnabled: true,
-            zoomControlsEnabled: true,
-            mapType: MapType.normal,
-            tiltGesturesEnabled: true,
-            compassEnabled: true,
-            scrollGesturesEnabled: true,
-            zoomGesturesEnabled: true,
-            onMapCreated: (GoogleMapController controller) async {
-              var _permision = await Geolocator.checkPermission();
-              debugPrint("izin: " + _permision.toString());
-              if (await Geolocator.isLocationServiceEnabled() &&
-                      _permision == LocationPermission.whileInUse ||
-                  _permision == LocationPermission.always) {
-                var position = await Geolocator.getCurrentPosition(
-                    desiredAccuracy: LocationAccuracy.high);
-                controller.animateCamera(
-                    CameraUpdate.newCameraPosition(CameraPosition(
-                        target: LatLng(
-                          position.latitude,
-                          position.longitude,
-                        ),
-                        zoom: 17)));
-              } else {
-                checkLocation(context);
-              }
-            },
-            initialCameraPosition:
-                context.read<AddlocationCubit>().cameraPosition,
-            gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
-              new Factory<OneSequenceGestureRecognizer>(
-                () => new EagerGestureRecognizer(),
+    return FutureBuilder<bool>(
+        future: getBool("darkmode"),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final isdarkmode = snapshot.data!;
+            Color settingDrawerColor =
+                isdarkmode ? AppColor().appColor : Colors.white;
+            return Container(
+              width: double.infinity,
+              height: context.height / 3.5,
+              child: Stack(
+                children: [
+                  GoogleMap(
+                    onLongPress: (argument) async {
+                      if (await InternetConnectionChecker().hasConnection &&
+                          await Geolocator.isLocationServiceEnabled()) {
+                        //eklenen markerları silmek için yaptım
+                        context.read<AddlocationCubit>().clearMarker();
+                        //MarkerId için addres geldi
+                        String address = await GetAddressFromLatLong(
+                            argument.latitude, argument.longitude);
+                        //Konumu Kaydet Butonu için gereken atamalar yapıldı
+                        context
+                            .read<AddlocationCubit>()
+                            .updateLocation(argument);
+                        //marker oluşturuluyor
+                        final marker = Marker(
+                            markerId: MarkerId(address), position: argument);
+                        context
+                            .read<AddlocationCubit>()
+                            .updateMarker(address, marker);
+                        debugPrint("lat: " +
+                            context
+                                .read<AddlocationCubit>()
+                                .originLatitude
+                                .toString() +
+                            " long: " +
+                            context
+                                .read<AddlocationCubit>()
+                                .originLongitude
+                                .toString());
+                      } else if (await InternetConnectionChecker()
+                                  .hasConnection ==
+                              false &&
+                          await Geolocator.isLocationServiceEnabled() ==
+                              false) {
+                        ShowDialogForAddLocationPage(context,
+                            "Internet ve Konum özelliğinizin açık olduğundan emin olun");
+                      } else if (await InternetConnectionChecker()
+                              .hasConnection ==
+                          false) {
+                        ShowDialogForAddLocationPage(
+                            context, "Internet Bağlantınızı Kontrol Ediniz");
+                      } else if (await Geolocator.isLocationServiceEnabled() ==
+                          false) {
+                        ShowDialogForAddLocationPage(
+                            context, "Konumunuzun açık olduğundan emin olun");
+                      }
+                    },
+                    markers:
+                        context.read<AddlocationCubit>().markers.values.toSet(),
+                    myLocationEnabled: true,
+                    myLocationButtonEnabled: true,
+                    zoomControlsEnabled: true,
+                    mapType: MapType.normal,
+                    tiltGesturesEnabled: true,
+                    compassEnabled: true,
+                    scrollGesturesEnabled: true,
+                    zoomGesturesEnabled: true,
+                    onMapCreated: (GoogleMapController controller) async {
+                      var _permision = await Geolocator.checkPermission();
+                      debugPrint("izin: " + _permision.toString());
+                      if (await Geolocator.isLocationServiceEnabled() &&
+                              _permision == LocationPermission.whileInUse ||
+                          _permision == LocationPermission.always) {
+                        var position = await Geolocator.getCurrentPosition(
+                            desiredAccuracy: LocationAccuracy.high);
+                        controller.animateCamera(
+                            CameraUpdate.newCameraPosition(CameraPosition(
+                                target: LatLng(
+                                  position.latitude,
+                                  position.longitude,
+                                ),
+                                zoom: 17)));
+                      } else {
+                        checkLocation(context);
+                      }
+                    },
+                    initialCameraPosition:
+                        context.read<AddlocationCubit>().cameraPosition,
+                    gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
+                      new Factory<OneSequenceGestureRecognizer>(
+                        () => new EagerGestureRecognizer(),
+                      ),
+                    ].toSet(),
+                  ),
+                  Positioned(
+                    child: IconButton(
+                      onPressed: () {
+                        context
+                            .read<AddlocationCubit>()
+                            .addLocationDispose(context);
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(
+                        Icons.arrow_back,
+                        color: isdarkmode
+                            ? AppColor().appColor
+                            : AppColor().darkModeBackgroundColor,
+                        size: context.width / 10,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ].toSet(),
-          ),
-          Positioned(
-            child: IconButton(
-              onPressed: () {
-                context.read<AddlocationCubit>().addLocationDispose(context);
-                Navigator.pop(context);
-              },
-              icon: Icon(
-                Icons.arrow_back,
-                color: !isdarkmode ? AppColor().appColor : AppColor().darkModeBackgroundColor,
-                size: context.width / 10,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+            );
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        });
   }
 
   Future<String> GetAddressFromLatLong(double lat, double long) async {
