@@ -36,65 +36,68 @@ class LocationsPageBody extends StatelessWidget {
                     children: [
                       _BuildGoogleMap(),
                       Align(
-                        alignment: Alignment.bottomCenter,
-                        child: SizedBox(
-                            height: context.height * .35,
-                            width: double.infinity,
-                            child: PageView.builder(
-                                controller: context
-                                    .read<LocationsCubit>()
-                                    .pageViewController,
-                                itemCount: context
-                                    .read<LocationsCubit>()
-                                    .pageViewTotalCount,
-                                padEnds: true,
-                                onPageChanged: (value) {
-                                  context
-                                      .read<LocationsCubit>()
-                                      .PageViewOnChanged(snapshot, value);
-                                },
-                                itemBuilder: (context, index) {
-                                  if (snapshot.hasData) {
-                                    final String _baslik = snapshot
-                                        .data!.docs[index]
-                                        .get("title")
-                                        .toString();
-                                    final String _aciklama = snapshot
-                                        .data!.docs[index]
-                                        .get("action")
-                                        .toString();
-                                    if (isfirstitem) {
-                                      context
-                                          .read<LocationsCubit>()
-                                          .PageViewOnChanged(
-                                            snapshot,
-                                            index,
-                                          );
-                                      isfirstitem = false;
-                                    }
-                                    String _url = snapshot.data!.docs[index]
-                                        .get("downloadUrl");
-                                    return LocationsContainer(
-                                        snapshot2: snapshot,
-                                        index: index,
-                                        detail: _aciklama,
-                                        pageViewCount: context
-                                            .read<LocationsCubit>()
-                                            .pageViewCounter,
-                                        pageViewTotalCount: context
-                                            .read<LocationsCubit>()
-                                            .pageViewTotalCount,
-                                        title: _baslik,
-                                        url: _url);
-                                  } else {
-                                    return AlertDialog(
-                                      title: Text("Konum Ekleyin"),
-                                      content: Text(
-                                          "Eklediğiniz konumlar burada listelenecektir."),
-                                    );
-                                  }
-                                })),
-                      ),
+                          alignment: Alignment.bottomCenter,
+                          child: SizedBox(
+                              height: context.height * .35,
+                              width: double.infinity,
+                              child: snapshot.hasData
+                                  ? snapshot.data!.size != 0
+                                      ? PageView.builder(
+                                          controller: context
+                                              .read<LocationsCubit>()
+                                              .pageViewController,
+                                          itemCount: context
+                                              .read<LocationsCubit>()
+                                              .pageViewTotalCount,
+                                          padEnds: true,
+                                          onPageChanged: (value) {
+                                            context
+                                                .read<LocationsCubit>()
+                                                .PageViewOnChanged(
+                                                    snapshot, value);
+                                          },
+                                          itemBuilder: (context, index) {
+                                            final String _baslik = snapshot
+                                                .data!.docs[index]
+                                                .get("title")
+                                                .toString();
+                                            final String _aciklama = snapshot
+                                                .data!.docs[index]
+                                                .get("action")
+                                                .toString();
+                                            if (isfirstitem) {
+                                              context
+                                                  .read<LocationsCubit>()
+                                                  .PageViewOnChanged(
+                                                    snapshot,
+                                                    index,
+                                                  );
+                                              isfirstitem = false;
+                                            }
+                                            String _url = snapshot
+                                                .data!.docs[index]
+                                                .get("downloadUrl");
+                                            return LocationsContainer(
+                                                snapshot2: snapshot,
+                                                index: index,
+                                                detail: _aciklama,
+                                                pageViewCount: context
+                                                    .read<LocationsCubit>()
+                                                    .pageViewCounter,
+                                                pageViewTotalCount: context
+                                                    .read<LocationsCubit>()
+                                                    .pageViewTotalCount,
+                                                title: _baslik,
+                                                url: _url);
+                                          })
+                                      : AlertDialog(
+                                          title: Text("Konum Ekleyin"),
+                                          content: Text(
+                                              "Eklediğiniz konumlar burada listelenecektir."),
+                                        )
+                                  : Center(
+                                      child: CircularProgressIndicator(),
+                                    ))),
                     ],
                   ),
                 );
