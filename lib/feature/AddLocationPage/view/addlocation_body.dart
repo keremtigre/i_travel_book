@@ -24,27 +24,48 @@ class AddLocationPageBody extends StatelessWidget {
             return ListView(
               children: [
                 _BuildGoogleMap(),
-                SizedBox(
-                  height: context.height / 40,
-                ),
                 //Mapin aşağısında kalan kısım için alan
-                SizedBox(
+                Container(
+                  padding: EdgeInsets.only(top: context.height / 30),
                   width: context.width,
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          _BuildAddPhotoWidget(),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          _BuildInfoText(),
-                        ],
-                      ),
-                      _BuildForm(),
-                      SizedBox(height: context.height / 20),
-                    ],
+                  child: Form(
+                    key: context.read<AddlocationCubit>().formKey,
+                    child: Column(
+                      children: [
+                        _BuildAddPhotoWidget(),
+                        AddLocationText(
+                          title: "Konum Başlığı",
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return AddLocationStrings.emptytexterror;
+                              } else {
+                                return null;
+                              }
+                            },
+                            hinntext: AddLocationStrings.placestitletext,
+                            controller: context
+                                .read<AddlocationCubit>()
+                                .placeTitleTextController,
+                            maxLength: 30),
+                        AddLocationText(
+                          title: "Konum Detayı",
+                          controller: context
+                              .read<AddlocationCubit>()
+                              .placeDetailTextController,
+                          hinntext:
+                              AddLocationStrings.locationTextFieldDetailText,
+                          maxLength: 120,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return AddLocationStrings.emptytexterror;
+                            } else {
+                              return null;
+                            }
+                          },
+                          maxLines: 2,
+                        ),
+                      ],
+                    ),
                   ),
                 )
               ],

@@ -32,7 +32,7 @@ class AddlocationCubit extends Cubit<AddlocationState> {
     loadInterstitialAd();
     checkLocation(context);
     print("add init çalıştı");
-    await Future.delayed(Duration(milliseconds: 100));
+    await Future.delayed(Duration(milliseconds: 25));
     emit(AddLocationLoaded());
   }
 

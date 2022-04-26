@@ -1,4 +1,6 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:i_travel_book/feature/AddLocationPage/viewmodel/cubit/addlocation_cubit.dart';
@@ -31,7 +33,12 @@ Future main() async {
           create: (context) => AddlocationCubit(),
         )
       ],
-      child: MyApp(),
+      child: DevicePreview(
+        enabled: !kReleaseMode,
+        builder: (context) {
+          return MyApp();
+        }
+      ),
     ), // Wrap your app
   );
 }

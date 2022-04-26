@@ -12,6 +12,7 @@ class AddLocationText extends StatelessWidget {
   String? Function(String?)? validator;
   final String hinntext;
   final TextEditingController controller;
+  final String title;
   int maxLength;
   int maxLines;
   AddLocationText({
@@ -20,6 +21,7 @@ class AddLocationText extends StatelessWidget {
     required this.hinntext,
     required this.controller,
     required this.maxLength,
+    required this.title,
     this.maxLines = 1,
   }) : super(key: key);
 
@@ -32,12 +34,27 @@ class AddLocationText extends StatelessWidget {
             final isdarkmode = snapshot.data;
             Color settingDrawerColor =
                 isdarkmode! ? AppColor().appColor : Colors.white;
-            return TextFormField(
-                maxLength: maxLength,
-                maxLines: maxLines,
-                controller: controller,
-                validator: validator,
-                decoration: DefaultDecoration(isdarkmode));
+            return Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(width: 2, color: AppColor().appColor)),
+              margin: EdgeInsets.only(
+                  top: context.height / 40,
+                  right: context.width / 30,
+                  left: context.width / 30),
+              child: ExpansionTile(title: Text(title), children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                      left: context.width / 50, right: context.width / 50),
+                  child: TextFormField(
+                      maxLength: maxLength,
+                      maxLines: maxLines,
+                      controller: controller,
+                      validator: validator,
+                      decoration: DefaultDecoration(isdarkmode)),
+                ),
+              ]),
+            );
           } else {
             return Center(
               child: CircularProgressIndicator(),
@@ -48,25 +65,25 @@ class AddLocationText extends StatelessWidget {
 
   InputDecoration DefaultDecoration(bool isdarkmode) => InputDecoration(
         enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(
               width: 2,
               color: !isdarkmode ? AppColor().appColor : Colors.white,
             )),
         border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(
               width: 2,
               color: AppColor().appColor,
             )),
         errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(
               width: 2,
               color: Colors.red,
             )),
         focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(
               width: 2,
               color: AppColor().appColor,

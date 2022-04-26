@@ -16,7 +16,7 @@ class _BuildGoogleMap extends StatelessWidget {
                 isdarkmode ? AppColor().appColor : Colors.white;
             return Container(
               width: double.infinity,
-              height: context.height / 3.5,
+              height: context.height / 2.9,
               child: Stack(
                 children: [
                   GoogleMap(

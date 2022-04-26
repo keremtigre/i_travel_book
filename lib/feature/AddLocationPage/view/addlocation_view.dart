@@ -1,7 +1,6 @@
 library addlocation_view.dart;
 
 import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +27,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 part 'parts/build_googlemap.dart';
 part 'addlocation_body.dart';
 part 'parts/build_addphoto.dart';
-part 'parts/build_form.dart';
 part 'parts/build_infotext.dart';
 part 'parts/build_savelocation.dart';
 
