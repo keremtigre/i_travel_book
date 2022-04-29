@@ -5,10 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:i_travel_book/feature/HomePage/view/home_view.dart';
 import 'package:i_travel_book/feature/LogInPage/viewmodel/cubit/login_cubit.dart';
 import 'package:i_travel_book/feature/SignUpPage/view/signup_view.dart';
-import 'package:i_travel_book/core/Helper/shared_preferences.dart';
-import 'package:i_travel_book/core/Helper/showcircularprogress.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:i_travel_book/core/Strings/loginpage_strings.dart';
-import 'package:i_travel_book/core/Strings/signupPage_strings.dart';
 import 'package:i_travel_book/core/Widgets/authtextfield.dart';
 import 'package:i_travel_book/core/color/appcolor..dart';
 import 'package:kartal/kartal.dart';
@@ -25,7 +23,7 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("ITravelBook"),
+        title: AutoSizeText("ITravelBook"),
       ),
       body: LoginPageBody(),
     );

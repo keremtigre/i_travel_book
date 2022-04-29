@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:i_travel_book/feature/HomePage/view/home_view.dart';
 
+import 'package:auto_size_text/auto_size_text.dart';
 void ShowDialogForAddLocationPage(BuildContext context, String message) {
   showDialog(
       context: context,
@@ -9,9 +10,9 @@ void ShowDialogForAddLocationPage(BuildContext context, String message) {
         return AlertDialog(actions: [
           TextButton(
             onPressed: (() => Navigator.pop(context)),
-            child: Text("Tamam"),
+            child: AutoSizeText("Tamam"),
           )
-        ], title: Text("Uyarı"), content: Text(message));
+        ], title: AutoSizeText("Uyarı"), content: AutoSizeText(message));
       });
 }
 
@@ -19,8 +20,8 @@ ShowDialogForPermission(BuildContext context) {
   showDialog(
       context: context,
       builder: (builder) => AlertDialog(
-            title: Text("Uyarı"),
-            content: Text(
+            title: AutoSizeText("Uyarı"),
+            content: AutoSizeText(
                 "Konum izni olmadan bu özelliği kullanamazsınız. Uygulama ayarlarından konuma izin verin"),
             actions: [
               TextButton(
@@ -30,12 +31,12 @@ ShowDialogForPermission(BuildContext context) {
                         MaterialPageRoute(builder: (builder) => HomePage()),
                         (route) => false);
                   },
-                  child: Text("Geri Dön")),
+                  child: AutoSizeText("Geri Dön")),
               TextButton(
                   onPressed: () async {
                     await Geolocator.openAppSettings();
                   },
-                  child: Text("Ayarlara Git"))
+                  child: AutoSizeText("Ayarlara Git"))
             ],
           ));
 }

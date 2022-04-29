@@ -37,7 +37,7 @@ class SettingsDrawer extends StatelessWidget {
                             imageUrl,
                           ),
                         ),
-                  Text(
+                  AutoSizeText(
                     FirebaseAuth.instance.currentUser!.email.toString(),
                     style: TextStyle(
                         color: settingDrawerColor,
@@ -49,7 +49,7 @@ class SettingsDrawer extends StatelessWidget {
                       showDialog(
                           context: context,
                           builder: (builder) {
-                            return  EditProfile();
+                            return EditProfile();
                           });
                     },
                     leading: Icon(
@@ -57,7 +57,7 @@ class SettingsDrawer extends StatelessWidget {
                       size: 35,
                       color: settingDrawerColor,
                     ),
-                    title: Text(
+                    title: AutoSizeText(
                       "Profilimi Düzenle",
                       style: TextStyle(fontSize: 16, color: settingDrawerColor),
                     ),
@@ -75,7 +75,7 @@ class SettingsDrawer extends StatelessWidget {
                       size: 35,
                       color: settingDrawerColor,
                     ),
-                    title: Text(
+                    title: AutoSizeText(
                       "Şifremi Değiştir",
                       style: TextStyle(color: settingDrawerColor, fontSize: 16),
                     ),
@@ -86,14 +86,14 @@ class SettingsDrawer extends StatelessWidget {
                           context: context,
                           builder: (builder) {
                             return AlertDialog(
-                              title: const Text("Çkış Yap"),
-                              content: const Text("Çıkış Yapılsın mı"),
+                              title: const AutoSizeText("Çkış Yap"),
+                              content: const AutoSizeText("Çıkış Yapılsın mı"),
                               actions: [
                                 TextButton(
                                     onPressed: () {
                                       Navigator.pop(context);
                                     },
-                                    child: Text(
+                                    child: AutoSizeText(
                                       "Hayır",
                                       style: TextStyle(
                                         color: settingDrawerColor,
@@ -110,7 +110,7 @@ class SettingsDrawer extends StatelessWidget {
                                                   LoginPage()),
                                           (Route<dynamic> route) => false);
                                     },
-                                    child: Text("Evet",
+                                    child: AutoSizeText("Evet",
                                         style: TextStyle(
                                             color: settingDrawerColor))),
                               ],
@@ -122,7 +122,7 @@ class SettingsDrawer extends StatelessWidget {
                       size: 35,
                       color: settingDrawerColor,
                     ),
-                    title: Text(
+                    title: AutoSizeText(
                       "Oturumu Kapat",
                       style: TextStyle(color: settingDrawerColor, fontSize: 16),
                     ),
@@ -133,15 +133,15 @@ class SettingsDrawer extends StatelessWidget {
                           context: context,
                           builder: (builder) {
                             return AlertDialog(
-                              title: const Text("Hesabı Sil"),
-                              content: const Text(
+                              title: const AutoSizeText("Hesabı Sil"),
+                              content: const AutoSizeText(
                                   "Bu işlemden sonra tüm verileriniz silinecektir. Devam etmek istiyor musunuz ?"),
                               actions: [
                                 TextButton(
                                     onPressed: () {
                                       Navigator.pop(context);
                                     },
-                                    child: Text(
+                                    child: AutoSizeText(
                                       "Hayır",
                                       style: TextStyle(
                                         color: settingDrawerColor,
@@ -164,7 +164,7 @@ class SettingsDrawer extends StatelessWidget {
                                                   LoginPage()),
                                           (Route<dynamic> route) => false);
                                     },
-                                    child: Text("Evet",
+                                    child: AutoSizeText("Evet",
                                         style: TextStyle(
                                           color: settingDrawerColor,
                                         ))),
@@ -177,7 +177,7 @@ class SettingsDrawer extends StatelessWidget {
                       size: 35,
                       color: settingDrawerColor,
                     ),
-                    title: Text(
+                    title: AutoSizeText(
                       "Hesabımı Sil",
                       style: TextStyle(color: settingDrawerColor, fontSize: 16),
                     ),

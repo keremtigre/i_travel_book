@@ -1,6 +1,6 @@
 library locations_view.dart;
 
-import 'dart:async';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,50 +9,48 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:i_travel_book/core/Helper/shared_preferences.dart';
 import 'package:i_travel_book/core/Widgets/locationPageContainerItem.dart';
 import 'package:i_travel_book/core/color/appcolor..dart';
-import 'package:i_travel_book/feature/HomePage/view/home_view.dart';
-import 'package:i_travel_book/feature/HomePage/viewmodel/cubit/home_cubit.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:i_travel_book/feature/LocationsPage/viewmodel/cubit/locations_cubit.dart';
 import 'package:kartal/kartal.dart';
 part 'locations_body.dart';
 part 'parts/build_googlemap.dart';
 part 'parts/build_detailpage.dart';
+part 'parts/build_searchText.dart';
 
 class LocationsPage extends StatelessWidget {
-  const LocationsPage({Key? key}) : super(key: key);
-
+  final bool isdarkmode;
+  LocationsPage({
+    Key? key,
+    required this.isdarkmode,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<bool>(
-        future: getBool("darkmode"),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final isdarkmode = snapshot.data!;
-            Color settingDrawerColor =
-                !isdarkmode ? AppColor().appColor : Colors.white;
-            return Scaffold(
-              appBar: AppBar(
-                backgroundColor: !isdarkmode
-                    ? AppColor().appColor
-                    : AppColor().darkModeBackgroundColor,
-                elevation: 0,
-                title: Text("Konumlarım"),
-                centerTitle: true,
-              ),
-              body: WillPopScope(
-                  onWillPop: () async {
-                    await Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (builder) => HomePage()),
-                        (route) => false);
-                    return true;
-                  },
-                  child: LocationsPageBody()),
-            );
-          } else {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        });
+    Color settingDrawerColor = !isdarkmode ? AppColor().appColor : Colors.white;
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              context.read<LocationsCubit>().LocationPageDispose(context);
+            }),
+        backgroundColor: !isdarkmode
+            ? AppColor().appColor
+            : AppColor().darkModeBackgroundColor,
+        elevation: 0,
+        title: AutoSizeText("Konumlarım"),
+        centerTitle: true,
+      ),
+      body: WillPopScope(
+          onWillPop: () async {
+            context.read<LocationsCubit>().LocationPageDispose(
+                  context,
+                );
+            return true;
+          },
+          child: LocationsPageBody(
+            isdarkmode: isdarkmode,
+          )),
+    );
   }
 }

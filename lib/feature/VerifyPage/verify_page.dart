@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:i_travel_book/core/color/appcolor..dart';
@@ -42,20 +43,20 @@ class _VerifyPageState extends State<VerifyPage> {
     return (await showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: const Text('Emin misiniz ?'),
-            content: const Text(
+            title: const AutoSizeText('Emin misiniz ?'),
+            content: const AutoSizeText(
                 'Bu adımdan sonra uygulama kapatılacak ve tüm kayıt olma işlemi iptal olacak kabul ediyor musunuz ?'),
             actions: <Widget>[
               TextButton(
                 onPressed: () => Navigator.of(context).pop(false),
-                child: Text(
+                child: AutoSizeText(
                   'Hayır',
                   style: TextStyle(color: AppColor().appColor),
                 ),
               ),
               TextButton(
                   onPressed: () => Navigator.of(context).pop(true),
-                  child: Text(
+                  child: AutoSizeText(
                     'Evet',
                     style: TextStyle(color: AppColor().appColor),
                   )),
@@ -76,7 +77,7 @@ class _VerifyPageState extends State<VerifyPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(user!.email.toString(),
+              AutoSizeText(user!.email.toString(),
                   style: TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
@@ -89,7 +90,7 @@ class _VerifyPageState extends State<VerifyPage> {
                 width: size.width * .75,
                 height: size.height * .35,
               ),
-              Text(
+              AutoSizeText(
                 "Devam etmek için lütfen size gönderilen linke tıklayıp mail adresinizi doğrulayınız.",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 17, color: Colors.white),

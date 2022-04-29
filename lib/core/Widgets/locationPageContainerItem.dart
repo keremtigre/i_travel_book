@@ -5,10 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:i_travel_book/core/Helper/shared_preferences.dart';
 import 'package:i_travel_book/core/color/appcolor..dart';
 import 'package:i_travel_book/core/services/cloud_firestore.dart';
-import 'package:i_travel_book/feature/HomePage/viewmodel/cubit/home_cubit.dart';
 import 'package:i_travel_book/feature/LocationsPage/view/locations_view.dart';
 import 'package:i_travel_book/feature/LocationsPage/viewmodel/cubit/locations_cubit.dart';
 import 'package:kartal/kartal.dart';
+
+import 'package:auto_size_text/auto_size_text.dart';
 
 class LocationsContainer extends StatelessWidget {
   final int pageViewCount;
@@ -17,10 +18,12 @@ class LocationsContainer extends StatelessWidget {
   final String title;
   final String detail;
   final int index;
+  final bool isdarkmode;
   final AsyncSnapshot<QuerySnapshot<Object?>> snapshot2;
   const LocationsContainer(
       {Key? key,
       required this.detail,
+      required this.isdarkmode,
       required this.index,
       required this.pageViewCount,
       required this.pageViewTotalCount,
@@ -30,119 +33,103 @@ class LocationsContainer extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<bool>(
-        future: getBool("darkmode"),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final isdarkmode = snapshot.data!;
-            Color settingDrawerColor =
-                !isdarkmode ? AppColor().appColor : Colors.white;
-            return Container(
-              margin: EdgeInsets.all(20),
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 5,
-                    child: !url.isEmpty
-                        ? ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: Image.network(
-                              url,
-                              height: context.height,
-                              width: context.width,
-                              fit: BoxFit.cover,
-                              filterQuality: FilterQuality.high,
-                            ),
-                          )
-                        : Container(
-                            decoration: BoxDecoration(
-                                color: isdarkmode
-                                    ? AppColor().darkModeBackgroundColor
-                                    : Colors.white,
-                                borderRadius: BorderRadius.circular(25)),
-                            alignment: Alignment.center,
-                            width: double.infinity,
-                            height: double.infinity,
-                            child: Image.asset(
-                              "assets/images/signup.png",
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        IconButton(
-                            onPressed: () {
-                              final String _baslik = title;
-                              final String _aciklama = detail;
-
-                              showDialog(
-                                  context: context,
-                                  builder: (context) => DetailPage(
-                                        image_url: url,
-                                        aciklama: _aciklama,
-                                        baslik: _baslik,
-                                      ));
-                            },
-                            icon: Icon(
-                              Icons.info_outline,
-                              color: AppColor().appColor,
-                              size: 30,
-                            )),
-                        Text(pageViewCount.toString() +
-                            "/" +
-                            pageViewTotalCount.toString()),
-                        IconButton(
-                            onPressed: () async {
-                              var collection = FirebaseFirestore.instance
-                                  .collection(FirebaseAuth
-                                      .instance.currentUser!.email
-                                      .toString());
-                              await collection
-                                  .where('id',
-                                      isEqualTo:
-                                          snapshot2.data!.docs[index].get("id"))
-                                  .get()
-                                  .then((value) {
-                                if (value != null) {
-                                  value.docs.first.reference.delete();
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          content: Text(
-                                              "Seçilen Konum Başarıyla Silindi")));
-                                }
-                              });
-                              await CloudHelper().deleteImage(url);
-                              context
-                                  .read<LocationsCubit>()
-                                  .pageViewController
-                                  .jumpToPage(0);
-                            },
-                            icon: Icon(
-                              Icons.delete,
-                              color: Colors.red,
-                              size: 30,
-                            )),
-                      ],
+    Color settingDrawerColor = !isdarkmode ? AppColor().appColor : Colors.white;
+    return Container(
+      margin: EdgeInsets.all(20),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 5,
+            child: !url.isEmpty
+                ? ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Image.network(
+                      url,
+                      height: context.height,
+                      width: context.width,
+                      fit: BoxFit.cover,
+                      filterQuality: FilterQuality.high,
+                    ),
+                  )
+                : Container(
+                    decoration: BoxDecoration(
+                        color: isdarkmode
+                            ? AppColor().darkModeBackgroundColor
+                            : Colors.white,
+                        borderRadius: BorderRadius.circular(25)),
+                    alignment: Alignment.center,
+                    width: double.infinity,
+                    height: double.infinity,
+                    child: Image.asset(
+                      "assets/images/signup.png",
+                      fit: BoxFit.cover,
                     ),
                   ),
-                ],
-              ),
-              decoration: BoxDecoration(
-                color: isdarkmode
-                    ? AppColor().darkModeBackgroundColor
-                    : Colors.grey.shade100,
-                borderRadius: BorderRadius.all(Radius.circular(20)),
-              ),
-            );
-          } else {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        });
+          ),
+          Expanded(
+            flex: 1,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                    onPressed: () {
+                      final String _baslik = title;
+                      final String _aciklama = detail;
+
+                      showDialog(
+                          context: context,
+                          builder: (context) => DetailPage(
+                                image_url: url,
+                                aciklama: _aciklama,
+                                baslik: _baslik,
+                              ));
+                    },
+                    icon: Icon(
+                      Icons.info_outline,
+                      color: AppColor().appColor,
+                      size: 30,
+                    )),
+                AutoSizeText(pageViewCount.toString() +
+                    "/" +
+                    pageViewTotalCount.toString()),
+                IconButton(
+                    onPressed: () async {
+                      var collection = FirebaseFirestore.instance.collection(
+                          FirebaseAuth.instance.currentUser!.email.toString());
+                      await collection
+                          .where('id',
+                              isEqualTo: snapshot2.data!.docs[index].get("id"))
+                          .get()
+                          .then((value) {
+                        if (value != null) {
+                          value.docs.first.reference.delete();
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: AutoSizeText(
+                                  "Seçilen Konum Başarıyla Silindi")));
+                        }
+                      });
+                      await CloudHelper().deleteImage(url);
+                      context
+                          .read<LocationsCubit>()
+                          .pageViewController
+                          .jumpToPage(0);
+                    },
+                    icon: Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                      size: 30,
+                    )),
+              ],
+            ),
+          ),
+        ],
+      ),
+      decoration: BoxDecoration(
+        color: isdarkmode
+            ? AppColor().darkModeBackgroundColor
+            : Colors.grey.shade100,
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+      ),
+    );
   }
 }

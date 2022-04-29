@@ -9,11 +9,14 @@ import 'package:i_travel_book/feature/AddLocationPage/helper/helper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kartal/kartal.dart';
 
+import 'package:auto_size_text/auto_size_text.dart';
 part 'addlocation_state.dart';
 
 class AddlocationCubit extends Cubit<AddlocationState> {
   AddlocationCubit() : super(AddlocationInitial());
   InterstitialAd? interstitialAd;
+
+  bool isMarkerLoading = false;
   double originLatitude = 0;
   double originLongitude = 0;
   File? image;
@@ -33,6 +36,11 @@ class AddlocationCubit extends Cubit<AddlocationState> {
     checkLocation(context);
     print("add init çalıştı");
     await Future.delayed(Duration(milliseconds: 25));
+    emit(AddLocationLoaded());
+  }
+
+  setismarkerloading(bool value) {
+    isMarkerLoading = value;
     emit(AddLocationLoaded());
   }
 
@@ -99,7 +107,7 @@ class AddlocationCubit extends Cubit<AddlocationState> {
                 children: [
                   ListTile(
                     leading: Icon(Icons.camera),
-                    title: Text("Kamera"),
+                    title: AutoSizeText("Kamera"),
                     onTap: () async {
                       try {
                         final image = await ImagePicker().pickImage(
@@ -120,7 +128,7 @@ class AddlocationCubit extends Cubit<AddlocationState> {
                   ),
                   ListTile(
                     leading: Icon(Icons.collections),
-                    title: Text("Galeri"),
+                    title: AutoSizeText("Galeri"),
                     onTap: () async {
                       try {
                         final image = await ImagePicker().pickImage(
@@ -145,7 +153,7 @@ class AddlocationCubit extends Cubit<AddlocationState> {
                       Navigator.pop(context);
                     },
                     leading: Icon(Icons.delete),
-                    title: Text("Fotoğrafı Kaldır"),
+                    title: AutoSizeText("Fotoğrafı Kaldır"),
                   )
                 ],
               ));

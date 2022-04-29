@@ -34,10 +34,9 @@ class SignupBody extends StatelessWidget {
               children: [
                 Padding(
                   padding: EdgeInsets.only(top: size.width / 10),
-                  child: Text(
+                  child: AutoSizeText(
                     "Kayıt Ol",
-                    style:
-                        TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Padding(

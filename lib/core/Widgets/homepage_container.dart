@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:i_travel_book/core/Helper/shared_preferences.dart';
 import 'package:i_travel_book/core/color/appcolor..dart';
-import 'package:i_travel_book/feature/HomePage/viewmodel/cubit/home_cubit.dart';
-import 'package:kartal/kartal.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:auto_size_text/auto_size_text.dart';
 
 class HomePageContainer extends StatelessWidget {
   String assetname;
   double height;
+  final bool isdarkmode;
   double width;
   String containerTitle;
   EdgeInsetsGeometry margin;
   HomePageContainer({
     Key? key,
+    required this.isdarkmode,
     required this.assetname,
     required this.height,
     required this.width,
@@ -23,11 +23,6 @@ class HomePageContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<bool>(
-        future: getBool("darkmode"),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final isdarkmode = snapshot.data!;
             Color settingDrawerColor =
                 !isdarkmode ? AppColor().appColor : Colors.white;
             return Column(
@@ -48,7 +43,7 @@ class HomePageContainer extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 5),
-                  child: Text(
+                  child: AutoSizeText(
                     containerTitle,
                     style: TextStyle(
                       fontSize: 20,
@@ -57,11 +52,5 @@ class HomePageContainer extends StatelessWidget {
                 ),
               ],
             );
-          } else {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        });
-  }
+          } 
 }

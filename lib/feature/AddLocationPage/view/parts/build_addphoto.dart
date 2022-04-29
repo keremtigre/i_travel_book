@@ -1,19 +1,16 @@
 part of addlocation_view.dart;
 
 class _BuildAddPhotoWidget extends StatelessWidget {
+  final bool isdarkmode;
   _BuildAddPhotoWidget({
     Key? key,
+    required this.isdarkmode,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<bool>(
-        future: getBool("darkmode"),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final isdarkmode = snapshot.data;
             Color settingDrawerColor =
-                isdarkmode! ? AppColor().appColor : Colors.white;
+                isdarkmode ? AppColor().appColor : Colors.white;
             return Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
@@ -26,7 +23,7 @@ class _BuildAddPhotoWidget extends StatelessWidget {
                   childrenPadding: EdgeInsets.only(
                       left: context.width / 20, bottom: context.height / 50),
                   expandedAlignment: Alignment.centerLeft,
-                  title: Text("Fotoğraf Ekleyebilirsiniz"),
+                  title: AutoSizeText("Fotoğraf Ekleyebilirsiniz"),
                   children: [
                     InkWell(
                         onTap: (() {
@@ -65,11 +62,5 @@ class _BuildAddPhotoWidget extends StatelessWidget {
                                 ))),
                   ]),
             );
-          } else {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        });
-  }
+          } 
 }

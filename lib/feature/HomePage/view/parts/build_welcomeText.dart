@@ -11,12 +11,13 @@ class _BuildWelcomeUserNameText extends StatelessWidget {
       padding: EdgeInsets.only(
         top: context.height / 25,
         left: context.width / 10,
+        right: context.width / 10,
       ),
-      child: Text(
+      child: AutoSizeText(
         context.read<HomeCubit>().FirebaseuserName.isEmpty & !snapshot.hasData
-            ? "Hoşgeldin"
-            : "Hoşgeldin ${context.read<HomeCubit>().FirebaseuserName}",
-        style: TextStyle(fontSize: 26, fontWeight: FontWeight.w400),
+            ? "Hoşgeldin !"
+            : "Hoşgeldin ! ${context.read<HomeCubit>().FirebaseuserName}",
+        style: TextStyle(fontSize: 22, fontWeight: FontWeight.w400),
       ),
     );
   }

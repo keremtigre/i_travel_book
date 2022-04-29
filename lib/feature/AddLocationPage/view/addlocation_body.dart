@@ -1,7 +1,9 @@
 part of addlocation_view.dart;
 
 class AddLocationPageBody extends StatelessWidget {
-  const AddLocationPageBody({Key? key}) : super(key: key);
+  final isdarkmode;
+  const AddLocationPageBody({Key? key, required this.isdarkmode})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,18 +25,24 @@ class AddLocationPageBody extends StatelessWidget {
           if (state is AddLocationLoaded) {
             return ListView(
               children: [
-                _BuildGoogleMap(),
+                _BuildGoogleMap(
+                  isdarkmode: isdarkmode,
+                ),
                 //Mapin aşağısında kalan kısım için alan
                 Container(
-                  padding: EdgeInsets.only(top: context.height / 30),
+                  padding: EdgeInsets.only(top: context.height / 60),
                   width: context.width,
                   child: Form(
                     key: context.read<AddlocationCubit>().formKey,
                     child: Column(
                       children: [
-                        _BuildAddPhotoWidget(),
+                        _BuildInfoText(isdarkmode: isdarkmode),
+                        _BuildAddPhotoWidget(
+                          isdarkmode: isdarkmode,
+                        ),
                         AddLocationText(
-                          title: "Konum Başlığı",
+                            isdarkmode: isdarkmode,
+                            title: "Konum Başlığı",
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return AddLocationStrings.emptytexterror;
@@ -48,6 +56,7 @@ class AddLocationPageBody extends StatelessWidget {
                                 .placeTitleTextController,
                             maxLength: 30),
                         AddLocationText(
+                          isdarkmode: isdarkmode,
                           title: "Konum Detayı",
                           controller: context
                               .read<AddlocationCubit>()
@@ -72,7 +81,7 @@ class AddLocationPageBody extends StatelessWidget {
             );
           } else
             return Center(
-              child: Text("SORUN OLUŞTU"),
+              child: AutoSizeText("SORUN OLUŞTU"),
             );
         },
       ),

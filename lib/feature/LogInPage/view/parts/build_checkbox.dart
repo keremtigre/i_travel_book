@@ -17,7 +17,7 @@ class _BuildCheckBox extends StatelessWidget {
             context.read<LoginCubit>().changeBeniHatirla(value);
           },
         ),
-        Text("Beni Hatırla"),
+        AutoSizeText("Beni Hatırla"),
       ],
     );
   }

@@ -10,10 +10,13 @@ class _BuildGoogleSignInButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
         onTap: () async {
-           context.read<LoginCubit>().setIsLodingGoogle();
-           debugPrint(
-              "isloading: " + context.read<LoginCubit>().isLodingGoogle.toString());
-          await context.read<LoginCubit>().signInwithGoogle(context).then((value) {
+          context.read<LoginCubit>().setIsLodingGoogle();
+          debugPrint("isloading: " +
+              context.read<LoginCubit>().isLodingGoogle.toString());
+          await context
+              .read<LoginCubit>()
+              .signInwithGoogle(context)
+              .then((value) {
             if (value == null) {
               context.read<LoginCubit>().setIsLodingGoogle();
               Navigator.pushAndRemoveUntil(
@@ -21,12 +24,12 @@ class _BuildGoogleSignInButton extends StatelessWidget {
                   MaterialPageRoute(builder: (builder) => HomePage()),
                   (route) => false);
             }
-          }); 
+          });
         },
         child: Container(
           height: size.height / 15,
           width: size.width / 2,
-          margin: EdgeInsets.only(top: context.height/20),
+          margin: EdgeInsets.only(top: context.height / 20),
           decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(color: AppColor().appColor),
@@ -34,8 +37,8 @@ class _BuildGoogleSignInButton extends StatelessWidget {
           ),
           child: !context.read<LoginCubit>().isLodingGoogle
               ? Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Image.asset(
@@ -43,13 +46,13 @@ class _BuildGoogleSignInButton extends StatelessWidget {
                         height: size.height / 25,
                         fit: BoxFit.cover,
                       ),
-                      Text(
+                      AutoSizeText(
                         "Google ile Giriş Yap",
                         style: TextStyle(color: Colors.black),
                       ),
                     ],
                   ),
-              )
+                )
               : Center(child: CircularProgressIndicator()),
         ));
   }

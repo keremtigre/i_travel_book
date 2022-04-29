@@ -33,13 +33,8 @@ Future main() async {
           create: (context) => AddlocationCubit(),
         )
       ],
-      child: DevicePreview(
-        enabled: !kReleaseMode,
-        builder: (context) {
-          return MyApp();
-        }
+      child:  MyApp(),
       ),
-    ), // Wrap your app
   );
 }
 

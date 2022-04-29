@@ -11,7 +11,7 @@ class ChangePasswordDialog extends StatelessWidget {
     return Form(
       key: _formKey,
       child: AlertDialog(
-        title: Text("Şifremi Değiştir"),
+        title: AutoSizeText("Şifremi Değiştir"),
         actions: [
           TextFormField(
             validator: (value) {
@@ -33,8 +33,12 @@ class ChangePasswordDialog extends StatelessWidget {
                 },
                 child:
                     context.read<HomeCubit>().changePasswordVisibility == true
-                        ? Icon(Icons.visibility, )
-                        : Icon(Icons.visibility_off, ),
+                        ? Icon(
+                            Icons.visibility,
+                          )
+                        : Icon(
+                            Icons.visibility_off,
+                          ),
               ),
               prefixIcon: Icon(
                 Icons.vpn_key,
@@ -66,8 +70,12 @@ class ChangePasswordDialog extends StatelessWidget {
                 },
                 child:
                     context.read<HomeCubit>().changePasswordVisibility2 == true
-                        ? Icon(Icons.visibility, )
-                        : Icon(Icons.visibility_off, ),
+                        ? Icon(
+                            Icons.visibility,
+                          )
+                        : Icon(
+                            Icons.visibility_off,
+                          ),
               ),
               prefixIcon: Icon(
                 Icons.vpn_key,
@@ -83,7 +91,7 @@ class ChangePasswordDialog extends StatelessWidget {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text("İptal")),
+                  child: AutoSizeText("İptal")),
               TextButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
@@ -92,19 +100,20 @@ class ChangePasswordDialog extends StatelessWidget {
                           .then((value) {
                         if (value == null) {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text("Şifreniz Başarıyla Güncellendi")));
+                              content: AutoSizeText(
+                                  "Şifreniz Başarıyla Güncellendi")));
                           putString("password", _passwordController2.text);
                           Navigator.pop(context);
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content:
-                                  Text("Bir Sorun Oluştu. Başarısız İşlem")));
+                              content: AutoSizeText(
+                                  "Bir Sorun Oluştu. Başarısız İşlem")));
                           Navigator.pop(context);
                         }
                       });
                     }
                   },
-                  child: Text("Değiştir"))
+                  child: AutoSizeText("Değiştir"))
             ],
           )
         ],

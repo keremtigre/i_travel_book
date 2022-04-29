@@ -1,40 +1,41 @@
 part of locations_view.dart;
 
 class LocationsPageBody extends StatelessWidget {
-  LocationsPageBody({Key? key}) : super(key: key);
+  LocationsPageBody({Key? key, required this.isdarkmode}) : super(key: key);
+  bool isdarkmode;
 
   bool isfirstitem = true;
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<LocationsCubit, LocationsState>(
-      listener: (context, state) {
-        // TODO: implement listener
-      },
-      builder: (context, state) {
-        if (state is LocationsInitial) {
-          context.read<LocationsCubit>().LocationPageInit();
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-        if (state is LocationsLoaded) {
-          return StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance
-                  .collection(
-                      FirebaseAuth.instance.currentUser!.email.toString())
-                  .snapshots(),
-              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                if (snapshot.hasData) {
-                  context.read<LocationsCubit>().pageViewTotalCount =
-                      snapshot.data!.size;
-                }
-
+    return StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection(FirebaseAuth.instance.currentUser!.email.toString())
+            .snapshots(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          return BlocConsumer<LocationsCubit, LocationsState>(
+            listener: (context, state) {
+              // TODO: implement listener
+            },
+            builder: (context, state) {
+              if (state is LocationsInitial) {
+                context.read<LocationsCubit>().LocationPageInit(snapshot);
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (state is LocationsLoaded) {
                 return Container(
                   height: double.infinity,
                   width: double.infinity,
                   child: Stack(
                     children: [
-                      _BuildGoogleMap(),
+                      _BuildGoogleMap(
+                        darkmode: isdarkmode,
+                      ),
+                      _searchText(
+                        isdarkmode: isdarkmode,
+                        snapshot: snapshot,
+                      ),
                       Align(
                           alignment: Alignment.bottomCenter,
                           child: SizedBox(
@@ -42,57 +43,93 @@ class LocationsPageBody extends StatelessWidget {
                               width: double.infinity,
                               child: snapshot.hasData
                                   ? snapshot.data!.size != 0
-                                      ? PageView.builder(
-                                          controller: context
-                                              .read<LocationsCubit>()
-                                              .pageViewController,
-                                          itemCount: context
-                                              .read<LocationsCubit>()
-                                              .pageViewTotalCount,
-                                          padEnds: true,
-                                          onPageChanged: (value) {
-                                            context
-                                                .read<LocationsCubit>()
-                                                .PageViewOnChanged(
-                                                    snapshot, value);
-                                          },
-                                          itemBuilder: (context, index) {
-                                            final String _baslik = snapshot
-                                                .data!.docs[index]
-                                                .get("title")
-                                                .toString();
-                                            final String _aciklama = snapshot
-                                                .data!.docs[index]
-                                                .get("action")
-                                                .toString();
-                                            if (isfirstitem) {
-                                              context
+                                      ? context
                                                   .read<LocationsCubit>()
-                                                  .PageViewOnChanged(
-                                                    snapshot,
-                                                    index,
-                                                  );
-                                              isfirstitem = false;
-                                            }
-                                            String _url = snapshot
-                                                .data!.docs[index]
-                                                .get("downloadUrl");
-                                            return LocationsContainer(
-                                                snapshot2: snapshot,
-                                                index: index,
-                                                detail: _aciklama,
-                                                pageViewCount: context
+                                                  .locationModel
+                                                  .length !=
+                                              0
+                                          ? PageView.builder(
+                                              controller: context
+                                                  .read<LocationsCubit>()
+                                                  .pageViewController,
+                                              itemCount: context
+                                                  .read<LocationsCubit>()
+                                                  .locationModel
+                                                  .length,
+                                              padEnds: true,
+                                              onPageChanged: (value) {
+                                                context
                                                     .read<LocationsCubit>()
-                                                    .pageViewCounter,
-                                                pageViewTotalCount: context
+                                                    .PageViewOnChanged(
+                                                        context
+                                                            .read<
+                                                                LocationsCubit>()
+                                                            .locationModel,
+                                                        value);
+                                              },
+                                              itemBuilder: (context, index) {
+                                                final String _baslik = context
                                                     .read<LocationsCubit>()
-                                                    .pageViewTotalCount,
-                                                title: _baslik,
-                                                url: _url);
-                                          })
+                                                    .locationModel[index]
+                                                    .title;
+                                                final String _aciklama = context
+                                                    .read<LocationsCubit>()
+                                                    .locationModel[index]
+                                                    .action;
+                                                if (isfirstitem) {
+                                                  context
+                                                      .read<LocationsCubit>()
+                                                      .PageViewOnChanged(
+                                                        context
+                                                            .read<
+                                                                LocationsCubit>()
+                                                            .locationModel,
+                                                        index,
+                                                      );
+                                                  isfirstitem = false;
+                                                }
+                                                String _url = context
+                                                    .read<LocationsCubit>()
+                                                    .locationModel[index]
+                                                    .downloadUrl;
+                                                return LocationsContainer(
+                                                    isdarkmode: isdarkmode,
+                                                    snapshot2: snapshot,
+                                                    index: index,
+                                                    detail: _aciklama,
+                                                    pageViewCount: context
+                                                        .read<LocationsCubit>()
+                                                        .pageViewCounter,
+                                                    pageViewTotalCount: context
+                                                        .read<LocationsCubit>()
+                                                        .pageViewTotalCount,
+                                                    title: _baslik,
+                                                    url: _url);
+                                              })
+                                          : AlertDialog(
+                                              alignment: Alignment.bottomCenter,
+                                              actionsAlignment:
+                                                  MainAxisAlignment.center,
+                                              title:
+                                                  AutoSizeText("Arama Sonucu"),
+                                              content: AutoSizeText(
+                                                  "Konum Bulunamadı"),
+                                              actions: [
+                                                TextButton(
+                                                    onPressed: () {
+                                                      context
+                                                          .read<
+                                                              LocationsCubit>()
+                                                          .getLocations(
+                                                              snapshot);
+                                                    },
+                                                    child: AutoSizeText(
+                                                        "Konumları Tekrar Getir"))
+                                              ],
+                                            )
                                       : AlertDialog(
-                                          title: Text("Konum Ekleyin"),
-                                          content: Text(
+                                          title: AutoSizeText("Konum Ekleyin"),
+                                          content: AutoSizeText(
                                               "Eklediğiniz konumlar burada listelenecektir."),
                                         )
                                   : Center(
@@ -101,10 +138,10 @@ class LocationsPageBody extends StatelessWidget {
                     ],
                   ),
                 );
-              });
-        } else
-          return Text("hata var");
-      },
-    );
+              } else
+                return AutoSizeText("hata var");
+            },
+          );
+        });
   }
 }

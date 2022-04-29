@@ -1,9 +1,8 @@
 part of home_view.dart;
 
 class _BuildListView extends StatelessWidget {
-  const _BuildListView({
-    Key? key,
-  }) : super(key: key);
+  final bool isdarkmode;
+  const _BuildListView({Key? key, required this.isdarkmode}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +20,7 @@ class _BuildListView extends StatelessWidget {
             InkWell(
               onTap: () => ShowPermission(context, false),
               child: HomePageContainer(
+                  isdarkmode: isdarkmode,
                   assetname: "assets/images/addlocation.png",
                   height: context.height / 3.5,
                   width: context.width / 1.4,
@@ -29,6 +29,7 @@ class _BuildListView extends StatelessWidget {
             InkWell(
               onTap: () => ShowPermission(context, true),
               child: HomePageContainer(
+                  isdarkmode: isdarkmode,
                   assetname: "assets/images/locations.png",
                   height: context.height / 3.5,
                   margin: EdgeInsets.only(left: 10),
@@ -47,15 +48,25 @@ class _BuildListView extends StatelessWidget {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (builder) =>
-                  !isLocatinPage ? AddLocationPage() : LocationsPage()));
+              builder: (builder) => !isLocatinPage
+                  ? AddLocationPage(
+                    isdarkmode: isdarkmode,
+                  )
+                  : LocationsPage(
+                      isdarkmode: isdarkmode,
+                    )));
     } else if (_permission == LocationPermission.always ||
         _permission == LocationPermission.whileInUse) {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (builder) =>
-                  !isLocatinPage ? AddLocationPage() : LocationsPage()));
+              builder: (builder) => !isLocatinPage
+                  ? AddLocationPage(
+                    isdarkmode: isdarkmode,
+                  )
+                  : LocationsPage(
+                      isdarkmode: isdarkmode,
+                    )));
     }
   }
 }

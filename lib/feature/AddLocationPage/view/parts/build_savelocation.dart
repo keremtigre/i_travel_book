@@ -10,7 +10,7 @@ class SaveLocationButton extends StatelessWidget {
     return FloatingActionButton.extended(
       elevation: 10,
       backgroundColor: AppColor().appColor,
-      label: Text(
+      label: AutoSizeText(
         "Kaydet",
         style: TextStyle(color: Colors.white),
       ),
@@ -28,7 +28,7 @@ class SaveLocationButton extends StatelessWidget {
         if (context.read<AddlocationCubit>().formKey.currentState!.validate() &&
             !context.read<AddlocationCubit>().markers.isEmpty &&
             await InternetConnectionChecker().hasConnection) {
-          ShowLoaderDialog(context, "Konum kaydediliyor...",true);
+          ShowLoaderDialog(context, "Konum kaydediliyor...", true);
           CloudHelper()
               .addLocation(
             context.read<AddlocationCubit>().placeTitleTextController.text,
@@ -44,7 +44,7 @@ class SaveLocationButton extends StatelessWidget {
               if (context.read<AddlocationCubit>().isInterstitialAdReady) {
                 context.read<AddlocationCubit>().interstitialAd?.show();
               }
-              context.read<AddlocationCubit>().AddLocationInit(context);
+              context.read<AddlocationCubit>().addLocationDispose(context);
               Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (builder) => HomePage()),
@@ -53,10 +53,10 @@ class SaveLocationButton extends StatelessWidget {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   duration: Duration(milliseconds: 25),
                   backgroundColor: AppColor().appColor,
-                  content: Text("Konum Eklendi")));
+                  content: AutoSizeText("Konum Eklendi")));
             } else if (value != null) {
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(SnackBar(content: Text(value.toString())));
+              ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: AutoSizeText(value.toString())));
               Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (builder) => HomePage()),

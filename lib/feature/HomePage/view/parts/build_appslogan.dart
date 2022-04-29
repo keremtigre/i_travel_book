@@ -1,4 +1,5 @@
 part of home_view.dart;
+
 class _BuildAppSlogan extends StatelessWidget {
   const _BuildAppSlogan({
     Key? key,
@@ -9,7 +10,7 @@ class _BuildAppSlogan extends StatelessWidget {
     return Padding(
       padding:
           EdgeInsets.only(top: context.height / 50, left: context.width / 6),
-      child: Text(
+      child: AutoSizeText(
         "Gezdiğin her an ITravelBook Seninle",
         style: TextStyle(
             fontSize: 17,

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -77,7 +78,7 @@ class SignupCubit extends Cubit<SignupState> {
                 children: [
                   ListTile(
                     leading: Icon(Icons.camera),
-                    title: Text("Kamera"),
+                    title: AutoSizeText("Kamera"),
                     onTap: () async {
                       try {
                         final image = await ImagePicker()
@@ -93,7 +94,7 @@ class SignupCubit extends Cubit<SignupState> {
                   ),
                   ListTile(
                     leading: Icon(Icons.collections),
-                    title: Text("Galeri"),
+                    title: AutoSizeText("Galeri"),
                     onTap: () async {
                       try {
                         final image = await ImagePicker().pickImage(
@@ -116,7 +117,7 @@ class SignupCubit extends Cubit<SignupState> {
                       Navigator.pop(context);
                     },
                     leading: Icon(Icons.delete),
-                    title: Text("Fotoğrafı Kaldır"),
+                    title: AutoSizeText("Fotoğrafı Kaldır"),
                   )
                 ],
               ));
@@ -149,7 +150,7 @@ class SignupCubit extends Cubit<SignupState> {
               (route) => false,
             );
             ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text("Sorun Oluştu")));
+                .showSnackBar(SnackBar(content: AutoSizeText("Sorun Oluştu")));
           }
         });
         // print(
@@ -164,7 +165,7 @@ class SignupCubit extends Cubit<SignupState> {
       } else {
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(
+            content: AutoSizeText(
           value,
         )));
       }

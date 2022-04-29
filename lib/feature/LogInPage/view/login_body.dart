@@ -29,7 +29,7 @@ class LoginPageBody extends StatelessWidget {
                   padding: EdgeInsets.only(top: size.height / 25),
                   child: Column(
                     children: [
-                      Text(
+                      AutoSizeText(
                         "Giriş Yap",
                         style: TextStyle(
                             fontSize: 30, fontWeight: FontWeight.bold),

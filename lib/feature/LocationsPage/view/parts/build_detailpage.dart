@@ -13,7 +13,7 @@ class DetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("Konum Detayları"),
+      title: AutoSizeText("Konum Detayları"),
       content: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
@@ -50,7 +50,7 @@ class DetailPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text(
+                      AutoSizeText(
                         "Başlık: ",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -59,7 +59,7 @@ class DetailPage extends StatelessWidget {
                       SizedBox(
                         height: 5,
                       ),
-                      Text(baslik),
+                      AutoSizeText(baslik),
                     ],
                   ),
                 ),
@@ -74,7 +74,7 @@ class DetailPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text(
+                      AutoSizeText(
                         "Açıklama: ",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -83,7 +83,7 @@ class DetailPage extends StatelessWidget {
                       SizedBox(
                         height: 5,
                       ),
-                      Text(aciklama),
+                      AutoSizeText(aciklama),
                     ],
                   ),
                 ),
@@ -95,7 +95,7 @@ class DetailPage extends StatelessWidget {
       actions: [
         TextButton(
             onPressed: () => (Navigator.pop(context)),
-            child: Text(
+            child: AutoSizeText(
               "Tamam",
               style: TextStyle(
                 color: Color.fromRGBO(108, 99, 255, 1),

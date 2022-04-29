@@ -26,7 +26,7 @@ class _BuildLoginOrSignUp extends StatelessWidget {
               }
             },
             child: !context.read<LoginCubit>().isLodingEmail
-                ? Text(
+                ? AutoSizeText(
                     "Giriş Yap",
                     style: TextStyle(color: Colors.white),
                   )
@@ -35,7 +35,7 @@ class _BuildLoginOrSignUp extends StatelessWidget {
                   ),
           ),
         ),
-        Text("ya da"),
+        AutoSizeText("ya da"),
         Container(
           width: size.width / 4,
           decoration: BoxDecoration(
@@ -47,7 +47,7 @@ class _BuildLoginOrSignUp extends StatelessWidget {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => SignUpPage()));
             },
-            child: Text(
+            child: AutoSizeText(
               "Üye Ol",
               style: TextStyle(color: Colors.white),
             ),

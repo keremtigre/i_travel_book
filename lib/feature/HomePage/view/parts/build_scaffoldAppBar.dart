@@ -1,7 +1,7 @@
 part of home_view.dart;
 
 class _BuildScaffoldAppBar extends StatelessWidget implements PreferredSize {
-  const _BuildScaffoldAppBar({
+   _BuildScaffoldAppBar({
     Key? key,
   }) : super(key: key);
   @override

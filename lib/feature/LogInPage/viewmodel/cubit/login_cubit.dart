@@ -8,6 +8,8 @@ import 'package:i_travel_book/core/Helper/showcircularprogress.dart';
 import 'package:i_travel_book/core/services/authentication.dart';
 import 'package:i_travel_book/core/services/cloud_firestore.dart';
 import 'package:i_travel_book/feature/HomePage/view/home_view.dart';
+
+import 'package:auto_size_text/auto_size_text.dart';
 part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
@@ -53,7 +55,7 @@ class LoginCubit extends Cubit<LoginState> {
 
   Future<String?> signInwithGoogle(BuildContext context) async {
     try {
-      ShowLoaderDialog(context, "Giriş Yapılıyor",false);
+      ShowLoaderDialog(context, "Giriş Yapılıyor", false);
       final GoogleSignInAccount? googleSignInAccount =
           await _googleSignIn.signIn();
       final GoogleSignInAuthentication googleSignInAuthentication =
@@ -81,7 +83,7 @@ class LoginCubit extends Cubit<LoginState> {
 
   LoginWithEmailMethod(BuildContext context) async {
     setIsLodingEmail();
-    ShowLoaderDialog(context, "Giriş Yapılıyor",false);
+    ShowLoaderDialog(context, "Giriş Yapılıyor", false);
     AuthenticationHelper()
         .signIn(
       email: emailController.text,
@@ -107,7 +109,7 @@ class LoginCubit extends Cubit<LoginState> {
         setIsLodingEmail();
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(
+            content: AutoSizeText(
           value,
         )));
       }

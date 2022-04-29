@@ -25,7 +25,7 @@ class _BuildUserPhoto extends StatelessWidget {
         SizedBox(
           height: 10,
         ),
-        Text(
+        AutoSizeText(
           "Profil fotoğrafı Eklemek için fotoğrafa tıklayın",
           style: TextStyle(fontWeight: FontWeight.w600),
         ),

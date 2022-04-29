@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-ShowLoaderDialog(BuildContext context,String text,bool isAddLocationPage) {
+import 'package:auto_size_text/auto_size_text.dart';
+ShowLoaderDialog(BuildContext context, String text, bool isAddLocationPage) {
   AlertDialog alert = AlertDialog(
     backgroundColor: Colors.white.withOpacity(0.9),
     content: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-       !isAddLocationPage ? Lottie.asset(
-          "assets/json/loading_an.json",
-        ) : Lottie.asset(
-          "assets/json/addlocationloading.json",
-        ) ,
+        !isAddLocationPage
+            ? Lottie.asset(
+                "assets/json/loading_an.json",
+              )
+            : Lottie.asset(
+                "assets/json/addlocationloading.json",
+              ),
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Text(text),
+          child: AutoSizeText(text),
         )
       ],
     ),
@@ -27,5 +30,3 @@ ShowLoaderDialog(BuildContext context,String text,bool isAddLocationPage) {
     },
   );
 }
-
-
