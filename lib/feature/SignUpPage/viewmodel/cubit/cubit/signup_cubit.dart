@@ -126,7 +126,6 @@ class SignupCubit extends Cubit<SignupState> {
 
   SignupWithEmail(BuildContext context) async {
     setIsloading();
-    ShowLoaderDialog(context, "Lütfen Bekleyin...", false);
     AuthenticationHelper()
         .signUp(email: emailController.text, password: passwordController.text)
         .then((value) {

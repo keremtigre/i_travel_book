@@ -55,7 +55,6 @@ class LoginCubit extends Cubit<LoginState> {
 
   Future<String?> signInwithGoogle(BuildContext context) async {
     try {
-      ShowLoaderDialog(context, "Giriş Yapılıyor", false);
       final GoogleSignInAccount? googleSignInAccount =
           await _googleSignIn.signIn();
       final GoogleSignInAuthentication googleSignInAuthentication =

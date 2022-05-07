@@ -2,6 +2,7 @@ part of addlocation_view.dart;
 
 class _BuildGoogleMap extends StatelessWidget {
   final bool isdarkmode;
+  Completer googlemapcompleter = Completer();
   _BuildGoogleMap({Key? key, required this.isdarkmode}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -81,13 +82,18 @@ class _BuildGoogleMap extends StatelessWidget {
                   _permision == LocationPermission.always) {
                 var position = await Geolocator.getCurrentPosition(
                     desiredAccuracy: LocationAccuracy.high);
-                controller.animateCamera(
-                    CameraUpdate.newCameraPosition(CameraPosition(
-                        target: LatLng(
-                          position.latitude,
-                          position.longitude,
-                        ),
-                        zoom: 17)));
+                Future.delayed(
+                  Duration(milliseconds: 200),
+                  () {
+                    controller.animateCamera(
+                        CameraUpdate.newCameraPosition(CameraPosition(
+                            target: LatLng(
+                              position.latitude,
+                              position.longitude,
+                            ),
+                            zoom: 17)));
+                  },
+                );
               } else {
                 checkLocation(context);
               }

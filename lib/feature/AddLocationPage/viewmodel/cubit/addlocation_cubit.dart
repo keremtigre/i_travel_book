@@ -35,7 +35,7 @@ class AddlocationCubit extends Cubit<AddlocationState> {
     loadInterstitialAd();
     checkLocation(context);
     print("add init çalıştı");
-    await Future.delayed(Duration(milliseconds: 25));
+    await Future.delayed(Duration(milliseconds: 125));
     emit(AddLocationLoaded());
   }
 
@@ -51,6 +51,7 @@ class AddlocationCubit extends Cubit<AddlocationState> {
     image = null;
     print("add dispose çalıştı");
     emit(AddLocationLoaded());
+    emit(AddlocationInitial());
   }
 
 //markerr güncelle
