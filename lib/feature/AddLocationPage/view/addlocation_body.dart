@@ -10,7 +10,8 @@ class AddLocationPageBody extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async {
         context.read<AddlocationCubit>().addLocationDispose(context);
-        Navigator.pop(context);
+        Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (builder) => HomePage()), (route) => false);
         return true;
       },
       child: BlocConsumer<AddlocationCubit, AddlocationState>(

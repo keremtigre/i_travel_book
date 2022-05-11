@@ -80,7 +80,7 @@ class _BuildGoogleMap extends StatelessWidget {
                       _permision == LocationPermission.whileInUse ||
                   _permision == LocationPermission.always) {
                 var position = await Geolocator.getCurrentPosition();
-                 controller.animateCamera(
+                controller.animateCamera(
                     CameraUpdate.newCameraPosition(CameraPosition(
                         target: LatLng(
                           position.latitude,
@@ -104,7 +104,10 @@ class _BuildGoogleMap extends StatelessWidget {
             child: IconButton(
               onPressed: () {
                 context.read<AddlocationCubit>().addLocationDispose(context);
-                Navigator.pop(context);
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (builder) => HomePage()),
+                    (route) => false);
               },
               icon: Icon(
                 Icons.arrow_back,

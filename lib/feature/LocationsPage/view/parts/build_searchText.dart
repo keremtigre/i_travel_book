@@ -18,6 +18,9 @@ class _searchText extends StatelessWidget {
           Expanded(
             child: TextField(
               controller: context.read<LocationsCubit>().searchController,
+              onChanged: (value) {
+                context.read<LocationsCubit>().searchLocation(snapshot);
+              },
               decoration: InputDecoration(
                 hintStyle: TextStyle(color: Colors.black),
                 fillColor: Colors.white.withOpacity(0.6),
@@ -52,8 +55,8 @@ class _searchText extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(left: 5),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              color: AppColor().appColor),
+                borderRadius: BorderRadius.circular(5),
+                color: AppColor().appColor),
             child: TextButton(
                 onPressed: () {
                   if (!context
@@ -65,7 +68,10 @@ class _searchText extends StatelessWidget {
                   }
                   FocusScope.of(context).unfocus();
                 },
-                child: AutoSizeText("Ara",style: TextStyle(color: Colors.white),)),
+                child: AutoSizeText(
+                  "Ara",
+                  style: TextStyle(color: Colors.white),
+                )),
           )
         ],
       ),

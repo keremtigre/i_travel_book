@@ -39,7 +39,7 @@ class HomeCubit extends Cubit<HomeState> {
   homeInitState() async {
     await AddmobService.initialize();
     await Geolocator.requestPermission();
-    await Future.delayed(Duration(milliseconds: 200));
+    await Future.delayed(Duration(milliseconds: 25));
     isdarkmode = await getDarkmode();
     emit(HomeLoaded());
   }

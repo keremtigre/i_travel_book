@@ -23,8 +23,9 @@ class _BuildGoogleMap extends StatelessWidget {
             initialCameraPosition:
                 context.read<LocationsCubit>().cameraPosition,
             onMapCreated: (GoogleMapController googleMapController) {
-              context.read<LocationsCubit>().googleMapController =
-                  googleMapController;
+              context
+                  .read<LocationsCubit>()
+                  .initialGoogleMapController(googleMapController);
               if (darkmode) {
                 rootBundle
                     .loadString('assets/json/map-dark.json')

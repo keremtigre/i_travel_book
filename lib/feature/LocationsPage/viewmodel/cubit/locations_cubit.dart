@@ -3,6 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:i_travel_book/feature/HomePage/view/home_view.dart';
 import 'package:i_travel_book/feature/LocationsPage/model/location.dart';
 part 'locations_state.dart';
 
@@ -17,15 +18,24 @@ class LocationsCubit extends Cubit<LocationsState> {
   double originLongitude = 0;
   int pageViewCounter = 1;
   int pageViewTotalCount = 0;
-  GoogleMapController? googleMapController;
+  Completer gMapCompleter = Completer();
   late CameraPosition cameraPosition =
       CameraPosition(target: LatLng(originLatitude, originLongitude));
   //initial error hatası için
   LocationPageInit(AsyncSnapshot<QuerySnapshot<Object?>> snapshot) async {
     markers.clear();
+    await Future.delayed(Duration(milliseconds: 400));
     getLocations(snapshot);
   }
 
+  initialGoogleMapController(GoogleMapController googleMapController) async {
+    if (gMapCompleter.isCompleted) {
+    } else {
+      gMapCompleter.complete(googleMapController);
+
+      emit(LocationsLoaded());
+    }
+  }
 
   getLocations(AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
     if (snapshot.hasData) {
@@ -50,8 +60,11 @@ class LocationsCubit extends Cubit<LocationsState> {
     searchController.clear();
     markers.clear();
     locationModel.clear();
-    Navigator.pop(context);
-    emit(LocationsInitial());
+    gMapCompleter = Completer();
+    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (builder) {
+      emit(LocationsInitial());
+      return HomePage();
+    }), (route) => false);
   }
 
   searchLocation(AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
@@ -72,7 +85,14 @@ class LocationsCubit extends Cubit<LocationsState> {
           markers.clear();
         } else if (title.contains(searchController.text.toLowerCase())) {
           isCompareCount++;
-          print(s.title + "else çalıştı");
+          print(s.title + " else çalıştı");
+          return true;
+        } else if (title
+            .compareTo(searchController.text.toLowerCase())
+            .isEven) {
+          isCompareCount++;
+          print(s.title + " else else çalıştı");
+          locationModel.insert(0, s);
           return true;
         }
 
@@ -86,6 +106,7 @@ class LocationsCubit extends Cubit<LocationsState> {
         final _lat = double.parse(locationModel[index].lat);
         getMarker(index, _lat, _lng, "on page changed");
         pageViewCounter = index + 1;
+        emit(LocationsLoaded());
       }
     } else {
       getLocations(snapshot);
@@ -102,8 +123,9 @@ class LocationsCubit extends Cubit<LocationsState> {
           value.toString(),
         ));
     markers[MarkerId(value.toString())] = marker;
+    GoogleMapController googleMapController = await gMapCompleter.future;
     await googleMapController
-        ?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+        .animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
             target: LatLng(
               lat,
               lng,

@@ -45,28 +45,32 @@ class _BuildListView extends StatelessWidget {
     if (_permission == LocationPermission.denied ||
         _permission == LocationPermission.deniedForever) {
       await Geolocator.requestPermission();
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (builder) => !isLocatinPage
-                  ? AddLocationPage(
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+            builder: (builder) => !isLocatinPage
+                ? AddLocationPage(
                     isdarkmode: isdarkmode,
                   )
-                  : LocationsPage(
-                      isdarkmode: isdarkmode,
-                    )));
+                : LocationsPage(
+                    isdarkmode: isdarkmode,
+                  )),
+        (route) => false,
+      );
     } else if (_permission == LocationPermission.always ||
         _permission == LocationPermission.whileInUse) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (builder) => !isLocatinPage
-                  ? AddLocationPage(
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+            builder: (builder) => !isLocatinPage
+                ? AddLocationPage(
                     isdarkmode: isdarkmode,
                   )
-                  : LocationsPage(
-                      isdarkmode: isdarkmode,
-                    )));
+                : LocationsPage(
+                    isdarkmode: isdarkmode,
+                  )),
+        (route) => false,
+      );
     }
   }
 }
