@@ -29,6 +29,7 @@ part 'parts/build_editprofile.dart';
 part 'parts/build_welcomeText.dart';
 part 'parts/build_changepassword.dart';
 part 'parts/build_settingsdrawer.dart';
+part 'parts/build_changeLanguage.dart';
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 

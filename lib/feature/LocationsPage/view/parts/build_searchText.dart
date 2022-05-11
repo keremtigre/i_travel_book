@@ -19,7 +19,7 @@ class _searchText extends StatelessWidget {
             child: TextField(
               controller: context.read<LocationsCubit>().searchController,
               onChanged: (value) {
-                context.read<LocationsCubit>().searchLocation(snapshot);
+                context.read<LocationsCubit>().searchLocations(snapshot);
               },
               decoration: InputDecoration(
                 hintStyle: TextStyle(color: Colors.black),
@@ -47,32 +47,11 @@ class _searchText extends StatelessWidget {
                       width: 2,
                       color: AppColor().appColor,
                     )),
-                hintText: "Aramak istediğiniz konum",
+                hintText: "Aramak istediğiniz konumun başlığı",
                 prefixText: ' ',
               ),
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(left: 5),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: AppColor().appColor),
-            child: TextButton(
-                onPressed: () {
-                  if (!context
-                      .read<LocationsCubit>()
-                      .searchController
-                      .text
-                      .isEmpty) {
-                    context.read<LocationsCubit>().searchLocation(snapshot);
-                  }
-                  FocusScope.of(context).unfocus();
-                },
-                child: AutoSizeText(
-                  "Ara",
-                  style: TextStyle(color: Colors.white),
-                )),
-          )
         ],
       ),
     );

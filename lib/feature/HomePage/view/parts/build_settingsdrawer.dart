@@ -49,12 +49,14 @@ class SettingsDrawer extends StatelessWidget {
                       showDialog(
                           context: context,
                           builder: (builder) {
-                            return EditProfile(isdarkmode: snapshot.data,);
+                            return EditProfile(
+                              isdarkmode: snapshot.data,
+                            );
                           });
                     },
                     leading: Icon(
                       Icons.manage_accounts_outlined,
-                      size: 35,
+                      size: 32,
                       color: settingDrawerColor,
                     ),
                     title: AutoSizeText(
@@ -67,12 +69,14 @@ class SettingsDrawer extends StatelessWidget {
                       showDialog(
                           context: context,
                           builder: (builder) {
-                            return ChangePasswordDialog(isdarkmode: snapshot.data,);
+                            return ChangePasswordDialog(
+                              isdarkmode: snapshot.data,
+                            );
                           });
                     },
                     leading: Icon(
                       Icons.password_outlined,
-                      size: 35,
+                      size: 32,
                       color: settingDrawerColor,
                     ),
                     title: AutoSizeText(
@@ -80,6 +84,29 @@ class SettingsDrawer extends StatelessWidget {
                       style: TextStyle(color: settingDrawerColor, fontSize: 16),
                     ),
                   ),
+                  //************* dil değişikliği başlangc */
+                  ListTile(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (builder) {
+                            return changeLanguage(
+                              isdarkmode: snapshot.data,
+                            );
+                          });
+                    },
+                    leading: Icon(
+                      Icons.translate,
+                      size: 32,
+                      color: settingDrawerColor,
+                    ),
+                    title: AutoSizeText(
+                      "Uygulama Dili",
+                      style: TextStyle(fontSize: 16, color: settingDrawerColor),
+                    ),
+                  ),
+
+                  //************* dil değişikliği son */
                   ListTile(
                     onTap: () {
                       showDialog(
@@ -141,7 +168,7 @@ class SettingsDrawer extends StatelessWidget {
                     },
                     leading: Icon(
                       Icons.logout,
-                      size: 35,
+                      size: 32,
                       color: settingDrawerColor,
                     ),
                     title: AutoSizeText(
@@ -210,7 +237,7 @@ class SettingsDrawer extends StatelessWidget {
                     },
                     leading: Icon(
                       Icons.delete_sweep,
-                      size: 35,
+                      size: 32,
                       color: settingDrawerColor,
                     ),
                     title: AutoSizeText(

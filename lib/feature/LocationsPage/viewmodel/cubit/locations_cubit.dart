@@ -67,6 +67,48 @@ class LocationsCubit extends Cubit<LocationsState> {
     }), (route) => false);
   }
 
+  searchLocations(AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
+    int isCompareCount = -1;
+    int index = 0;
+    locationModel.clear();
+    if (!searchController.text.isEmpty) {
+      if (locationModel.length == 0) {
+        getLocations(snapshot);
+      }
+      print("text: " +
+          searchController.text +
+          ", length: " +
+          locationModel.length.toString());
+      locationModel = locationModel.where((s) {
+        String title = s.title.toLowerCase();
+
+        if (!title.contains(searchController.text.toLowerCase())) {
+          markers.clear();
+        } else if (title.contains(searchController.text.toLowerCase())) {
+          isCompareCount++;
+          print(s.title + " else çalıştı");
+          return true;
+        }
+
+        return false;
+      }).toList();
+      setPageViewTotalCount();
+      print("iscompare çalıştı: " + isCompareCount.toString());
+      if (isCompareCount != -1) {
+        markers.clear();
+        locationModel.sort((a, b) => a.title.length.compareTo(b.title.length));
+        final _lng = double.parse(locationModel[index].lng);
+        final _lat = double.parse(locationModel[index].lat);
+        getMarker(index, _lat, _lng, "on page changed");
+        pageViewCounter = index + 1;
+        emit(LocationsLoaded());
+      }
+    } else {
+      getLocations(snapshot);
+      emit(LocationsLoaded());
+    }
+  }
+
   searchLocation(AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
     int isCompareCount = -1;
     int index = 0;
@@ -81,18 +123,9 @@ class LocationsCubit extends Cubit<LocationsState> {
           locationModel.length.toString());
       locationModel = locationModel.where((s) {
         String title = s.title.toLowerCase();
-        if (!title.contains(searchController.text.toLowerCase())) {
-          markers.clear();
-        } else if (title.contains(searchController.text.toLowerCase())) {
-          isCompareCount++;
-          print(s.title + " else çalıştı");
-          return true;
-        } else if (title
-            .compareTo(searchController.text.toLowerCase())
-            .isEven) {
+        if (title == searchController.text.toLowerCase()) {
           isCompareCount++;
           print(s.title + " else else çalıştı");
-          locationModel.insert(0, s);
           return true;
         }
 
