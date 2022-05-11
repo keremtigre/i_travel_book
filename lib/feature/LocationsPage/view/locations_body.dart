@@ -110,10 +110,8 @@ class LocationsPageBody extends StatelessWidget {
                                               alignment: Alignment.bottomCenter,
                                               actionsAlignment:
                                                   MainAxisAlignment.center,
-                                              title:
-                                                  AutoSizeText("Arama Sonucu"),
-                                              content: AutoSizeText(
-                                                  "Konum Bulunamadı"),
+                                              title: Text("Arama Sonucu"),
+                                              content: Text("Konum Bulunamadı"),
                                               actions: [
                                                 TextButton(
                                                     onPressed: () {
@@ -123,13 +121,13 @@ class LocationsPageBody extends StatelessWidget {
                                                           .getLocations(
                                                               snapshot);
                                                     },
-                                                    child: AutoSizeText(
+                                                    child: Text(
                                                         "Konumları Tekrar Getir"))
                                               ],
                                             )
                                       : AlertDialog(
-                                          title: AutoSizeText("Konum Ekleyin"),
-                                          content: AutoSizeText(
+                                          title: Text("Konum Ekleyin"),
+                                          content: Text(
                                               "Eklediğiniz konumlar burada listelenecektir."),
                                         )
                                   : Center(

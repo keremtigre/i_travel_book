@@ -29,6 +29,22 @@ class LocationsPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        actions: [
+          TextButton(
+              onPressed: () {
+                context.read<LocationsCubit>().LocationPageDispose(context);
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (builder) =>
+                            LocationsPage(isdarkmode: isdarkmode)),
+                    (route) => false);
+              },
+              child: Text(
+                "Sayfayı Yenile",
+                style: TextStyle(color: Colors.white),
+              ))
+        ],
         leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {

@@ -49,7 +49,7 @@ class SettingsDrawer extends StatelessWidget {
                       showDialog(
                           context: context,
                           builder: (builder) {
-                            return EditProfile();
+                            return EditProfile(isdarkmode: snapshot.data,);
                           });
                     },
                     leading: Icon(
@@ -67,7 +67,7 @@ class SettingsDrawer extends StatelessWidget {
                       showDialog(
                           context: context,
                           builder: (builder) {
-                            return ChangePasswordDialog();
+                            return ChangePasswordDialog(isdarkmode: snapshot.data,);
                           });
                     },
                     leading: Icon(
@@ -86,34 +86,56 @@ class SettingsDrawer extends StatelessWidget {
                           context: context,
                           builder: (builder) {
                             return AlertDialog(
-                              title: const AutoSizeText("Çkış Yap"),
-                              content: const AutoSizeText("Çıkış Yapılsın mı"),
-                              actions: [
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: AutoSizeText(
-                                      "Hayır",
-                                      style: TextStyle(
-                                        color: settingDrawerColor,
+                              title: Text("Çıkış Yap"),
+                              content: Container(
+                                height: context.height / 8,
+                                width: context.width,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text("Çıkış Yapılsın mı ?"),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          top: context.height / 50),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: AutoSizeText(
+                                                "Hayır",
+                                                style: TextStyle(
+                                                  color: settingDrawerColor,
+                                                ),
+                                              )),
+                                          TextButton(
+                                              onPressed: () {
+                                                AuthenticationHelper()
+                                                    .signOut();
+                                                removeDataSignup();
+                                                Navigator.pushAndRemoveUntil(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (builder) =>
+                                                            LoginPage()),
+                                                    (Route<dynamic> route) =>
+                                                        false);
+                                              },
+                                              child: AutoSizeText("Evet",
+                                                  style: TextStyle(
+                                                      color:
+                                                          settingDrawerColor))),
+                                        ],
                                       ),
-                                    )),
-                                TextButton(
-                                    onPressed: () {
-                                      AuthenticationHelper().signOut();
-                                      removeDataSignup();
-                                      Navigator.pushAndRemoveUntil(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (builder) =>
-                                                  LoginPage()),
-                                          (Route<dynamic> route) => false);
-                                    },
-                                    child: AutoSizeText("Evet",
-                                        style: TextStyle(
-                                            color: settingDrawerColor))),
-                              ],
+                                    )
+                                  ],
+                                ),
+                              ),
                             );
                           });
                     },
@@ -133,42 +155,56 @@ class SettingsDrawer extends StatelessWidget {
                           context: context,
                           builder: (builder) {
                             return AlertDialog(
-                              title: const AutoSizeText("Hesabı Sil"),
-                              content: const AutoSizeText(
-                                  "Bu işlemden sonra tüm verileriniz silinecektir. Devam etmek istiyor musunuz ?"),
-                              actions: [
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: AutoSizeText(
-                                      "Hayır",
-                                      style: TextStyle(
-                                        color: settingDrawerColor,
-                                      ),
-                                    )),
-                                TextButton(
-                                    onPressed: () {
-                                      debugPrint("Hesap Silindi=> " +
-                                          FirebaseAuth
-                                              .instance.currentUser!.email
-                                              .toString());
-                                      AuthenticationHelper().deleteUser(
-                                          user: FirebaseAuth
-                                              .instance.currentUser!);
-                                      removeData();
-                                      Navigator.pushAndRemoveUntil(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (builder) =>
-                                                  LoginPage()),
-                                          (Route<dynamic> route) => false);
-                                    },
-                                    child: AutoSizeText("Evet",
-                                        style: TextStyle(
-                                          color: settingDrawerColor,
-                                        ))),
-                              ],
+                              title: Text("Hesabı Sil"),
+                              content: Container(
+                                height: context.height / 7,
+                                width: context.width,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                        "Bu işlemden sonra tüm verileriniz silinecektir. Devam etmek istiyor musunuz ?"),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: AutoSizeText(
+                                              "Hayır",
+                                              style: TextStyle(
+                                                color: settingDrawerColor,
+                                              ),
+                                            )),
+                                        TextButton(
+                                            onPressed: () {
+                                              debugPrint("Hesap Silindi=> " +
+                                                  FirebaseAuth.instance
+                                                      .currentUser!.email
+                                                      .toString());
+                                              AuthenticationHelper().deleteUser(
+                                                  user: FirebaseAuth
+                                                      .instance.currentUser!);
+                                              removeData();
+                                              Navigator.pushAndRemoveUntil(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (builder) =>
+                                                          LoginPage()),
+                                                  (Route<dynamic> route) =>
+                                                      false);
+                                            },
+                                            child: AutoSizeText("Evet",
+                                                style: TextStyle(
+                                                  color: settingDrawerColor,
+                                                ))),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
                             );
                           });
                     },

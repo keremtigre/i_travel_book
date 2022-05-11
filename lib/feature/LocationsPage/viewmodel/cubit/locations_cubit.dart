@@ -23,9 +23,9 @@ class LocationsCubit extends Cubit<LocationsState> {
   //initial error hatası için
   LocationPageInit(AsyncSnapshot<QuerySnapshot<Object?>> snapshot) async {
     markers.clear();
-    await Future.delayed(Duration(milliseconds: 25));
     getLocations(snapshot);
   }
+
 
   getLocations(AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
     if (snapshot.hasData) {
@@ -102,7 +102,6 @@ class LocationsCubit extends Cubit<LocationsState> {
           value.toString(),
         ));
     markers[MarkerId(value.toString())] = marker;
-    await Future.delayed(Duration(milliseconds: 5));
     await googleMapController
         ?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
             target: LatLng(
