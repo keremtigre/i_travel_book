@@ -3,11 +3,17 @@ part of home_view.dart;
 class HomePageBody extends StatelessWidget {
   HomePageBody({Key? key}) : super(key: key);
   FirebaseAuth _auth = FirebaseAuth.instance;
+  String language = "";
+  initialLanguage() async {
+    language = await getString("language");
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<bool>(
         future: getBool("darkmode"),
         builder: (context, darkmodeSnapshot) {
+          initialLanguage();
           if (darkmodeSnapshot.hasData) {
             return BlocConsumer<HomeCubit, HomeState>(
                 listener: (context, state) {},
@@ -40,9 +46,15 @@ class HomePageBody extends StatelessWidget {
                             children: [
                               _BuildWelcomeUserNameText(
                                 snapshot: snapshot,
+                                language:language
                               ),
-                              _BuildAppSlogan(),
-                              _BuildListView(isdarkmode:darkmodeSnapshot.data!,),
+                              _BuildAppSlogan(
+                                language:language
+                              ),
+                              _BuildListView(
+                                isdarkmode: darkmodeSnapshot.data!,
+                                language:language
+                              ),
                               _BuildHomePageImage(),
                               _BuildBannerAdMob(),
                             ],

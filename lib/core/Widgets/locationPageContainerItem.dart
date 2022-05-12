@@ -18,6 +18,7 @@ class LocationsContainer extends StatelessWidget {
   final String title;
   final String detail;
   final int index;
+  final language;
   final bool isdarkmode;
   final AsyncSnapshot<QuerySnapshot<Object?>> snapshot2;
   const LocationsContainer(
@@ -25,6 +26,7 @@ class LocationsContainer extends StatelessWidget {
       required this.detail,
       required this.isdarkmode,
       required this.index,
+      required this.language,
       required this.pageViewCount,
       required this.pageViewTotalCount,
       required this.title,
@@ -79,6 +81,7 @@ class LocationsContainer extends StatelessWidget {
                       showDialog(
                           context: context,
                           builder: (context) => DetailPage(
+                                language:language,
                                 image_url: url,
                                 aciklama: _aciklama,
                                 baslik: _baslik,

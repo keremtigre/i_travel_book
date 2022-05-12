@@ -34,7 +34,17 @@ class SignUpPage extends StatelessWidget {
                     ? AppColor().appColor
                     : AppColor().darkModeBackgroundColor,
               ),
-              body: SignupBody(),
+              body: FutureBuilder<String>(
+                  future: getString("language"),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return SignupBody(
+                        language: snapshot.data,
+                      );
+                    } else {
+                      return CircularProgressIndicator();
+                    }
+                  }),
             );
           } else {
             return Center(

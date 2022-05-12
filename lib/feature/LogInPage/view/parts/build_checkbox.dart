@@ -1,10 +1,8 @@
 part of login_view.dart;
 
 class _BuildCheckBox extends StatelessWidget {
-  const _BuildCheckBox({
-    Key? key,
-  }) : super(key: key);
-
+  const _BuildCheckBox({Key? key, required this.language}) : super(key: key);
+  final language;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -17,7 +15,7 @@ class _BuildCheckBox extends StatelessWidget {
             context.read<LoginCubit>().changeBeniHatirla(value);
           },
         ),
-        AutoSizeText("Beni Hatırla"),
+        AutoSizeText(language == "TR" ? "Beni Hatırla":"Remember Me"),
       ],
     );
   }

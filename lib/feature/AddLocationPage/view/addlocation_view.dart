@@ -10,6 +10,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:i_travel_book/core/Helper/shared_preferences.dart';
 import 'package:i_travel_book/core/Helper/showcircularprogress.dart';
 import 'package:i_travel_book/core/Strings/addlocation_strings.dart';
 import 'package:i_travel_book/core/Widgets/addlocation_text.dart';
@@ -32,13 +33,23 @@ part 'parts/build_savelocation.dart';
 
 class AddLocationPage extends StatelessWidget {
   final bool isdarkmode;
-  const AddLocationPage({Key? key,required this.isdarkmode}) : super(key: key);
+  const AddLocationPage({Key? key, required this.isdarkmode}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: AddLocationPageBody(isdarkmode: isdarkmode,),
+      body: FutureBuilder<String>(
+          future: getString("language"),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return AddLocationPageBody(
+                language: snapshot.data,
+                isdarkmode: isdarkmode,);
+            } else {
+              return CircularProgressIndicator();
+            }
+          }),
       floatingActionButton: SaveLocationButton(),
     );
   }

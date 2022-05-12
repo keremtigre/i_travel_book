@@ -2,6 +2,8 @@ library login_view.dart;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:i_travel_book/core/Helper/shared_preferences.dart';
 import 'package:i_travel_book/feature/HomePage/view/home_view.dart';
 import 'package:i_travel_book/feature/LogInPage/viewmodel/cubit/login_cubit.dart';
 import 'package:i_travel_book/feature/SignUpPage/view/signup_view.dart';
@@ -17,7 +19,7 @@ part 'parts/build_googleSignInButton.dart';
 part 'parts/build_checkbox.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  LoginPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +27,17 @@ class LoginPage extends StatelessWidget {
         centerTitle: true,
         title: AutoSizeText("ITravelBook"),
       ),
-      body: LoginPageBody(),
+      body: FutureBuilder<String>(
+        future: getString("language"),
+        builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return LoginPageBody(
+            language: snapshot.data,
+          );
+        } else {
+          return CircularProgressIndicator();
+        }
+      }),
     );
   }
 }

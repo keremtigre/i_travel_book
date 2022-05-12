@@ -1,8 +1,8 @@
 part of signup_view.dart;
 
 class _BuildUserPhoto extends StatelessWidget {
-  const _BuildUserPhoto({Key? key}) : super(key: key);
-
+  const _BuildUserPhoto({Key? key, required this.language}) : super(key: key);
+  final language;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -26,7 +26,9 @@ class _BuildUserPhoto extends StatelessWidget {
           height: 10,
         ),
         AutoSizeText(
-          "Profil fotoğrafı Eklemek için fotoğrafa tıklayın",
+          language == "TR"
+              ? "Profil fotoğrafı Eklemek için fotoğrafa tıklayın"
+              : "Click on photo to add profile photo",
           style: TextStyle(fontWeight: FontWeight.w600),
         ),
       ],

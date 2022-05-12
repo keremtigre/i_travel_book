@@ -5,15 +5,17 @@ class DetailPage extends StatelessWidget {
       {Key? key,
       required this.aciklama,
       required this.baslik,
+      required this.language,
       required this.image_url})
       : super(key: key);
   final String aciklama;
+  final language;
   final String baslik;
   final String image_url;
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("Konum Detayları"),
+      title: Text( language=="TR" ?  "Konum Detayları" : "Location Details"),
       content: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
@@ -51,7 +53,7 @@ class DetailPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        "Başlık: ",
+                       language=="TR" ? "Başlık:" : "Title:",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             decoration: TextDecoration.underline),
@@ -75,7 +77,7 @@ class DetailPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        "Açıklama: ",
+                         language=="TR" ? "Açıklama:": "Text:",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             decoration: TextDecoration.underline),

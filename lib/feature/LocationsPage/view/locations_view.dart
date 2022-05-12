@@ -19,10 +19,9 @@ part 'parts/build_searchText.dart';
 
 class LocationsPage extends StatelessWidget {
   final bool isdarkmode;
-  LocationsPage({
-    Key? key,
-    required this.isdarkmode,
-  }) : super(key: key);
+  LocationsPage({Key? key, required this.isdarkmode, required this.language})
+      : super(key: key);
+  String language;
   @override
   Widget build(BuildContext context) {
     Color settingDrawerColor = !isdarkmode ? AppColor().appColor : Colors.white;
@@ -36,12 +35,12 @@ class LocationsPage extends StatelessWidget {
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                        builder: (builder) =>
-                            LocationsPage(isdarkmode: isdarkmode)),
+                        builder: (builder) => LocationsPage(
+                            language: language, isdarkmode: isdarkmode)),
                     (route) => false);
               },
               child: Text(
-                "Sayfayı Yenile",
+                language == "TR" ? "Sayfayı Yenile" : "Refresh Page",
                 style: TextStyle(color: Colors.white),
               ))
         ],
@@ -54,7 +53,7 @@ class LocationsPage extends StatelessWidget {
             ? AppColor().appColor
             : AppColor().darkModeBackgroundColor,
         elevation: 0,
-        title: AutoSizeText("Konumlarım"),
+        title: AutoSizeText(language == "TR" ? "Konumlarım" : "Locations"),
         centerTitle: true,
       ),
       body: WillPopScope(

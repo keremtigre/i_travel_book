@@ -9,9 +9,10 @@ class _BuildForm extends StatelessWidget {
 
   const _BuildForm({
     Key? key,
+    required this.language,
     required this.size,
   }) : super(key: key);
-
+  final language;
   final Size size;
 
   @override
@@ -29,13 +30,13 @@ class _BuildForm extends StatelessWidget {
             child: AuthTextField(
               isLoginCubit: true,
               controller: context.read<LoginCubit>().emailController,
-              hinntext: LoginPageStrings.emailFieldText,
+              hinntext:language == "TR" ?  LoginPageStrings.emailFieldText : "Enter your mail address",
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return "Lütfen e-mail adresinizi giriniz";
+                  return language == "TR" ?  "Lütfen e-mail adresinizi giriniz": "Please enter your mail address";
                 }
                 if (!_isValidEmail(value)) {
-                  return "Geçersiz e-mail";
+                  return language == "TR" ? "Geçersiz e-mail": "invalid e-mail";
                 } else {
                   return null;
                 }
@@ -52,13 +53,13 @@ class _BuildForm extends StatelessWidget {
               isLoginCubit: true,
               isPasswordText: true,
               controller: context.read<LoginCubit>().passwordController,
-              hinntext: LoginPageStrings.passwordTextField,
+              hinntext: language == "TR" ?  LoginPageStrings.passwordTextField : "Enter your password",
               validator: (password) {
                 if (password!.isEmpty || password == null) {
-                  return LoginPageStrings.passwordTextErrorMesage1;
+                  return language == "TR" ?  LoginPageStrings.passwordTextErrorMesage1: "Please enter your password";
                 }
                 if (password.length < 6) {
-                  return LoginPageStrings.passwordTextErrorMesage2;
+                  return language == "TR" ?  LoginPageStrings.passwordTextErrorMesage2 : " Your password cannot be less than 6 characters";;
                 } else {
                   return null;
                 }

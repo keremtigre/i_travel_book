@@ -2,8 +2,10 @@ part of home_view.dart;
 
 class _BuildListView extends StatelessWidget {
   final bool isdarkmode;
-  const _BuildListView({Key? key, required this.isdarkmode}) : super(key: key);
-
+  const _BuildListView(
+      {Key? key, required this.isdarkmode, required this.language})
+      : super(key: key);
+  final language;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,7 +26,8 @@ class _BuildListView extends StatelessWidget {
                   assetname: "assets/images/addlocation.png",
                   height: context.height / 3.5,
                   width: context.width / 1.4,
-                  containerTitle: "Konum Ekle"),
+                  containerTitle:
+                      language == "TR" ? "Konum Ekle" : "Add Location"),
             ),
             InkWell(
               onTap: () => ShowPermission(context, true),
@@ -34,7 +37,9 @@ class _BuildListView extends StatelessWidget {
                   height: context.height / 3.5,
                   margin: EdgeInsets.only(left: 10),
                   width: context.width / 1.4,
-                  containerTitle: "Kayıtlı Konumlarım"),
+                  containerTitle: language == "TR"
+                      ? "Kayıtlı Konumlarım"
+                      : "Saved Locations"),
             )
           ]),
     );
@@ -53,6 +58,7 @@ class _BuildListView extends StatelessWidget {
                     isdarkmode: isdarkmode,
                   )
                 : LocationsPage(
+                  language: language,
                     isdarkmode: isdarkmode,
                   )),
         (route) => false,
@@ -67,6 +73,7 @@ class _BuildListView extends StatelessWidget {
                     isdarkmode: isdarkmode,
                   )
                 : LocationsPage(
+                   language: language,
                     isdarkmode: isdarkmode,
                   )),
         (route) => false,

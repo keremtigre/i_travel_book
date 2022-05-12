@@ -1,11 +1,11 @@
 part of login_view.dart;
 
 class _BuildGoogleSignInButton extends StatelessWidget {
-  const _BuildGoogleSignInButton({Key? key, required this.size})
+  const _BuildGoogleSignInButton({Key? key, required this.size,required this.language})
       : super(key: key);
 
   final Size size;
-
+  final language;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -46,8 +46,8 @@ class _BuildGoogleSignInButton extends StatelessWidget {
                         height: size.height / 25,
                         fit: BoxFit.cover,
                       ),
-                      AutoSizeText(
-                        "Google ile Giriş Yap",
+                      Text(
+                        language == "TR" ? "Google ile Giriş Yap" :"Log in with Google",
                         style: TextStyle(color: Colors.black),
                       ),
                     ],

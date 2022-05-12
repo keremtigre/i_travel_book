@@ -1,12 +1,19 @@
 part of home_view.dart;
 
 class ChangePasswordDialog extends StatelessWidget {
-  ChangePasswordDialog({Key? key,required this.isdarkmode}) : super(key: key);
+  ChangePasswordDialog(
+      {Key? key, required this.isdarkmode, required this.language})
+      : super(key: key);
   final GlobalKey<FormState> _formKey =
       new GlobalKey<FormState>(debugLabel: 'changepasskey');
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _passwordController2 = TextEditingController();
   final isdarkmode;
+  String language = "";
+  initialLanguage() async {
+    language = await getString("language");
+  }
+
   @override
   Widget build(BuildContext context) {
     Color changePasswordColor =
@@ -14,7 +21,7 @@ class ChangePasswordDialog extends StatelessWidget {
     return Form(
       key: _formKey,
       child: AlertDialog(
-        title: Text("Şifremi Değiştir"),
+        title: Text(language =="TR" ? "Şifremi Değiştir" :"Change My Password"),
         content: Container(
           height: context.height / 3.7,
           width: context.width,
@@ -25,10 +32,10 @@ class ChangePasswordDialog extends StatelessWidget {
                 TextFormField(
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Bu alan boş bırakılamaz';
+                      return language =="TR" ?  'Bu alan boş bırakılamaz':"This field cannot be left blank";
                     }
                     if (value != _passwordController2.text) {
-                      return 'İki Şife Birbiri ile uyuşmuyor';
+                      return language =="TR" ?  'İki Şife Birbiri ile uyuşmuyor':"Two Passwords Don't Match Each Other";
                     } else {
                       return null;
                     }
@@ -57,7 +64,7 @@ class ChangePasswordDialog extends StatelessWidget {
                       Icons.vpn_key,
                       color: changePasswordColor,
                     ),
-                    hintText: "Yeni Şifrenizi Giriniz",
+                    hintText: language =="TR" ?  "Yeni Şifrenizi Giriniz":"Enter Your New Password",
                     prefixText: ' ',
                   ),
                 ),
@@ -67,10 +74,10 @@ class ChangePasswordDialog extends StatelessWidget {
                 TextFormField(
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Bu alan boş bırakılamaz';
+                      return language =="TR" ?  'Bu alan boş bırakılamaz':"This field cannot be left blank";
                     }
                     if (value != _passwordController.text) {
-                      return 'İki Şife Birbiri ile uyuşmuyor';
+                      return  language =="TR" ? 'İki Şife Birbiri ile uyuşmuyor':"Two Passwords Don't Match Each Other";
                     } else {
                       return null;
                     }
@@ -99,7 +106,7 @@ class ChangePasswordDialog extends StatelessWidget {
                       Icons.vpn_key,
                       color: changePasswordColor,
                     ),
-                    hintText: "Yeni Şifrenizi Tekrarlayın",
+                    hintText: language =="TR" ?  "Yeni Şifrenizi Tekrarlayın":"Repeat Your New Password",
                     prefixText: ' ',
                   ),
                 ),
@@ -113,7 +120,7 @@ class ChangePasswordDialog extends StatelessWidget {
                             Navigator.pop(context);
                           },
                           child: AutoSizeText(
-                            "İptal",
+                           language =="TR" ?  "İptal" : "Cancel",
                             style: TextStyle(
                               color: changePasswordColor,
                             ),
@@ -128,7 +135,7 @@ class ChangePasswordDialog extends StatelessWidget {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                           content: AutoSizeText(
-                                              "Şifreniz Başarıyla Güncellendi")));
+                                            language =="TR" ?   "Şifreniz Başarıyla Güncellendi" :"Your Password Has Been Updated Successfully")));
                                   putString(
                                       "password", _passwordController2.text);
                                   Navigator.pop(context);
@@ -136,14 +143,14 @@ class ChangePasswordDialog extends StatelessWidget {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                           content: AutoSizeText(
-                                              "Bir Sorun Oluştu. Başarısız İşlem")));
+                                            language =="TR" ?   "Bir Sorun Oluştu. Başarısız İşlem":"A Problem Occurred. Failed Transaction")));
                                   Navigator.pop(context);
                                 }
                               });
                             }
                           },
                           child: AutoSizeText(
-                            "Değiştir",
+                           language =="TR" ?  "Değiştir" :"Change",
                             style: TextStyle(
                               color: changePasswordColor,
                             ),

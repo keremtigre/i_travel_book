@@ -17,6 +17,7 @@ import 'package:i_travel_book/feature/AddLocationPage/view/addlocation_view.dart
 import 'package:i_travel_book/feature/HomePage/viewmodel/cubit/home_cubit.dart';
 import 'package:i_travel_book/feature/LocationsPage/view/locations_view.dart';
 import 'package:i_travel_book/feature/LogInPage/view/login_view.dart';
+import 'package:i_travel_book/feature/StartingPage/startingpage.dart';
 import 'package:kartal/kartal.dart';
 part 'home_body.dart';
 part 'parts/build_scaffoldLeading.dart';
@@ -30,11 +31,17 @@ part 'parts/build_welcomeText.dart';
 part 'parts/build_changepassword.dart';
 part 'parts/build_settingsdrawer.dart';
 part 'parts/build_changeLanguage.dart';
+
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  HomePage({Key? key}) : super(key: key);
+  String language = "";
+  initialLanguage() async {
+    language = await getString("language");
+  }
 
   @override
   Widget build(BuildContext context) {
+    initialLanguage();
     context.read<HomeCubit>().getDarkmode();
     return Scaffold(
       drawer: SettingsDrawer(

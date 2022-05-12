@@ -3,11 +3,12 @@ part of signup_view.dart;
 class _BuildSignupButton extends StatelessWidget {
   const _BuildSignupButton({
     Key? key,
+    required this.language,
     required this.size,
   }) : super(key: key);
 
   final Size size;
-
+  final language;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,7 +30,7 @@ class _BuildSignupButton extends StatelessWidget {
                 }
               },
               child: AutoSizeText(
-                "Kayıt Ol",
+               language == "TR" ? "Kayıt Ol" : "Sign Up",
                 style: TextStyle(color: Colors.white),
               ),
             )

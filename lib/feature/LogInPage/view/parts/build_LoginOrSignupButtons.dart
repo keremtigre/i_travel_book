@@ -3,11 +3,12 @@ part of login_view.dart;
 class _BuildLoginOrSignUp extends StatelessWidget {
   const _BuildLoginOrSignUp({
     Key? key,
+    required this.language,
     required this.size,
   }) : super(key: key);
 
   final Size size;
-
+  final language;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -27,7 +28,7 @@ class _BuildLoginOrSignUp extends StatelessWidget {
             },
             child: !context.read<LoginCubit>().isLodingEmail
                 ? AutoSizeText(
-                    "Giriş Yap",
+                   language == "TR" ?  "Giriş Yap":"Log In",
                     style: TextStyle(color: Colors.white),
                   )
                 : Center(
@@ -35,7 +36,7 @@ class _BuildLoginOrSignUp extends StatelessWidget {
                   ),
           ),
         ),
-        AutoSizeText("ya da"),
+        AutoSizeText(language == "TR" ? "ya da" :"or"),
         Container(
           width: size.width / 4,
           decoration: BoxDecoration(
@@ -47,8 +48,8 @@ class _BuildLoginOrSignUp extends StatelessWidget {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => SignUpPage()));
             },
-            child: AutoSizeText(
-              "Üye Ol",
+            child: Text(
+             language == "TR" ?  "Üye Ol" : "Sign Up",
               style: TextStyle(color: Colors.white),
             ),
           ),

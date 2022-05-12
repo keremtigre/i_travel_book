@@ -2,8 +2,9 @@ part of home_view.dart;
 
 class _BuildAppSlogan extends StatelessWidget {
   const _BuildAppSlogan({
-    Key? key,
+    Key? key,required this.language
   }) : super(key: key);
+  final language;
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +12,7 @@ class _BuildAppSlogan extends StatelessWidget {
       padding:
           EdgeInsets.only(top: context.height / 50, left: context.width / 6),
       child: AutoSizeText(
-        "Gezdiğin her an ITravelBook Seninle",
+       language=="TR" ? "Gezdiğin her an ITravelBook seninle": "ITravelBook with you every time you travel",
         style: TextStyle(
             fontSize: 17,
             fontWeight: FontWeight.w400,

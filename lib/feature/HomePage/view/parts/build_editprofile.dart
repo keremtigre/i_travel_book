@@ -1,19 +1,26 @@
 part of home_view.dart;
 
 class EditProfile extends StatelessWidget {
-  EditProfile({Key? key, required this.isdarkmode}) : super(key: key);
+  EditProfile({Key? key, required this.isdarkmode, required this.language})
+      : super(key: key);
 
   final GlobalKey<FormState> _formKey =
       new GlobalKey<FormState>(debugLabel: 'editProfile');
   TextEditingController _controller = TextEditingController();
   final isdarkmode;
+  String language = "";
+  initialLanguage() async {
+    language = await getString("language");
+  }
+
   @override
   Widget build(BuildContext context) {
+    initialLanguage();
     Color editProfileColor = !isdarkmode! ? AppColor().appColor : Colors.white;
     return AlertDialog(
       scrollable: true,
       alignment: Alignment.center,
-      title: Text("Profilimi Düzenle"),
+      title: Text(language =="TR" ? "Profilimi Düzenle" : "Edit Profile"),
       content: Container(
         height: context.height / 3.8,
         width: context.width,
@@ -21,7 +28,7 @@ class EditProfile extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text("Kullanıcı adınızı aşağıdan değiştirebilirsiniz"),
+            Text(language =="TR" ?  "Kullanıcı adınızı aşağıdan değiştirebilirsiniz" :"You can change your username below"),
             Padding(
               padding: EdgeInsets.only(top: context.height / 50),
               child: Form(
@@ -30,7 +37,7 @@ class EditProfile extends StatelessWidget {
                   controller: _controller,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return "Bu alan boş bırakılamaz";
+                      return language =="TR" ? "Bu alan boş bırakılamaz" : "This field cannot be left blank";
                     } else {
                       return null;
                     }
@@ -61,7 +68,7 @@ class EditProfile extends StatelessWidget {
                           color: editProfileColor,
                         )),
                     prefixIcon: Icon(Icons.person, color: editProfileColor),
-                    hintText: "Kullanıcı adınızı giriniz",
+                    hintText: language =="TR" ? "Kullanıcı adınızı giriniz":"Enter your username",
                     prefixText: ' ',
                   ),
                 ),
@@ -77,7 +84,7 @@ class EditProfile extends StatelessWidget {
                         Navigator.pop(context);
                       },
                       child: AutoSizeText(
-                        "İptal",
+                       language =="TR" ?  "İptal":"Cancel",
                         style: TextStyle(color: editProfileColor),
                       )),
                   TextButton(
@@ -87,7 +94,7 @@ class EditProfile extends StatelessWidget {
                           Navigator.pop(context);
                         }
                       },
-                      child: AutoSizeText("Onayla",
+                      child: AutoSizeText(language =="TR" ?  "Değiştir": "Change",
                           style: TextStyle(color: editProfileColor)))
                 ],
               ),

@@ -6,9 +6,11 @@ class _BuildForm extends StatelessWidget {
   double paddingright;
   double paddingtop;
   double paddingbottom;
+  final language;
   _BuildForm(
       {Key? key,
       required this.size,
+      required this.language,
       this.paddingleft = 0.0,
       this.paddingright = 0.0,
       this.paddingtop = 0.0,
@@ -37,12 +39,12 @@ class _BuildForm extends StatelessWidget {
                 isLoginCubit: false,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Kullanıcı Adınızı Giriniz';
+                    return language == "TR" ? 'Kullanıcı Adınızı Giriniz' : "Please enter your username";
                   } else {
                     null;
                   }
                 },
-                hinntext: SignUpPageStrings.usernameTextField,
+                hinntext: language == "TR" ? SignUpPageStrings.usernameTextField :"Enter your username",
                 controller: context.read<SignupCubit>().userNameController),
           ),
           //email textfield
@@ -56,15 +58,15 @@ class _BuildForm extends StatelessWidget {
                 isLoginCubit: false,
                 validator: (email) {
                   if (email!.isEmpty || email == null) {
-                    return SignUpPageStrings.emailTextErrorMesage1;
+                    return language == "TR" ? SignUpPageStrings.emailTextErrorMesage1: "Please enter your e-mail address";
                   }
                   if (!_isValidEmail(email)) {
-                    return SignUpPageStrings.inavalidEmail;
+                    return  language == "TR" ? SignUpPageStrings.inavalidEmail: "Invalid e-mail";
                   } else {
                     return null;
                   }
                 },
-                hinntext: SignUpPageStrings.emailFieldText,
+                hinntext:language == "TR" ? SignUpPageStrings.emailFieldText :"Enter your mail",
                 controller: context.read<SignupCubit>().emailController),
           ),
           //password text
@@ -79,16 +81,16 @@ class _BuildForm extends StatelessWidget {
                 isPasswordText: true,
                 validator: (password) {
                   if (password!.isEmpty || password == null) {
-                    return SignUpPageStrings.passwordTextErrorMesage1;
+                    return language == "TR" ? SignUpPageStrings.passwordTextErrorMesage1 : "Please enter your password";
                   }
 
                   if (password.length < 6) {
-                    return SignUpPageStrings.passwordTextErrorMesage2;
+                    return language == "TR" ? SignUpPageStrings.passwordTextErrorMesage2 :"";
                   } else {
                     return null;
                   }
                 },
-                hinntext: SignUpPageStrings.passwordTextField,
+                hinntext: language == "TR" ? SignUpPageStrings.passwordTextField :" Your password cannot be less than 6 characters",
                 controller: context.read<SignupCubit>().passwordController),
           ),
           Padding(
@@ -103,19 +105,19 @@ class _BuildForm extends StatelessWidget {
                 isPasswordText: true,
                 validator: (password) {
                   if (password!.isEmpty || password == null) {
-                    return SignUpPageStrings.passwordTextErrorMesage1;
+                    return language == "TR" ? SignUpPageStrings.passwordTextErrorMesage1:"Please enter your password";
                   }
                   if (password.length < 6) {
-                    return SignUpPageStrings.passwordTextErrorMesage2;
+                    return language == "TR" ? SignUpPageStrings.passwordTextErrorMesage2:" Your password cannot be less than 6 characters";
                   }
                   if (password !=
                       context.read<SignupCubit>().passwordController.text) {
-                    return SignUpPageStrings.passwordTextErrorMesage3;
+                    return language == "TR" ? SignUpPageStrings.passwordTextErrorMesage3:"Passwords do not match";
                   } else {
                     return null;
                   }
                 },
-                hinntext: SignUpPageStrings.passwordTextField2,
+                hinntext: language == "TR" ? SignUpPageStrings.passwordTextField2:"Enter your password again",
                 controller: context.read<SignupCubit>().passwordController2),
           ),
         ],

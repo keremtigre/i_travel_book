@@ -5,8 +5,9 @@ class _searchText extends StatelessWidget {
     Key? key,
     required this.isdarkmode,
     required this.snapshot,
+    required this.language
   }) : super(key: key);
-
+  final language;
   final bool isdarkmode;
   AsyncSnapshot<QuerySnapshot<Object?>> snapshot;
   @override
@@ -47,7 +48,7 @@ class _searchText extends StatelessWidget {
                       width: 2,
                       color: AppColor().appColor,
                     )),
-                hintText: "Aramak istediğiniz konumun başlığı",
+                hintText:language=="TR" ? "Aramak istediğiniz konumun başlığı" :"Title of the location you want to search",
                 prefixText: ' ',
               ),
             ),

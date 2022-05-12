@@ -2,16 +2,18 @@ part of addlocation_view.dart;
 
 class AddLocationPageBody extends StatelessWidget {
   final isdarkmode;
-  const AddLocationPageBody({Key? key, required this.isdarkmode})
-      : super(key: key);
+  AddLocationPageBody({Key? key, required this.isdarkmode,required this.language}) : super(key: key);
+  final language;
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
         context.read<AddlocationCubit>().addLocationDispose(context);
-        Navigator.pushAndRemoveUntil(context,
-        MaterialPageRoute(builder: (builder) => HomePage()), (route) => false);
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (builder) => HomePage()),
+            (route) => false);
         return true;
       },
       child: BlocConsumer<AddlocationCubit, AddlocationState>(
@@ -37,13 +39,18 @@ class AddLocationPageBody extends StatelessWidget {
                     key: context.read<AddlocationCubit>().formKey,
                     child: Column(
                       children: [
-                        _BuildInfoText(isdarkmode: isdarkmode),
+                        _BuildInfoText(
+                          language:language,
+                          isdarkmode: isdarkmode),
                         _BuildAddPhotoWidget(
+                          language:language,
                           isdarkmode: isdarkmode,
                         ),
                         AddLocationText(
                             isdarkmode: isdarkmode,
-                            title: "Konum Başlığı",
+                            title: language == "TR"
+                                ? "Konum Başlığı"
+                                : "Location Title",
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return AddLocationStrings.emptytexterror;
@@ -58,7 +65,8 @@ class AddLocationPageBody extends StatelessWidget {
                             maxLength: 30),
                         AddLocationText(
                           isdarkmode: isdarkmode,
-                          title: "Konum Detayı",
+                          title: language == "TR"
+                                ?"Konum Detayı" :"Location Text",
                           controller: context
                               .read<AddlocationCubit>()
                               .placeDetailTextController,
@@ -82,7 +90,8 @@ class AddLocationPageBody extends StatelessWidget {
             );
           } else
             return Center(
-              child: AutoSizeText("SORUN OLUŞTU"),
+              child: AutoSizeText(language == "TR"
+                                ?"SORUN OLUŞTU" :"Error"),
             );
         },
       ),

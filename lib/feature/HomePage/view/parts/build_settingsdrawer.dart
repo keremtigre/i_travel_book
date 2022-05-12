@@ -4,18 +4,23 @@ class SettingsDrawer extends StatelessWidget {
   final double height;
   final double width;
   final String imageUrl;
-  const SettingsDrawer({
+  String language = "";
+  SettingsDrawer({
     Key? key,
     required this.height,
     required this.width,
     required this.imageUrl,
   }) : super(key: key);
+  initialLanguage() async {
+    language = await getString("language");
+  }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<bool>(
         future: getBool("darkmode"),
         builder: (context, snapshot) {
+          initialLanguage();
           if (snapshot.hasData) {
             final isdarkmode = snapshot.data;
             Color settingDrawerColor =
@@ -50,6 +55,7 @@ class SettingsDrawer extends StatelessWidget {
                           context: context,
                           builder: (builder) {
                             return EditProfile(
+                              language: language,
                               isdarkmode: snapshot.data,
                             );
                           });
@@ -60,7 +66,7 @@ class SettingsDrawer extends StatelessWidget {
                       color: settingDrawerColor,
                     ),
                     title: AutoSizeText(
-                      "Profilimi Düzenle",
+                      language == "TR" ? "Profilimi Düzenle" : "Edit Profile",
                       style: TextStyle(fontSize: 16, color: settingDrawerColor),
                     ),
                   ),
@@ -70,6 +76,7 @@ class SettingsDrawer extends StatelessWidget {
                           context: context,
                           builder: (builder) {
                             return ChangePasswordDialog(
+                              language: language,
                               isdarkmode: snapshot.data,
                             );
                           });
@@ -80,7 +87,7 @@ class SettingsDrawer extends StatelessWidget {
                       color: settingDrawerColor,
                     ),
                     title: AutoSizeText(
-                      "Şifremi Değiştir",
+                      language == "TR" ? "Şifremi Değiştir" : "Change Password",
                       style: TextStyle(color: settingDrawerColor, fontSize: 16),
                     ),
                   ),
@@ -101,7 +108,7 @@ class SettingsDrawer extends StatelessWidget {
                       color: settingDrawerColor,
                     ),
                     title: AutoSizeText(
-                      "Uygulama Dili",
+                      language == "TR" ? "Uygulama Dili" : "App Language",
                       style: TextStyle(fontSize: 16, color: settingDrawerColor),
                     ),
                   ),
@@ -113,7 +120,7 @@ class SettingsDrawer extends StatelessWidget {
                           context: context,
                           builder: (builder) {
                             return AlertDialog(
-                              title: Text("Çıkış Yap"),
+                              title: Text(language == "TR" ? "Çıkış Yap" : "Log Out"),
                               content: Container(
                                 height: context.height / 8,
                                 width: context.width,
@@ -122,7 +129,7 @@ class SettingsDrawer extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Text("Çıkış Yapılsın mı ?"),
+                                    Text(language == "TR" ? "Çıkış Yapılsın mı ?":"Will be exited. Are you sure ?" ),
                                     Padding(
                                       padding: EdgeInsets.only(
                                           top: context.height / 50),
@@ -135,7 +142,7 @@ class SettingsDrawer extends StatelessWidget {
                                                 Navigator.pop(context);
                                               },
                                               child: AutoSizeText(
-                                                "Hayır",
+                                              language == "TR" ?   "Hayır" :"No",
                                                 style: TextStyle(
                                                   color: settingDrawerColor,
                                                 ),
@@ -153,7 +160,7 @@ class SettingsDrawer extends StatelessWidget {
                                                     (Route<dynamic> route) =>
                                                         false);
                                               },
-                                              child: AutoSizeText("Evet",
+                                              child: AutoSizeText(language == "TR" ? "Evet":"Yes",
                                                   style: TextStyle(
                                                       color:
                                                           settingDrawerColor))),
@@ -172,7 +179,7 @@ class SettingsDrawer extends StatelessWidget {
                       color: settingDrawerColor,
                     ),
                     title: AutoSizeText(
-                      "Oturumu Kapat",
+                      language == "TR" ? "Oturumu Kapat" : "Login Out",
                       style: TextStyle(color: settingDrawerColor, fontSize: 16),
                     ),
                   ),
@@ -182,7 +189,7 @@ class SettingsDrawer extends StatelessWidget {
                           context: context,
                           builder: (builder) {
                             return AlertDialog(
-                              title: Text("Hesabı Sil"),
+                              title: Text(language == "TR" ? "Hesabı Sil":"Delete Account"),
                               content: Container(
                                 height: context.height / 7,
                                 width: context.width,
@@ -191,7 +198,7 @@ class SettingsDrawer extends StatelessWidget {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Text(
-                                        "Bu işlemden sonra tüm verileriniz silinecektir. Devam etmek istiyor musunuz ?"),
+                                       language == "TR" ?  "Bu işlemden sonra tüm verileriniz silinecektir. Devam etmek istiyor musunuz ?":"All your data will be deleted after this operation. Do you want to continue?"),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
@@ -200,7 +207,7 @@ class SettingsDrawer extends StatelessWidget {
                                               Navigator.pop(context);
                                             },
                                             child: AutoSizeText(
-                                              "Hayır",
+                                             language == "TR" ?  "Hayır":"No",
                                               style: TextStyle(
                                                 color: settingDrawerColor,
                                               ),
@@ -223,7 +230,7 @@ class SettingsDrawer extends StatelessWidget {
                                                   (Route<dynamic> route) =>
                                                       false);
                                             },
-                                            child: AutoSizeText("Evet",
+                                            child: AutoSizeText(language == "TR" ? "Evet" :"Yes",
                                                 style: TextStyle(
                                                   color: settingDrawerColor,
                                                 ))),
@@ -241,7 +248,7 @@ class SettingsDrawer extends StatelessWidget {
                       color: settingDrawerColor,
                     ),
                     title: AutoSizeText(
-                      "Hesabımı Sil",
+                      language == "TR" ? "Hesabımı Sil" : "Delete Account",
                       style: TextStyle(color: settingDrawerColor, fontSize: 16),
                     ),
                   ),

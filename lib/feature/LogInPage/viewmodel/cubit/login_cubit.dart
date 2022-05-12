@@ -10,6 +10,7 @@ import 'package:i_travel_book/core/services/cloud_firestore.dart';
 import 'package:i_travel_book/feature/HomePage/view/home_view.dart';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:i_travel_book/feature/LocationsPage/viewmodel/cubit/locations_cubit.dart';
 part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
@@ -24,29 +25,37 @@ class LoginCubit extends Cubit<LoginState> {
   TextEditingController passwordController = TextEditingController();
   void changeBeniHatirla(bool? value) {
     beniHatirla = value!;
-    emit(LoginInitial());
+    emit(LoginLoaded());
   }
 
   setIsLodingGoogle() {
     isLodingGoogle = !isLodingGoogle;
+    emit(LoginLoaded());
+  }
+  loginDispose(){
     emit(LoginInitial());
+  }
+  loginInitial() async {
+    emit(LoginInitial());
+    await Future.delayed(Duration(milliseconds: 25));
+    emit(LoginLoaded());
   }
 
   setIsLodingEmail() {
     isLodingEmail = !isLodingEmail;
-    emit(LoginInitial());
+    emit(LoginLoaded());
   }
 
   void clearFiled(BuildContext context) {
     passwordController.clear();
-    emit(LoginInitial());
+    emit(LoginLoaded());
   }
 
   void changePasswordVisibility() {
     passwordVisibility == true
         ? passwordVisibility = false
         : passwordVisibility = true;
-    emit(LoginInitial());
+    emit(LoginLoaded());
   }
 
 // Google sign in

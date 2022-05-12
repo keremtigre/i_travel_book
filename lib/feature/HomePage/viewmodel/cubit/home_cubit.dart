@@ -13,10 +13,14 @@ class HomeCubit extends Cubit<HomeState> {
   HomeCubit() : super(HomeInitial());
   String FirebaseuserName = "";
   String FirebaseimageUrl = "";
-
+  String selectedLanguage = "TR";
   bool isdarkmode = false;
   bool changePasswordVisibility = true;
   bool changePasswordVisibility2 = true;
+  setSelectedLanguage(String value) {
+    selectedLanguage = value;
+    emit(HomeLoaded());
+  }
 
   changePasswordVisibilty() {
     if (changePasswordVisibility) {

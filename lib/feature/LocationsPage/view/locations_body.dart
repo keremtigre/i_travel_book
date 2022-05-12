@@ -3,8 +3,12 @@ part of locations_view.dart;
 class LocationsPageBody extends StatelessWidget {
   LocationsPageBody({Key? key, required this.isdarkmode}) : super(key: key);
   bool isdarkmode;
-
   bool isfirstitem = true;
+  String language = "";
+  initialLanguage() async {
+    language = await getString("language");
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
@@ -12,6 +16,7 @@ class LocationsPageBody extends StatelessWidget {
             .collection(FirebaseAuth.instance.currentUser!.email.toString())
             .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          initialLanguage();
           return BlocConsumer<LocationsCubit, LocationsState>(
             listener: (context, state) {
               // TODO: implement listener
@@ -35,6 +40,7 @@ class LocationsPageBody extends StatelessWidget {
                       _searchText(
                         isdarkmode: isdarkmode,
                         snapshot: snapshot,
+                        language:language
                       ),
                       Align(
                           alignment: Alignment.bottomCenter,
@@ -95,6 +101,7 @@ class LocationsPageBody extends StatelessWidget {
                                                 return LocationsContainer(
                                                     isdarkmode: isdarkmode,
                                                     snapshot2: snapshot,
+                                                    language:language,
                                                     index: index,
                                                     detail: _aciklama,
                                                     pageViewCount: context
@@ -110,8 +117,12 @@ class LocationsPageBody extends StatelessWidget {
                                               alignment: Alignment.bottomCenter,
                                               actionsAlignment:
                                                   MainAxisAlignment.center,
-                                              title: Text("Arama Sonucu"),
-                                              content: Text("Konum Bulunamadı"),
+                                              title: Text(language == "TR"
+                                                  ? "Arama Sonucu"
+                                                  : "Search Result"),
+                                              content: Text(language == "TR"
+                                                  ? "Konum Bulunamadı"
+                                                  : "Location Not Found"),
                                               actions: [
                                                 TextButton(
                                                     onPressed: () {
@@ -121,14 +132,14 @@ class LocationsPageBody extends StatelessWidget {
                                                           .getLocations(
                                                               snapshot);
                                                     },
-                                                    child: Text(
-                                                        "Konumları Tekrar Getir"))
+                                                    child: Text(language == "TR"
+                                                  ? "Konumları Tekrar Getir" : "Refresh Locations"))
                                               ],
                                             )
                                       : AlertDialog(
-                                          title: Text("Konum Ekleyin"),
-                                          content: Text(
-                                              "Eklediğiniz konumlar burada listelenecektir."),
+                                          title: Text("Add Location"),
+                                          content: Text(language == "TR" ?
+                                              "Eklediğiniz konumlar burada listelenecektir." :"The locations you add will be listed here."),
                                         )
                                   : Center(
                                       child: CircularProgressIndicator(),
