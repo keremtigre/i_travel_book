@@ -3,13 +3,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:i_travel_book/core/Helper/shared_preferences.dart';
 import 'package:i_travel_book/feature/AddLocationPage/viewmodel/cubit/addlocation_cubit.dart';
 import 'package:i_travel_book/feature/HomePage/viewmodel/cubit/home_cubit.dart';
 import 'package:i_travel_book/feature/LocationsPage/viewmodel/cubit/locations_cubit.dart';
 import 'package:i_travel_book/feature/LogInPage/viewmodel/cubit/login_cubit.dart';
 import 'package:i_travel_book/feature/SignUpPage/viewmodel/cubit/cubit/signup_cubit.dart';
-import 'package:i_travel_book/feature/StartingPage/startingpage.dart';
 import 'package:i_travel_book/core/color/appcolor..dart';
+import 'package:i_travel_book/feature/SplashScreen/startingpage.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,8 +34,8 @@ Future main() async {
           create: (context) => AddlocationCubit(),
         )
       ],
-      child:  MyApp(),
-      ),
+      child: MyApp(),
+    ),
   );
 }
 
@@ -60,7 +61,7 @@ class _MyAppState extends State<MyApp> {
                 return MaterialApp(
                   theme: snapshot.data,
                   debugShowCheckedModeBanner: false,
-                  home: StartingPage(),
+                  home: SplashScreen(),
                 );
               } else {
                 return CircularProgressIndicator();

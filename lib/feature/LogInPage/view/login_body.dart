@@ -1,7 +1,7 @@
 part of login_view.dart;
 
 class LoginPageBody extends StatelessWidget {
-  LoginPageBody({Key? key,required this.language}) : super(key: key);
+  LoginPageBody({Key? key, required this.language}) : super(key: key);
   final language;
   @override
   Widget build(BuildContext context) {

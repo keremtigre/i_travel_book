@@ -32,12 +32,13 @@ class LoginCubit extends Cubit<LoginState> {
     isLodingGoogle = !isLodingGoogle;
     emit(LoginLoaded());
   }
-  loginDispose(){
+
+  loginDispose() {
     emit(LoginInitial());
   }
+
   loginInitial() async {
-    emit(LoginInitial());
-    await Future.delayed(Duration(milliseconds: 25));
+    await Future.delayed(Duration(milliseconds: 125));
     emit(LoginLoaded());
   }
 

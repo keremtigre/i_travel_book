@@ -2,7 +2,9 @@ part of addlocation_view.dart;
 
 class AddLocationPageBody extends StatelessWidget {
   final isdarkmode;
-  AddLocationPageBody({Key? key, required this.isdarkmode,required this.language}) : super(key: key);
+  AddLocationPageBody(
+      {Key? key, required this.isdarkmode, required this.language})
+      : super(key: key);
   final language;
 
   @override
@@ -40,10 +42,9 @@ class AddLocationPageBody extends StatelessWidget {
                     child: Column(
                       children: [
                         _BuildInfoText(
-                          language:language,
-                          isdarkmode: isdarkmode),
+                            language: language, isdarkmode: isdarkmode),
                         _BuildAddPhotoWidget(
-                          language:language,
+                          language: language,
                           isdarkmode: isdarkmode,
                         ),
                         AddLocationText(
@@ -53,12 +54,16 @@ class AddLocationPageBody extends StatelessWidget {
                                 : "Location Title",
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return AddLocationStrings.emptytexterror;
+                                return language == "TR"
+                                    ? AddLocationStrings.emptytexterror
+                                    : "this field cannot be left blank";
                               } else {
                                 return null;
                               }
                             },
-                            hinntext: AddLocationStrings.placestitletext,
+                            hinntext: language == "TR"
+                                ? AddLocationStrings.placestitletext
+                                : "Add a Title to Your Location (Ex. *Home,Cafe...)",
                             controller: context
                                 .read<AddlocationCubit>()
                                 .placeTitleTextController,
@@ -66,16 +71,20 @@ class AddLocationPageBody extends StatelessWidget {
                         AddLocationText(
                           isdarkmode: isdarkmode,
                           title: language == "TR"
-                                ?"Konum Detayı" :"Location Text",
+                              ? "Konum Detayı"
+                              : "Location Text",
                           controller: context
                               .read<AddlocationCubit>()
                               .placeDetailTextController,
-                          hinntext:
-                              AddLocationStrings.locationTextFieldDetailText,
+                          hinntext: language == "TR"
+                              ? AddLocationStrings.locationTextFieldDetailText
+                              : "You can add details about your location",
                           maxLength: 120,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return AddLocationStrings.emptytexterror;
+                              return language == "TR"
+                                  ? AddLocationStrings.emptytexterror
+                                  : "this field cannot be left blank";
                             } else {
                               return null;
                             }
@@ -90,8 +99,7 @@ class AddLocationPageBody extends StatelessWidget {
             );
           } else
             return Center(
-              child: AutoSizeText(language == "TR"
-                                ?"SORUN OLUŞTU" :"Error"),
+              child: AutoSizeText(language == "TR" ? "SORUN OLUŞTU" : "Error"),
             );
         },
       ),

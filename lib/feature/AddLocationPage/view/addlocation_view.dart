@@ -37,20 +37,23 @@ class AddLocationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: FutureBuilder<String>(
-          future: getString("language"),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return AddLocationPageBody(
+    return FutureBuilder<String>(
+        future: getString("language"),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Scaffold(
+              resizeToAvoidBottomInset: false,
+              body: AddLocationPageBody(
                 language: snapshot.data,
-                isdarkmode: isdarkmode,);
-            } else {
-              return CircularProgressIndicator();
-            }
-          }),
-      floatingActionButton: SaveLocationButton(),
-    );
+                isdarkmode: isdarkmode,
+              ),
+              floatingActionButton: SaveLocationButton(
+                language:snapshot.data
+              ),
+            );
+          } else {
+            return CircularProgressIndicator();
+          }
+        });
   }
 }

@@ -1,9 +1,8 @@
 part of addlocation_view.dart;
 
 class SaveLocationButton extends StatelessWidget {
-  const SaveLocationButton({
-    Key? key,
-  }) : super(key: key);
+  final language;
+  const SaveLocationButton({Key? key, required this.language}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +10,7 @@ class SaveLocationButton extends StatelessWidget {
       elevation: 10,
       backgroundColor: AppColor().appColor,
       label: AutoSizeText(
-        "Kaydet",
+      language=="TR" ?  "Kaydet" :"Save",
         style: TextStyle(color: Colors.white),
       ),
       onPressed: () async {
