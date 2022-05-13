@@ -29,6 +29,10 @@ class LocationsPageBody extends StatelessWidget {
                 );
               }
               if (state is LocationsLoaded) {
+                if (context.read<LocationsCubit>().newLocationAdded) {
+                  context.read<LocationsCubit>().getLocations(snapshot);
+                  context.read<LocationsCubit>().setNewLocationAdded(false);
+                }
                 return Container(
                   height: double.infinity,
                   width: double.infinity,
@@ -38,10 +42,9 @@ class LocationsPageBody extends StatelessWidget {
                         darkmode: isdarkmode,
                       ),
                       _searchText(
-                        isdarkmode: isdarkmode,
-                        snapshot: snapshot,
-                        language:language
-                      ),
+                          isdarkmode: isdarkmode,
+                          snapshot: snapshot,
+                          language: language),
                       Align(
                           alignment: Alignment.bottomCenter,
                           child: SizedBox(
@@ -101,7 +104,7 @@ class LocationsPageBody extends StatelessWidget {
                                                 return LocationsContainer(
                                                     isdarkmode: isdarkmode,
                                                     snapshot2: snapshot,
-                                                    language:language,
+                                                    language: language,
                                                     index: index,
                                                     detail: _aciklama,
                                                     pageViewCount: context
@@ -133,13 +136,15 @@ class LocationsPageBody extends StatelessWidget {
                                                               snapshot);
                                                     },
                                                     child: Text(language == "TR"
-                                                  ? "Konumları Tekrar Getir" : "Refresh Locations"))
+                                                        ? "Konumları Tekrar Getir"
+                                                        : "Refresh Locations"))
                                               ],
                                             )
                                       : AlertDialog(
                                           title: Text("Add Location"),
-                                          content: Text(language == "TR" ?
-                                              "Eklediğiniz konumlar burada listelenecektir." :"The locations you add will be listed here."),
+                                          content: Text(language == "TR"
+                                              ? "Eklediğiniz konumlar burada listelenecektir."
+                                              : "The locations you add will be listed here."),
                                         )
                                   : Center(
                                       child: CircularProgressIndicator(),

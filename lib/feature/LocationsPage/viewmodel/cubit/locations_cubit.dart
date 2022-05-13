@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:i_travel_book/core/services/cloud_firestore.dart';
 import 'package:i_travel_book/feature/HomePage/view/home_view.dart';
 import 'package:i_travel_book/feature/LocationsPage/model/location.dart';
 part 'locations_state.dart';
@@ -16,6 +19,7 @@ class LocationsCubit extends Cubit<LocationsState> {
   var pageViewController = PageController();
   double originLatitude = 0;
   double originLongitude = 0;
+  bool newLocationAdded = false;
   int pageViewCounter = 1;
   int pageViewTotalCount = 0;
   Completer gMapCompleter = Completer();
@@ -37,8 +41,30 @@ class LocationsCubit extends Cubit<LocationsState> {
     }
   }
 
+  deleteLocation(AsyncSnapshot<QuerySnapshot<Object?>> snapshot2, int index,
+      BuildContext context, String url) async {
+    var collection = FirebaseFirestore.instance
+        .collection(FirebaseAuth.instance.currentUser!.email.toString());
+    await collection
+        .where('id', isEqualTo: snapshot2.data!.docs[index].get("id"))
+        .get()
+        .then((value) {
+      if (value != null) {
+        value.docs.first.reference.delete();
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: AutoSizeText("Seçilen Konum Başarıyla Silindi")));
+      }
+    });
+    await CloudHelper().deleteImage(url);
+    locationModel.removeAt(index);
+    pageViewTotalCount--;
+    pageViewController.jumpToPage(0);
+    emit(LocationsLoaded());
+  }
+
   getLocations(AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
     if (snapshot.hasData) {
+      locationModel.clear();
       locationModel = snapshot.data!.docs.map((doc) {
         return LocationModel(
             title: doc["title"],
@@ -63,6 +89,7 @@ class LocationsCubit extends Cubit<LocationsState> {
     gMapCompleter = Completer();
     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (builder) {
       emit(LocationsInitial());
+
       return HomePage();
     }), (route) => false);
   }
@@ -107,6 +134,11 @@ class LocationsCubit extends Cubit<LocationsState> {
       getLocations(snapshot);
       emit(LocationsLoaded());
     }
+  }
+
+  setNewLocationAdded(bool value) {
+    newLocationAdded = value;
+    emit(LocationsLoaded());
   }
 
   searchLocation(AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {

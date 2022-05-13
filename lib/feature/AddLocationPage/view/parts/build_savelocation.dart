@@ -2,17 +2,24 @@ part of addlocation_view.dart;
 
 class SaveLocationButton extends StatelessWidget {
   final language;
-  const SaveLocationButton({Key? key, required this.language}) : super(key: key);
+  const SaveLocationButton({Key? key, required this.language})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
       elevation: 10,
       backgroundColor: AppColor().appColor,
-      label: AutoSizeText(
-      language=="TR" ?  "Kaydet" :"Save",
-        style: TextStyle(color: Colors.white),
-      ),
+      label: !context.read<AddlocationCubit>().saveProgress
+          ? AutoSizeText(
+              language == "TR" ? "Kaydet" : "Save",
+              style: TextStyle(color: Colors.white),
+            )
+          : Center(
+              child: CircularProgressIndicator(
+                color: Colors.white,
+              ),
+            ),
       onPressed: () async {
         if (context.read<AddlocationCubit>().formKey.currentState!.validate() &&
             await InternetConnectionChecker().hasConnection == false) {
@@ -27,7 +34,13 @@ class SaveLocationButton extends StatelessWidget {
         if (context.read<AddlocationCubit>().formKey.currentState!.validate() &&
             !context.read<AddlocationCubit>().markers.isEmpty &&
             await InternetConnectionChecker().hasConnection) {
-          ShowLoaderDialog(context, "Konum kaydediliyor...", true);
+          showDialog(
+              context: context,
+              builder: (builder) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              });
           CloudHelper()
               .addLocation(
             context.read<AddlocationCubit>().placeTitleTextController.text,
@@ -40,6 +53,7 @@ class SaveLocationButton extends StatelessWidget {
           )
               .then((value) {
             if (value == null) {
+              context.read<LocationsCubit>().setNewLocationAdded(true);
               if (context.read<AddlocationCubit>().isInterstitialAdReady) {
                 context.read<AddlocationCubit>().interstitialAd?.show();
               }

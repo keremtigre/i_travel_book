@@ -22,6 +22,7 @@ import 'package:i_travel_book/feature/AddLocationPage/helper/showerDialog.dart';
 import 'package:i_travel_book/feature/AddLocationPage/viewmodel/cubit/addlocation_cubit.dart';
 import 'package:i_travel_book/feature/HomePage/view/home_view.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:i_travel_book/feature/LocationsPage/viewmodel/cubit/locations_cubit.dart';
 import 'package:i_travel_book/feature/LogInPage/viewmodel/cubit/login_cubit.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:kartal/kartal.dart';

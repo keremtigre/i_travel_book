@@ -3,16 +3,25 @@ import 'package:geolocator/geolocator.dart';
 import 'package:i_travel_book/feature/HomePage/view/home_view.dart';
 
 import 'package:auto_size_text/auto_size_text.dart';
+
 void ShowDialogForAddLocationPage(BuildContext context, String message) {
   showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(actions: [
-          TextButton(
-            onPressed: (() => Navigator.pop(context)),
-            child: AutoSizeText("Tamam"),
-          )
-        ], title: AutoSizeText("Uyarı"), content: AutoSizeText(message));
+        return AlertDialog(
+            title: Text("Uyarı"),
+            content: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(message),
+                TextButton(
+                  onPressed: (() => Navigator.pop(context)),
+                  child: Text("Tamam"),
+                )
+              ],
+            ));
       });
 }
 
@@ -20,8 +29,8 @@ ShowDialogForPermission(BuildContext context) {
   showDialog(
       context: context,
       builder: (builder) => AlertDialog(
-            title: AutoSizeText("Uyarı"),
-            content: AutoSizeText(
+            title: Text("Uyarı"),
+            content: Text(
                 "Konum izni olmadan bu özelliği kullanamazsınız. Uygulama ayarlarından konuma izin verin"),
             actions: [
               TextButton(
@@ -31,12 +40,12 @@ ShowDialogForPermission(BuildContext context) {
                         MaterialPageRoute(builder: (builder) => HomePage()),
                         (route) => false);
                   },
-                  child: AutoSizeText("Geri Dön")),
+                  child: Text("Geri Dön")),
               TextButton(
                   onPressed: () async {
                     await Geolocator.openAppSettings();
                   },
-                  child: AutoSizeText("Ayarlara Git"))
+                  child: Text("Ayarlara Git"))
             ],
           ));
 }

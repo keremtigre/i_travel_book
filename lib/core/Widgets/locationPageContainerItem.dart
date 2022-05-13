@@ -81,7 +81,7 @@ class LocationsContainer extends StatelessWidget {
                       showDialog(
                           context: context,
                           builder: (context) => DetailPage(
-                                language:language,
+                                language: language,
                                 image_url: url,
                                 aciklama: _aciklama,
                                 baslik: _baslik,
@@ -97,25 +97,9 @@ class LocationsContainer extends StatelessWidget {
                     pageViewTotalCount.toString()),
                 IconButton(
                     onPressed: () async {
-                      var collection = FirebaseFirestore.instance.collection(
-                          FirebaseAuth.instance.currentUser!.email.toString());
-                      await collection
-                          .where('id',
-                              isEqualTo: snapshot2.data!.docs[index].get("id"))
-                          .get()
-                          .then((value) {
-                        if (value != null) {
-                          value.docs.first.reference.delete();
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: AutoSizeText(
-                                  "Seçilen Konum Başarıyla Silindi")));
-                        }
-                      });
-                      await CloudHelper().deleteImage(url);
                       context
                           .read<LocationsCubit>()
-                          .pageViewController
-                          .jumpToPage(0);
+                          .deleteLocation(snapshot2, index, context, url);
                     },
                     icon: Icon(
                       Icons.delete,

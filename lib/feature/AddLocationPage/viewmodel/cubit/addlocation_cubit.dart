@@ -15,7 +15,7 @@ part 'addlocation_state.dart';
 class AddlocationCubit extends Cubit<AddlocationState> {
   AddlocationCubit() : super(AddlocationInitial());
   InterstitialAd? interstitialAd;
-
+  bool saveProgress = false;
   bool isMarkerLoading = false;
   double originLatitude = 0;
   double originLongitude = 0;
@@ -36,6 +36,11 @@ class AddlocationCubit extends Cubit<AddlocationState> {
     checkLocation(context);
     print("add init çalıştı");
     await Future.delayed(Duration(milliseconds: 25));
+    emit(AddLocationLoaded());
+  }
+
+  setSaveProgress(bool value) {
+    saveProgress = value;
     emit(AddLocationLoaded());
   }
 

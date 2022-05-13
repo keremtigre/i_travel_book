@@ -46,7 +46,9 @@ class _StartingPageState extends State<StartingPage> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Image.asset("assets/images/logo.png"),
+                                  Image.asset(
+                                    "assets/images/logo.png",
+                                  ),
                                   Text(dropDownValue != "TR"
                                       ? "Please Select Language"
                                       : "Lütfen uygulama dilini seçiniz"),
@@ -89,7 +91,11 @@ class _StartingPageState extends State<StartingPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Image.asset("assets/images/addlocation.png"),
+                                  Image.asset(
+                                    "assets/images/addlocation.png",
+                                    width: context.width,
+                                    height: context.height / 3.4,
+                                  ),
                                   AutoSizeText(
                                     dropDownValue == "TR"
                                         ? "Sevdiğiniz Konumları eklemenize sadece bir adım kaldı"
