@@ -43,6 +43,13 @@ class LocationsCubit extends Cubit<LocationsState> {
 
   deleteLocation(AsyncSnapshot<QuerySnapshot<Object?>> snapshot2, int index,
       BuildContext context, String url) async {
+    showDialog(
+        context: context,
+        builder: (builder) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        });
     var collection = FirebaseFirestore.instance
         .collection(FirebaseAuth.instance.currentUser!.email.toString());
     await collection
@@ -50,6 +57,7 @@ class LocationsCubit extends Cubit<LocationsState> {
         .get()
         .then((value) {
       if (value != null) {
+        Navigator.pop(context);
         value.docs.first.reference.delete();
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: AutoSizeText("Seçilen Konum Başarıyla Silindi")));
