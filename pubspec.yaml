@@ -1,8 +1,7 @@
 name: i_travel_book
 description: A new Flutter project.
 
-
-version: 1.0.0+1
+version: 1.0.0+2
 
 environment:
   sdk: ">=2.16.2 <3.0.0"
@@ -11,7 +10,7 @@ dependencies:
   animated_splash_screen: ^1.2.0
   auto_size_text: ^3.0.0
   cloud_firestore: ^3.1.8
-  device_preview: ^1.0.0
+  device_preview: ^1.1.0
   firebase_auth: ^3.3.6
   firebase_core: ^1.12.0
   firebase_storage: ^10.2.7

@@ -48,9 +48,6 @@ class AddLocationPage extends StatelessWidget {
                 language: snapshot.data,
                 isdarkmode: isdarkmode,
               ),
-              floatingActionButton: SaveLocationButton(
-                language:snapshot.data
-              ),
             );
           } else {
             return CircularProgressIndicator();

@@ -19,7 +19,7 @@ class _BuildInfoText extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
           border: Border.all(
-              width: 2,
+              width: 1,
               color: !isdarkmode ? AppColor().appColor : Colors.white),
           color: Colors.white.withOpacity(0.6),
         ),

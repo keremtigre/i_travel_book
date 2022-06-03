@@ -27,13 +27,6 @@ Future<void> removeData() async {
   await preferences.remove("password");
 }
 
-Future<void> removeDataSignup() async {
-  SharedPreferences preferences = await SharedPreferences.getInstance();
-  await preferences.remove("hatirla");
-  await preferences.remove("email");
-  await preferences.remove("password");
-}
-
 //*********************************************************************************/
 //Dark -Light Mode için
 void saveData(String key, dynamic value) async {

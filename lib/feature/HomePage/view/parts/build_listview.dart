@@ -16,7 +16,7 @@ class _BuildListView extends StatelessWidget {
       height: context.height / 3,
       width: context.width,
       child: ListView(
-          physics: PageScrollPhysics(),
+          physics: BouncingScrollPhysics(),
           scrollDirection: Axis.horizontal,
           children: [
             InkWell(
@@ -24,8 +24,8 @@ class _BuildListView extends StatelessWidget {
               child: HomePageContainer(
                   isdarkmode: isdarkmode,
                   assetname: "assets/images/addlocation.png",
-                  height: context.height / 3.5,
-                  width: context.width / 1.4,
+                  height: context.height / 4.5,
+                  width: context.width / 2,
                   containerTitle:
                       language == "TR" ? "Konum Ekle" : "Add Location"),
             ),
@@ -34,9 +34,9 @@ class _BuildListView extends StatelessWidget {
               child: HomePageContainer(
                   isdarkmode: isdarkmode,
                   assetname: "assets/images/locations.png",
-                  height: context.height / 3.5,
+                  height: context.height / 4.5,
                   margin: EdgeInsets.only(left: 10),
-                  width: context.width / 1.4,
+                  width: context.width / 2,
                   containerTitle: language == "TR"
                       ? "Kayıtlı Konumlarım"
                       : "Saved Locations"),
@@ -58,7 +58,7 @@ class _BuildListView extends StatelessWidget {
                     isdarkmode: isdarkmode,
                   )
                 : LocationsPage(
-                  language: language,
+                    language: language,
                     isdarkmode: isdarkmode,
                   )),
         (route) => false,
@@ -73,7 +73,7 @@ class _BuildListView extends StatelessWidget {
                     isdarkmode: isdarkmode,
                   )
                 : LocationsPage(
-                   language: language,
+                    language: language,
                     isdarkmode: isdarkmode,
                   )),
         (route) => false,

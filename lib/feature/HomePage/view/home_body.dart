@@ -45,17 +45,77 @@ class HomePageBody extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               _BuildWelcomeUserNameText(
-                                snapshot: snapshot,
-                                language:language
-                              ),
-                              _BuildAppSlogan(
-                                language:language
-                              ),
+                                  snapshot: snapshot, language: language),
+                              _BuildAppSlogan(language: language),
                               _BuildListView(
-                                isdarkmode: darkmodeSnapshot.data!,
-                                language:language
+                                  isdarkmode: darkmodeSnapshot.data!,
+                                  language: language),
+                              Padding(
+                                padding:
+                                    EdgeInsets.only(left: context.width / 30),
+                                child: AutoSizeText(
+                                  language == "TR"
+                                      ? "Konumunuzda Gezilebilecek Yerler"
+                                      : "Places to Visit in Your Location",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                  ),
+                                ),
                               ),
-                              _BuildHomePageImage(),
+                              Expanded(
+                                child: Container(
+                                  padding: EdgeInsets.only(left: 10, top: 10),
+                                  height: context.height / 4,
+                                  width: context.width,
+                                  child: ListView(
+                                      physics: BouncingScrollPhysics(),
+                                      scrollDirection: Axis.horizontal,
+                                      children: [
+                                        InkWell(
+                                          onTap: () {},
+                                          child: Stack(
+                                            children: [
+                                              Banner(
+                                                location:
+                                                    BannerLocation.topStart,
+                                                message: language == "TR"
+                                                    ? "Çok Yakında"
+                                                    : "coming soon",
+                                                child: HomePageContainer(
+                                                    isdarkmode:
+                                                        darkmodeSnapshot.data!,
+                                                    assetname:
+                                                        "assets/images/collesium.jpeg",
+                                                    height:
+                                                        context.height / 4.5,
+                                                    width: context.width / 2,
+                                                    containerTitle: ""),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        InkWell(
+                                          onTap: () {},
+                                          child: Banner(
+                                            location: BannerLocation.topStart,
+                                            message: language == "TR"
+                                                ? "Çok Yakında"
+                                                : "coming soon",
+                                            child: HomePageContainer(
+                                                isdarkmode:
+                                                    darkmodeSnapshot.data!,
+                                                assetname:
+                                                    "assets/images/galata_tower.jpeg",
+                                                height: context.height / 4.5,
+                                                margin:
+                                                    EdgeInsets.only(left: 10),
+                                                width: context.width / 2,
+                                                containerTitle: ""),
+                                          ),
+                                        )
+                                      ]),
+                                ),
+                              ),
                               _BuildBannerAdMob(),
                             ],
                           );

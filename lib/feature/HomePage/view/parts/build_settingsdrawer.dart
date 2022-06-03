@@ -117,10 +117,12 @@ class SettingsDrawer extends StatelessWidget {
                   ListTile(
                     onTap: () {
                       showDialog(
+                          barrierDismissible: true,
                           context: context,
                           builder: (builder) {
                             return AlertDialog(
-                              title: Text(language == "TR" ? "Çıkış Yap" : "Log Out"),
+                              title: Text(
+                                  language == "TR" ? "Çıkış Yap" : "Log Out"),
                               content: Container(
                                 height: context.height / 8,
                                 width: context.width,
@@ -129,7 +131,9 @@ class SettingsDrawer extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Text(language == "TR" ? "Çıkış Yapılsın mı ?":"Will be exited. Are you sure ?" ),
+                                    Text(language == "TR"
+                                        ? "Çıkış Yapılsın mı ?"
+                                        : "Will be exited. Are you sure ?"),
                                     Padding(
                                       padding: EdgeInsets.only(
                                           top: context.height / 50),
@@ -139,28 +143,46 @@ class SettingsDrawer extends StatelessWidget {
                                         children: [
                                           TextButton(
                                               onPressed: () {
-                                                Navigator.pop(context);
+                                                Navigator.of(context,
+                                                        rootNavigator: true)
+                                                    .pop();
                                               },
                                               child: AutoSizeText(
-                                              language == "TR" ?   "Hayır" :"No",
+                                                language == "TR"
+                                                    ? "Hayır"
+                                                    : "No",
                                                 style: TextStyle(
                                                   color: settingDrawerColor,
                                                 ),
                                               )),
                                           TextButton(
-                                              onPressed: () {
-                                                AuthenticationHelper()
-                                                    .signOut();
-                                                removeDataSignup();
-                                                Navigator.pushAndRemoveUntil(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (builder) =>
-                                                            LoginPage()),
-                                                    (Route<dynamic> route) =>
-                                                        false);
+                                              onPressed: () async {
+                                                await AuthenticationHelper()
+                                                    .signOut()
+                                                    .then((value) {
+                                                  if (value == null) {
+                                                    Navigator.of(context,
+                                                            rootNavigator: true)
+                                                        .pop();
+                                                    Navigator.pushAndRemoveUntil(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (builder) =>
+                                                                LoginPage()),
+                                                        (route) => false);
+                                                  } else {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(SnackBar(
+                                                            content: Text(value
+                                                                .toString())));
+                                                  }
+                                                });
                                               },
-                                              child: AutoSizeText(language == "TR" ? "Evet":"Yes",
+                                              child: AutoSizeText(
+                                                  language == "TR"
+                                                      ? "Evet"
+                                                      : "Yes",
                                                   style: TextStyle(
                                                       color:
                                                           settingDrawerColor))),
@@ -189,7 +211,9 @@ class SettingsDrawer extends StatelessWidget {
                           context: context,
                           builder: (builder) {
                             return AlertDialog(
-                              title: Text(language == "TR" ? "Hesabı Sil":"Delete Account"),
+                              title: Text(language == "TR"
+                                  ? "Hesabı Sil"
+                                  : "Delete Account"),
                               content: Container(
                                 height: context.height / 7,
                                 width: context.width,
@@ -197,40 +221,60 @@ class SettingsDrawer extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Text(
-                                       language == "TR" ?  "Bu işlemden sonra tüm verileriniz silinecektir. Devam etmek istiyor musunuz ?":"All your data will be deleted after this operation. Do you want to continue?"),
+                                    Text(language == "TR"
+                                        ? "Bu işlemden sonra tüm verileriniz silinecektir. Devam etmek istiyor musunuz ?"
+                                        : "All your data will be deleted after this operation. Do you want to continue?"),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         TextButton(
                                             onPressed: () {
-                                              Navigator.pop(context);
+                                              Navigator.of(context,
+                                                      rootNavigator: true)
+                                                  .pop();
                                             },
                                             child: AutoSizeText(
-                                             language == "TR" ?  "Hayır":"No",
+                                              language == "TR" ? "Hayır" : "No",
                                               style: TextStyle(
                                                 color: settingDrawerColor,
                                               ),
                                             )),
                                         TextButton(
-                                            onPressed: () {
+                                            onPressed: () async {
                                               debugPrint("Hesap Silindi=> " +
                                                   FirebaseAuth.instance
                                                       .currentUser!.email
                                                       .toString());
-                                              AuthenticationHelper().deleteUser(
-                                                  user: FirebaseAuth
-                                                      .instance.currentUser!);
-                                              removeData();
-                                              Navigator.pushAndRemoveUntil(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (builder) =>
-                                                          LoginPage()),
-                                                  (Route<dynamic> route) =>
-                                                      false);
+                                              await AuthenticationHelper()
+                                                  .deleteUser(
+                                                      user: FirebaseAuth
+                                                          .instance
+                                                          .currentUser!)
+                                                  .then((value) {
+                                                if (value == null) {
+                                                  removeData();
+                                                  Navigator.of(context,
+                                                          rootNavigator: true)
+                                                      .pop();
+                                                  Navigator.pushAndRemoveUntil(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (builder) =>
+                                                              LoginPage()),
+                                                      (Route<dynamic> route) =>
+                                                          false);
+                                                } else {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(SnackBar(
+                                                          content: Text(value
+                                                              .toString())));
+                                                }
+                                              });
                                             },
-                                            child: AutoSizeText(language == "TR" ? "Evet" :"Yes",
+                                            child: AutoSizeText(
+                                                language == "TR"
+                                                    ? "Evet"
+                                                    : "Yes",
                                                 style: TextStyle(
                                                   color: settingDrawerColor,
                                                 ))),

@@ -141,7 +141,9 @@ class LocationsPageBody extends StatelessWidget {
                                               ],
                                             )
                                       : AlertDialog(
-                                          title: Text("Add Location"),
+                                          title: Text(language == "TR"
+                                              ? "Konum Ekleyin"
+                                              : "Add Location"),
                                           content: Text(language == "TR"
                                               ? "Eklediğiniz konumlar burada listelenecektir."
                                               : "The locations you add will be listed here."),

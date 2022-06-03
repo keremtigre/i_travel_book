@@ -2,20 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-<key>NSPhotoLibraryUsageDescription</key> 	
-<string>Need to access gallery in order to get image.</string>
-<key>NSCameraUsageDescription</key> 	
-<string>Need to access camera in order to get image.</string> 	
-<key>NSPhotoLibraryAddUsageDescription</key> 	
-<string>Add photo liabrary description</string>
-<key>NSLocationWhenInUseUsageDescription</key>
-<string>This app needs access to location in the background.</string>    
-<key>NSLocationAlwaysUsageDescription</key>
-<string>This app needs access to location when in the background.</string>
-<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-<string>This app needs access to location when open and in the background.</string>
-	<key>GADIsAdManagerApp</key>
-	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -57,5 +43,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>GADIsAdManagerApp</key>
+	<string>true</string>
 </dict>
 </plist>

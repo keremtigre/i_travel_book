@@ -14,11 +14,27 @@
       },
       "oauth_client": [
         {
-          "client_id": "590014607433-f36455o1sbnttg7cf2bu2f6g4p4ki2eb.apps.googleusercontent.com",
+          "client_id": "590014607433-2brfrf3o0ocb65u5m0501m7hmij8mmbp.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.keremtigre.i_travel_book",
             "certificate_hash": "184f3b23ad6319b5ec121078fa2af5d17fb8ef26"
+          }
+        },
+        {
+          "client_id": "590014607433-4iod6d1fm8hlnmhai5v287k9rgdeek2r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.keremtigre.i_travel_book",
+            "certificate_hash": "40a26bb7881daa463623f1ae5ace30d6a22dc470"
+          }
+        },
+        {
+          "client_id": "590014607433-aas5101tvad2vb4d1883c5jb4kcu6ac8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.keremtigre.i_travel_book",
+            "certificate_hash": "2d6510becd7aa21499c1c0a8b430c78ec0c127d2"
           }
         },
         {

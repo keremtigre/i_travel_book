@@ -92,7 +92,6 @@ class LoginCubit extends Cubit<LoginState> {
 
   LoginWithEmailMethod(BuildContext context) async {
     setIsLodingEmail();
-    ShowLoaderDialog(context, "Giriş Yapılıyor", false);
     AuthenticationHelper()
         .signIn(
       email: emailController.text,
@@ -116,7 +115,6 @@ class LoginCubit extends Cubit<LoginState> {
         );
       } else {
         setIsLodingEmail();
-        Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: AutoSizeText(
           value,

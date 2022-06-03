@@ -39,46 +39,52 @@ class AuthenticationHelper {
   }
 
   Future deleteUser({User? user}) async {
-    if (user != null) {
-      print("Kullanıcı Silindi " +
-          FirebaseAuth.instance.currentUser!.email.toString());
-      Reference storageRef1 =
-          FirebaseStorage.instance.ref(user.email).child('LocationPhoto');
-      Reference storageRef2 =
-          FirebaseStorage.instance.ref(user.email).child('ProfilePhoto');
-      storageRef1.listAll().then((value) {
-        value.items.forEach((element) {
-          element.delete();
+    try {
+      if (user != null) {
+        print("Kullanıcı Silindi " +
+            FirebaseAuth.instance.currentUser!.email.toString());
+        Reference storageRef1 =
+            FirebaseStorage.instance.ref(user.email).child('LocationPhoto');
+        Reference storageRef2 =
+            FirebaseStorage.instance.ref(user.email).child('ProfilePhoto');
+        storageRef1.listAll().then((value) {
+          value.items.forEach((element) {
+            element.delete();
+          });
         });
-      });
-      storageRef2.listAll().then((value) {
-        value.items.forEach((element) {
-          element.delete();
+        storageRef2.listAll().then((value) {
+          value.items.forEach((element) {
+            element.delete();
+          });
         });
-      });
-      var snapshots = await FirebaseFirestore.instance
-          .collection(user.email.toString())
-          .get();
-      for (var doc in snapshots.docs) {
-        doc.reference.delete();
+        var snapshots = await FirebaseFirestore.instance
+            .collection(user.email.toString())
+            .get();
+        for (var doc in snapshots.docs) {
+          doc.reference.delete();
+        }
+        FirebaseFirestore.instance
+            .collection("ProfileData")
+            .doc(user.email.toString())
+            .delete();
+        user.delete();
+        print("Sil Çalıştı");
+        return null;
+      } else {
+        return "bir sorun oluştu";
       }
-      FirebaseFirestore.instance
-          .collection("ProfileData")
-          .doc(user.email.toString())
-          .delete();
-      user.delete();
-      print("Sil Çalıştı");
-      return "Hesap Silindi";
-    } else {
-      return "bir sorun oluştu";
+    } on FirebaseAuthException catch (e) {
+      return "Bir sorun oluşu";
     }
   }
 
   Future signOut() async {
-    print(
-        "Çıkış Yapıldı " + FirebaseAuth.instance.currentUser!.email.toString());
-    await _auth.signOut();
-    print("SignUp Çalıştı");
+    try {
+      await _auth.signOut();
+      return null;
+    } on FirebaseAuthException catch (e) {
+      return "Bir sorun oluşu";
+    }
   }
 
   Future changePassword(String password) async {

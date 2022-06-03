@@ -17,14 +17,19 @@ class AddlocationCubit extends Cubit<AddlocationState> {
   InterstitialAd? interstitialAd;
   bool saveProgress = false;
   bool isMarkerLoading = false;
+  List<GlobalKey<FormState>> formKeys = [
+    GlobalKey<FormState>(),
+    GlobalKey<FormState>(),
+  ];
+  int currentStep = 0;
   double originLatitude = 0;
   double originLongitude = 0;
   File? image;
   Map<MarkerId, Marker> markers = {};
   late CameraPosition cameraPosition =
       CameraPosition(target: LatLng(originLatitude, originLongitude));
-  final GlobalKey<FormState> formKey =
-      new GlobalKey<FormState>(debugLabel: 'addlocationkey');
+  /* final GlobalKey<FormState> formKey =
+      new GlobalKey<FormState>(debugLabel: 'addlocationkey'); */
   final placeTitleTextController = TextEditingController();
   final placeDetailTextController = TextEditingController();
   bool photoIsSelected = false;
@@ -54,6 +59,8 @@ class AddlocationCubit extends Cubit<AddlocationState> {
     placeDetailTextController.clear();
     placeTitleTextController.clear();
     image = null;
+    currentStep = 0;
+    saveProgress = false;
     print("add dispose çalıştı");
     emit(AddLocationLoaded());
     emit(AddlocationInitial());
@@ -100,6 +107,23 @@ class AddlocationCubit extends Cubit<AddlocationState> {
     emit(AddLocationLoaded());
   }
 
+  tapped(int step) {
+    currentStep = step;
+    emit(AddLocationLoaded());
+  }
+
+  continued() {
+    if (formKeys[currentStep].currentState!.validate()) {
+      currentStep < 2 ? currentStep += 1 : null;
+    }
+    emit(AddLocationLoaded());
+  }
+
+  cancel() {
+    currentStep > 0 ? currentStep -= 1 : null;
+    emit(AddLocationLoaded());
+  }
+
 //pick image
   Future pickImage(BuildContext context) async {
     showModalBottomSheet(
@@ -130,6 +154,7 @@ class AddlocationCubit extends Cubit<AddlocationState> {
                       } on PlatformException catch (e) {
                         print("başarısız oldu " + e.message.toString());
                       }
+                      emit(AddLocationLoaded());
                     },
                   ),
                   ListTile(
@@ -151,12 +176,14 @@ class AddlocationCubit extends Cubit<AddlocationState> {
                       } on PlatformException catch (e) {
                         print("başarısız oldu " + e.message.toString());
                       }
+                      emit(AddLocationLoaded());
                     },
                   ),
                   ListTile(
                     onTap: () {
                       this.image = null;
                       Navigator.pop(context);
+                      emit(AddLocationLoaded());
                     },
                     leading: Icon(Icons.delete),
                     title: AutoSizeText("Fotoğrafı Kaldır"),
