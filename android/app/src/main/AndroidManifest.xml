@@ -13,10 +13,10 @@
         android:icon="@mipmap/launcher_icon">
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3683671396124442~5953938172"/>
+            android:value=""/>
     <meta-data
            android:name="com.google.android.geo.API_KEY"
-           android:value="AIzaSyBquiTPuct-oP-gigHJI_jTwMAhZ6g1oso" />
+           android:value="" />
         
         <activity
             android:name=".MainActivity"
