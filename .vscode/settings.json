@@ -1,0 +1,6 @@
+{
+  "files.exclude": {
+    "android/app/src/main/AndroidManifest.xml": true,
+    "android/app/google-services.json": true
+  }
+}
