@@ -1,16 +1,21 @@
 # i_travel_book
 
-A new Flutter project.
+ITravelBook sevdiğiniz konumları kayıt edebileceğiniz bir seyahat uygulamasıdır. En Yakın zamanda Google Play Store'da
 
-## Getting Started
+## Uygulama Hakkında 
 
-This project is a starting point for a Flutter application.
+- State Management: flutter_bloc
+- Backend: Firebase
 
-A few resources to get you started if this is your first Flutter project:
+## Uygulamadan Görseller 
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+<img src="https://user-images.githubusercontent.com/47521147/172225508-7b15032f-be9d-479b-bb37-1c49f69ebd30.png" width="350" height="600">|
+<img src="https://user-images.githubusercontent.com/47521147/172225510-6cf98f96-3042-457a-9bd5-c5f735a26c5f.png" width="350" height="600">|
+<img src="https://user-images.githubusercontent.com/47521147/172225511-8b942146-0522-49ca-a55e-37f47b167158.png" width="350" height="600">
+<img src="https://user-images.githubusercontent.com/47521147/172225519-6e599257-c4dc-4d45-9d25-053aa310e815.png" width="350" height="600">|
+<img src="https://user-images.githubusercontent.com/47521147/172225506-16118e6f-cdc3-4fd2-bdb0-8a377c49b4d9.png" width="350" height="600">
+<img src="https://user-images.githubusercontent.com/47521147/172225501-27fbf808-1c3d-4833-ab20-5fb46901b0fb.png" width="350" height="600">|
+<img src="https://user-images.githubusercontent.com/47521147/172225495-e2c736ee-e83d-4422-83af-0a0a1cce581e.png" width="350" height="600">
+<img src="https://user-images.githubusercontent.com/47521147/172225471-622793a3-539b-4e2c-aa7c-cc8d4c3b98a3.png" width="350" height="600">|
+<img src="https://user-images.githubusercontent.com/47521147/172225448-ff97bea2-06ef-4520-a096-204c75b0bf7b.png" width="350" height="600">
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
