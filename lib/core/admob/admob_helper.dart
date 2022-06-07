@@ -1,7 +1,7 @@
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class AddmobService {
-  static String get bannerAdUnitId => "ca-app-pub-3683671396124442/4713008692";
+  static String get bannerAdUnitId => "ca-app-pub-9703444831349835/8769535717";
   static String get testbannerAdUnitId =>
       "ca-app-pub-3940256099942544/6300978111";
   static initialize() {
@@ -13,7 +13,7 @@ class AddmobService {
   static BannerAd createBannerAdd() {
     return BannerAd(
         size: AdSize.banner,
-        adUnitId: testbannerAdUnitId,
+        adUnitId: bannerAdUnitId,
         request: AdRequest(),
         listener: BannerAdListener(
             onAdClosed: (ad) {

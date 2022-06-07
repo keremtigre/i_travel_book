@@ -86,7 +86,7 @@ class AddlocationCubit extends Cubit<AddlocationState> {
 //Konum Ekledikten sonra reklam çıkması için
   void loadInterstitialAd() {
     InterstitialAd.load(
-      adUnitId: "ca-app-pub-3940256099942544/1033173712",
+      adUnitId: "ca-app-pub-9703444831349835/9891045698",
       request: AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) {

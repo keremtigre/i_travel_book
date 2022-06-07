@@ -1,7 +1,7 @@
 name: i_travel_book
 description: A new Flutter project.
 
-version: 1.0.0+2
+version: 1.0.0+5
 
 environment:
   sdk: ">=2.16.2 <3.0.0"
@@ -39,7 +39,7 @@ dev_dependencies:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/logo.png"
+  image_path: "assets/images/app_icon.png"
 flutter:
 
   uses-material-design: true

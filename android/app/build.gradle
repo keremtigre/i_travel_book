@@ -51,10 +51,10 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.keremtigre.i_travel_book"
-        minSdkVersion 30
+        minSdkVersion 21
     targetSdkVersion 30
-        versionCode 2
-        versionName "1.0.2"
+        versionCode 5
+        versionName "1.0.5"
         multiDexEnabled true
     }
     signingConfigs {
