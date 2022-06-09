@@ -1,7 +1,7 @@
 name: i_travel_book
 description: A new Flutter project.
 
-version: 1.0.0+7
+version: 1.0.0+8
 
 environment:
   sdk: ">=2.16.2 <3.0.0"

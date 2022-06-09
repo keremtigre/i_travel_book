@@ -17,7 +17,6 @@ class HomeCubit extends Cubit<HomeState> {
   String selectedLanguage = "TR";
 
   late String language;
-  late bool privacyDialogShowed;
   bool isdarkmode = false;
   bool changePasswordVisibility = true;
   bool changePasswordVisibility2 = true;
@@ -28,12 +27,12 @@ class HomeCubit extends Cubit<HomeState> {
 
   saveLanguage(BuildContext context) async {
     await putString("language", selectedLanguage);
+
+    emit(HomeInitial());
     Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (builder) => HomePage()),
         (Route<dynamic> route) => false);
-    emit(HomeInitial());
-    emit(HomeLoaded());
   }
 
   changePasswordVisibilty() {
@@ -56,7 +55,6 @@ class HomeCubit extends Cubit<HomeState> {
 
   homeInitState() async {
     language = await getString("language");
-    privacyDialogShowed = await getBool("privacyShowed");
     await AddmobService.initialize();
     await Geolocator.requestPermission();
     await Future.delayed(Duration(milliseconds: 25));
