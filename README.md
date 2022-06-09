@@ -2,6 +2,8 @@
 
 ITravelBook sevdiğiniz konumları kayıt edebileceğiniz bir seyahat uygulamasıdır. En Yakın zamanda Google Play Store'da
 
+<img src="https://user-images.githubusercontent.com/47521147/172875905-5ed7fb0e-cccb-4ebb-b8de-5a5744282cae.png">
+
 ## Uygulama Hakkında 
 
 - State Management: flutter_bloc
