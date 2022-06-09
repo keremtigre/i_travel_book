@@ -37,6 +37,7 @@ class _BuildForm extends StatelessWidget {
             ),
             child: AuthTextField(
                 isLoginCubit: false,
+                isUserName:true,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return language == "TR" ? 'Kullanıcı Adınızı Giriniz' : "Please enter your username";

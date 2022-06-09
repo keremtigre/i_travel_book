@@ -3,17 +3,11 @@ part of home_view.dart;
 class HomePageBody extends StatelessWidget {
   HomePageBody({Key? key}) : super(key: key);
   FirebaseAuth _auth = FirebaseAuth.instance;
-  String language = "";
-  initialLanguage() async {
-    language = await getString("language");
-  }
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<bool>(
         future: getBool("darkmode"),
         builder: (context, darkmodeSnapshot) {
-          initialLanguage();
           if (darkmodeSnapshot.hasData) {
             return BlocConsumer<HomeCubit, HomeState>(
                 listener: (context, state) {},
@@ -30,6 +24,32 @@ class HomePageBody extends StatelessWidget {
                             .collection("ProfileData")
                             .snapshots(),
                         builder: (context, snapshot) {
+                          String language = context.read<HomeCubit>().language;
+                          snapshot.data!.docs.forEach((element) async {
+                            if (element.id ==
+                                _auth.currentUser!.email.toString()) {
+                              if (await element.get("privacyPolicyAccepted") ==
+                                  false) {
+                                Future.delayed(Duration.zero, () {
+                                  showDialog<bool>(
+                                      barrierDismissible: false,
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return WillPopScope(
+                                          onWillPop: () async {
+                                            return false;
+                                          },
+                                          child: PrivacyPolicyWidget(
+                                            darkmodeSnapshot: darkmodeSnapshot,
+                                            language: language,
+                                          ),
+                                        );
+                                      });
+                                });
+                              }
+                            }
+                          });
+
                           if (snapshot.hasData) {
                             snapshot.data!.docs.forEach((element) {
                               if (element.id ==

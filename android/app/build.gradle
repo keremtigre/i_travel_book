@@ -53,8 +53,8 @@ android {
         applicationId "com.keremtigre.i_travel_book"
         minSdkVersion 21
     targetSdkVersion 30
-        versionCode 5
-        versionName "1.0.5"
+        versionCode 7
+        versionName "1.0.7"
         multiDexEnabled true
     }
     signingConfigs {

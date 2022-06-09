@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:i_travel_book/core/Helper/shared_preferences.dart';
 import 'package:i_travel_book/core/admob/admob_helper.dart';
 import 'package:i_travel_book/core/color/appcolor..dart';
+import 'package:i_travel_book/feature/HomePage/view/home_view.dart';
 import 'package:meta/meta.dart';
 
 part 'home_state.dart';
@@ -14,11 +15,24 @@ class HomeCubit extends Cubit<HomeState> {
   String FirebaseuserName = "";
   String FirebaseimageUrl = "";
   String selectedLanguage = "TR";
+
+  late String language;
+  late bool privacyDialogShowed;
   bool isdarkmode = false;
   bool changePasswordVisibility = true;
   bool changePasswordVisibility2 = true;
   setSelectedLanguage(String value) {
     selectedLanguage = value;
+    emit(HomeLoaded());
+  }
+
+  saveLanguage(BuildContext context) async {
+    await putString("language", selectedLanguage);
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (builder) => HomePage()),
+        (Route<dynamic> route) => false);
+    emit(HomeInitial());
     emit(HomeLoaded());
   }
 
@@ -41,6 +55,8 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   homeInitState() async {
+    language = await getString("language");
+    privacyDialogShowed = await getBool("privacyShowed");
     await AddmobService.initialize();
     await Geolocator.requestPermission();
     await Future.delayed(Duration(milliseconds: 25));

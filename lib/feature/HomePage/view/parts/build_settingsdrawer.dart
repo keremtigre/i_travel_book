@@ -112,7 +112,23 @@ class SettingsDrawer extends StatelessWidget {
                       style: TextStyle(fontSize: 16, color: settingDrawerColor),
                     ),
                   ),
-
+                  // ****Gizlililk Politikası
+                  ListTile(
+                    onTap: () async{
+                     await launchUrl(Uri.parse("https://www.freeprivacypolicy.com/live/71123d10-bc1a-43db-b45c-d8fcad645bd7"));
+                    },
+                    leading: Icon(
+                      Icons.verified_user,
+                      size: 32,
+                      color: settingDrawerColor,
+                    ),
+                    title: AutoSizeText(
+                      language == "TR"
+                          ? "Gizlilik Politikası"
+                          : "Privacy Policy",
+                      style: TextStyle(fontSize: 16, color: settingDrawerColor),
+                    ),
+                  ),
                   //************* dil değişikliği son */
                   ListTile(
                     onTap: () {

@@ -22,7 +22,7 @@ class _VerifyPageState extends State<VerifyPage> {
   void initState() {
     user = auth.currentUser;
     user!.sendEmailVerification();
-    timer = Timer.periodic(Duration(seconds: 10), (timer) {
+    timer = Timer.periodic(Duration(seconds: 1), (timer) {
       checkEmailVerified();
     });
     super.initState();

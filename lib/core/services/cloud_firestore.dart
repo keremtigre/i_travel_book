@@ -46,17 +46,17 @@ class CloudHelper {
   }
 
   Future deleteImage(String downloadUrl) async {
-    if(!downloadUrl.isEmpty){
+    if (!downloadUrl.isEmpty) {
       try {
-      FirebaseStorage.instance.refFromURL(downloadUrl).delete();
-      return null;
-    } on FirebaseException catch (e) {
-      return e.message;
-    }
+        FirebaseStorage.instance.refFromURL(downloadUrl).delete();
+        return null;
+      } on FirebaseException catch (e) {
+        return e.message;
+      }
     }
   }
 
-  Future addUserNamePhoto(File file, String userName) async {
+  Future addUserNamePhoto(File file, String userName,bool privacyAccepted) async {
     try {
       String file_name = file.path.split('/').last;
       var download_url;
@@ -75,7 +75,8 @@ class CloudHelper {
       }
       await users.doc(uid).set({
         'userPhoto': file.path != '' ? download_url : "",
-        'userName': userName
+        'userName': userName,
+        'privacyPolicyAccepted': privacyAccepted
       });
       return null;
     } on FirebaseAuthException catch (e) {
@@ -83,7 +84,6 @@ class CloudHelper {
     }
   }
 
-  
   Future addLocation(
       String title, String action, String lat, String lng, File file) async {
     try {
@@ -100,7 +100,7 @@ class CloudHelper {
             .ref
             .getDownloadURL();
       }
-      
+
       await users.add({
         'id': Uuid().v4(),
         'title': title,
@@ -108,10 +108,23 @@ class CloudHelper {
         'lat': lat,
         'lng': lng,
         'downloadUrl': file.path != '' ? download_url : "",
+        'createdTime': Timestamp.now()
       });
       return null;
     } on FirebaseException catch (error) {
       return error.message;
+    }
+  }
+
+  Future privacyPolicyAccepted() async {
+    try {
+      String uid = FirebaseAuth.instance.currentUser!.email.toString();
+      CollectionReference snapshot =
+          await firebaseFirestore.collection('ProfileData');
+      await snapshot.doc(uid).update({'privacyPolicyAccepted': true});
+      return null;
+    } on FirebaseException catch (e) {
+      return e.message;
     }
   }
 }

@@ -11,10 +11,12 @@ class AuthTextField extends StatelessWidget {
   final String hinntext;
   final bool isPasswordText;
   final bool isVerifyPassword;
+  bool isUserName;
   final TextEditingController controller;
   final bool isLoginCubit;
   AuthTextField(
       {Key? key,
+      this.isUserName = false,
       required this.validator,
       required this.hinntext,
       required this.controller,
@@ -63,7 +65,8 @@ class AuthTextField extends StatelessWidget {
               width: 2,
               color: AppColor().appColor,
             )),
-        prefixIcon: Icon(Icons.email, color: AppColor().appColor),
+        prefixIcon: Icon(isUserName ? Icons.person : Icons.email,
+            color: AppColor().appColor),
         hintText: hinntext,
         prefixText: ' ',
       );

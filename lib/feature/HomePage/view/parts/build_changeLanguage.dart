@@ -68,22 +68,15 @@ class changeLanguage extends StatelessWidget {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: Text(language == "TR"
-                      ?  "İptal" :"Cancel",
+                        child: Text(
+                          language == "TR" ? "İptal" : "Cancel",
                           style: TextStyle(color: changeLanguageColor),
                         )),
                     TextButton(
-                        onPressed: () {
-                          putString("language",
-                              context.read<HomeCubit>().selectedLanguage);
-                          Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (builder) => HomePage()),
-                              (Route<dynamic> route) => false);
+                        onPressed: () async {
+                          await context.read<HomeCubit>().saveLanguage(context);
                         },
-                        child: Text(language == "TR"
-                      ? "Değiştir" :"Change",
+                        child: Text(language == "TR" ? "Değiştir" : "Change",
                             style: TextStyle(color: changeLanguageColor)))
                   ],
                 )

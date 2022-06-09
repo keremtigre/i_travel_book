@@ -138,7 +138,7 @@ class SignupCubit extends Cubit<SignupState> {
         File _Firebaseimage = image;
 
         CloudHelper()
-            .addUserNamePhoto(_Firebaseimage, userNameController.text)
+            .addUserNamePhoto(_Firebaseimage, userNameController.text,false)
             .then((value) {
           if (value != null) {
             setIsloading();

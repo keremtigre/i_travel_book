@@ -73,11 +73,16 @@ class LoginCubit extends Cubit<LoginState> {
         accessToken: googleSignInAuthentication.accessToken,
         idToken: googleSignInAuthentication.idToken,
       );
-      await _auth.signInWithCredential(credential).then((value) {
-        putBool("hatirla", true);
+      await _auth.signInWithCredential(credential).then((value) async {
+        await putBool("hatirla", true);
+        if (value.additionalUserInfo!.isNewUser) {
+          await CloudHelper().addUserNamePhoto(
+              File(''), _auth.currentUser!.displayName!, false);
+        } else {
+          await CloudHelper().addUserNamePhoto(
+              File(''), _auth.currentUser!.displayName!, true);
+        }
       });
-      await CloudHelper()
-          .addUserNamePhoto(File(''), _auth.currentUser!.displayName!);
     } on FirebaseAuthException catch (e) {
       print(e.message);
       throw e;
